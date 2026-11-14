@@ -1,6 +1,6 @@
 # Lelet launch test
 
-Updated Sat 14 Nov 2026, 12:30 WIB. Written by a script, not by hand.
+Updated Sat 14 Nov 2026, 13:50 WIB. Written by a script, not by hand.
 
 **The launch test has not started yet.**
 
@@ -15,8 +15,8 @@ Counts read before the start are test traffic and are subtracted.
 
 ## Raw counts
 
-- Zero point (Sat 14 Nov 2026, 12:30 WIB): 2 / 0 / 0
-- Latest (Sat 14 Nov 2026, 12:30 WIB): 2 / 0 / 0
+- Zero point (Sat 14 Nov 2026, 13:50 WIB): 3 / 0 / 0
+- Latest (Sat 14 Nov 2026, 13:50 WIB): 3 / 0 / 0
 
 Order: first test / ten tests / letter sent. Counted = latest minus zero point.
 

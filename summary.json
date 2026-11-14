@@ -1,0 +1,146 @@
+{
+  "schema": 1,
+  "name": "Lelet",
+  "updated": "2026-11-14T06:50:13.434Z",
+  "updatedText": "Sat 14 Nov 2026, 13:50 WIB",
+  "phase": "before",
+  "outcome": "waiting",
+  "headline": "The launch test has not started yet.",
+  "nextStep": null,
+  "totals": {
+    "testers": 0,
+    "regulars": 0,
+    "letters": 0
+  },
+  "need": {
+    "testers": 30,
+    "regulars": 10,
+    "letters": 5
+  },
+  "stop": {
+    "testers": 10,
+    "letters": 1
+  },
+  "labels": {
+    "testers": "Devices that ran a first test",
+    "regulars": "Devices that reached 10 tests",
+    "letters": "Devices that marked a letter as sent"
+  },
+  "start": "2026-11-28T00:00:00+07:00",
+  "end": "2026-12-13T00:00:00+07:00",
+  "startText": "Sat 28 Nov 2026, 00:00 WIB",
+  "endText": "Sun 13 Dec 2026, 00:00 WIB",
+  "decisionDay": "Mon 14 Dec 2026",
+  "checkpoint": {
+    "at": "2026-12-05T23:59:00+07:00",
+    "testers": 20,
+    "regulars": 3,
+    "atText": "Sat 5 Dec 2026, 23:59 WIB"
+  },
+  "daysToStart": 14,
+  "daysLeft": 29,
+  "lateBaseline": false,
+  "raw": {
+    "baseline": {
+      "at": "2026-11-14T06:50:13.434Z",
+      "testers": 3,
+      "regulars": 0,
+      "letters": 0
+    },
+    "latest": {
+      "at": "2026-11-14T06:50:13.434Z",
+      "testers": 3,
+      "regulars": 0,
+      "letters": 0
+    }
+  },
+  "links": {
+    "app": "https://juw12.github.io/lelet/",
+    "repo": "https://github.com/juw12/lelet",
+    "status": "https://github.com/juw12/lelet/blob/launch-status/STATUS.md",
+    "launchIssue": null,
+    "verdictIssue": null
+  },
+  "needsMe": [
+    {
+      "id": "count-off",
+      "title": "Keep your own devices out of the count",
+      "status": "last-tap",
+      "due": "2026-11-28",
+      "detail": "Done on the laptop on 14 Nov (Edge and Chrome). The phone is left: open the link once in the phone's browser.",
+      "links": [
+        {
+          "label": "Open on the phone",
+          "url": "https://juw12.github.io/lelet/?count=off"
+        }
+      ]
+    },
+    {
+      "id": "invite",
+      "title": "Send the 30 invitations, one by one",
+      "status": "last-tap",
+      "due": "2026-11-28",
+      "detail": "Sat 28 Nov at 10:00. The text is written; each link opens the app with the message ready. Choosing the person and pressing send is yours.",
+      "links": [
+        {
+          "label": "WhatsApp",
+          "url": "https://wa.me/?text=Halo%21%20Aku%20lagi%20bikin%20Lelet%2C%20alat%20gratis%20untuk%20cek%20apakah%20internet%20rumah%20lebih%20lambat%20dari%20paket%20yang%20dibayar.%20Kalau%20memang%20lambat%2C%20Lelet%20menuliskan%20surat%20keluhannya.%20Boleh%20bantu%20coba%20satu%20tes%20malam%20ini%3F%20Tanpa%20akun%2C%20sekitar%201%20menit%3A%20https%3A%2F%2Fjuw12.github.io%2Flelet%2F"
+        },
+        {
+          "label": "Telegram",
+          "url": "https://t.me/share/url?url=https%3A%2F%2Fjuw12.github.io%2Flelet%2F&text=Halo%21%20Aku%20lagi%20bikin%20Lelet%2C%20alat%20gratis%20untuk%20cek%20apakah%20internet%20rumah%20lebih%20lambat%20dari%20paket%20yang%20dibayar.%20Kalau%20memang%20lambat%2C%20Lelet%20menuliskan%20surat%20keluhannya.%20Boleh%20bantu%20coba%20satu%20tes%20malam%20ini%3F%20Tanpa%20akun%2C%20sekitar%201%20menit."
+        },
+        {
+          "label": "E-mail",
+          "url": "mailto:?subject=Boleh%20bantu%20coba%20Lelet%3F&body=Halo%21%20Aku%20lagi%20bikin%20Lelet%2C%20alat%20gratis%20untuk%20cek%20apakah%20internet%20rumah%20lebih%20lambat%20dari%20paket%20yang%20dibayar.%20Kalau%20memang%20lambat%2C%20Lelet%20menuliskan%20surat%20keluhannya.%20Boleh%20bantu%20coba%20satu%20tes%20malam%20ini%3F%20Tanpa%20akun%2C%20sekitar%201%20menit%3A%20https%3A%2F%2Fjuw12.github.io%2Flelet%2F"
+        },
+        {
+          "label": "20:00 reminder",
+          "url": "https://wa.me/?text=Sekarang%20jam%20sibuk%2C%20biasanya%20internet%20paling%20lambat.%20Kalau%20sempat%2C%20jalankan%20satu%20tes%20Lelet%20sekarang%20ya%3A%20https%3A%2F%2Fjuw12.github.io%2Flelet%2F"
+        },
+        {
+          "label": "Day-7 message",
+          "url": "https://wa.me/?text=Terima%20kasih%20sudah%20coba%20Lelet.%20Kalau%20sudah%20ada%2010%20tes%20dan%20hasilnya%20di%20bawah%20paket%2C%20Lelet%20bisa%20menuliskan%20surat%20keluhannya.%20Tinggal%20salin%20dan%20kirim%20ke%20provider%3A%20https%3A%2F%2Fjuw12.github.io%2Flelet%2F"
+        },
+        {
+          "label": "Launch-day page",
+          "url": "https://github.com/juw12/lelet/blob/main/docs/launch-day.md"
+        }
+      ]
+    },
+    {
+      "id": "letter-review",
+      "title": "Have a lawyer or YLKI read both letters",
+      "status": "yours",
+      "due": "2026-11-27",
+      "detail": "A reading check is done: 5 of 5 cited articles match the law. That is not a legal review. The request with both letters is written; sending it is yours.",
+      "links": [
+        {
+          "label": "The request",
+          "url": "https://github.com/juw12/lelet/blob/main/docs/review-request.md"
+        },
+        {
+          "label": "YLKI service",
+          "url": "https://ylki.or.id/layanan-pengaduan-ylki/"
+        }
+      ]
+    },
+    {
+      "id": "trademark",
+      "title": "Trademark search for the name Lelet",
+      "status": "blocked",
+      "due": null,
+      "detail": "Tried on 14 Nov: the official search (PDKI) answered 403 to an automated browser and WIPO asked for a captcha. Not bypassed, so the result is unknown. Both open in a normal browser: look at class 9 and class 42. Not needed for the launch test.",
+      "links": [
+        {
+          "label": "PDKI search",
+          "url": "https://pdki-indonesia.dgip.go.id/search?type=trademark&keyword=lelet&page=1"
+        },
+        {
+          "label": "WIPO search",
+          "url": "https://branddb.wipo.int/en/quicksearch/results?sort=score%20desc&strategy=concept&rows=30&by=brandName&v=lelet"
+        }
+      ]
+    }
+  ]
+}
