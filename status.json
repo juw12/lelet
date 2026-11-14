@@ -1,0 +1,15 @@
+{
+  "snapshots": [
+    {
+      "at": "2026-11-14T05:30:38.788Z",
+      "counts": {
+        "testers": 2,
+        "regulars": 0,
+        "letters": 0
+      }
+    }
+  ],
+  "final": null,
+  "issue": null,
+  "launchIssue": null
+}
