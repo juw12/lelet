@@ -121,7 +121,7 @@ Results on 2026-11-14 (Windows 11, Node 26, Edge 157):
 | Accuracy, 8 / 2 Mbps line, Hemat | read 8.01 / 2.00 Mbps |
 | Accuracy, 30 / 10 Mbps line, Normal | read 30.00 / 9.87 Mbps |
 | Browser e2e, 8 / 2 Mbps line | 71 of 71 checks pass, read 8.00 / 1.99 Mbps, 6.8 MB used |
-| Published page, real Hemat test | 8 of 8 checks pass: 3.5 s, 11.2 MB, no console or CSP errors |
+| Published page, real Hemat test | 8 of 8 checks pass: 4.6 s, 10.7 MB, no console or CSP errors |
 
 Honest notes on the tests:
 
