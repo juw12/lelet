@@ -4,8 +4,8 @@ Lelet writes three texts for a home-internet customer: a complaint letter to the
 WhatsApp version of it, and a second letter to the regulator (Komdigi) when the provider does not answer
 in 7 working days. Nobody qualified to give legal advice has read them yet.
 
-**Status on 14 Nov 2026:** the review page is written and checked against the app; the request is about
-to go to YLKI by e-mail. This line is updated when it is sent and when an answer arrives.
+**Status on 14 Nov 2026:** the request was sent to YLKI's consumer address by e-mail at 17:24 WIB, with
+the review page attached as a PDF. No answer yet. This line is updated when an answer arrives.
 
 ## The page a reviewer reads
 

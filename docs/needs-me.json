@@ -56,18 +56,48 @@
     },
     {
       "id": "letter-review",
-      "title": "Have a lawyer or YLKI read both letters",
-      "status": "yours",
-      "due": "2026-11-27",
-      "detail": "A reading check is done: 5 of 5 cited articles match the law. That is not a legal review. The request with both letters is written; sending it is yours.",
+      "title": "Ask YLKI to read the letters",
+      "status": "done",
+      "due": null,
+      "detail": "Sent on 14 Nov 2026 at 17:24 WIB to YLKI's consumer address, from Juwen's Gmail, with the review page attached as a PDF and five questions. No answer yet. Sending the request is not a legal review: the letters stay unchanged until a qualified person answers.",
       "links": [
         {
-          "label": "The request",
-          "url": "https://github.com/juw12/lelet/blob/main/docs/review-request.md"
+          "label": "The page YLKI got",
+          "url": "https://github.com/juw12/lelet/blob/main/docs/permohonan-tinjauan.md"
         },
         {
-          "label": "YLKI service",
-          "url": "https://ylki.or.id/layanan-pengaduan-ylki/"
+          "label": "Request and status",
+          "url": "https://github.com/juw12/lelet/blob/main/docs/review-request.md"
+        }
+      ]
+    },
+    {
+      "id": "review-reply",
+      "title": "Read YLKI's answer and decide what changes",
+      "status": "yours",
+      "due": "2026-11-27",
+      "detail": "The answer goes to your Gmail inbox, which no tool reads. When it arrives, paste it into a chat and the letters, the tests and this page get updated. If nothing has come by Fri 27 Nov, the launch test still runs with the 'not legal advice' line; ask the second reader.",
+      "links": [
+        {
+          "label": "Gmail: mail from YLKI",
+          "url": "https://mail.google.com/mail/u/0/#search/ylki"
+        }
+      ]
+    },
+    {
+      "id": "second-reader",
+      "title": "Second reader if YLKI stays silent: BPKN, a legal-aid clinic or a paid lawyer",
+      "status": "yours",
+      "due": null,
+      "detail": "BPKN's portal asks for the sender's identity, and a lawyer costs money, so neither was done for you. The same PDF and the same five questions can be reused as they are.",
+      "links": [
+        {
+          "label": "BPKN portal",
+          "url": "https://pengaduan.bpkn.go.id"
+        },
+        {
+          "label": "The page to attach",
+          "url": "https://github.com/juw12/lelet/blob/main/docs/permohonan-tinjauan.md"
         }
       ]
     },
@@ -85,6 +115,19 @@
         {
           "label": "WIPO search",
           "url": "https://branddb.wipo.int/en/quicksearch/results?sort=score%20desc&strategy=concept&rows=30&by=brandName&v=lelet"
+        }
+      ]
+    },
+    {
+      "id": "language-zh",
+      "title": "Third screen language: Chinese",
+      "status": "done",
+      "due": null,
+      "detail": "The app now has Indonesian, English and Simplified Chinese screens. The letters stay in Indonesian in every language, because they go to Indonesian providers and to Komdigi. Checked by 56 unit tests and 94 browser checks. No native speaker has proofread the Chinese text.",
+      "links": [
+        {
+          "label": "Open the app",
+          "url": "https://juw12.github.io/lelet/"
         }
       ]
     }
