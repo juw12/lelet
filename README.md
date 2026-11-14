@@ -119,7 +119,7 @@ Then open `http://localhost:8080/`. On `localhost` you can point the app at a te
 ## Tests
 
 ```
-npm test             # 46 unit tests of the logic and the two scripts (node --test, no packages needed)
+npm test             # 48 unit tests of the logic and the two scripts (node --test, no packages needed)
 npm run accuracy     # engine against a rate-limited local server
 npm run e2e          # 87 browser checks (Python + Playwright)
 python tests/live_check.py   # one real test on the published page
@@ -131,7 +131,7 @@ Results on 2026-11-14 (Windows 11, Node 26, Edge 157):
 
 | Check | Result |
 |---|---|
-| Unit tests | 46 of 46 pass |
+| Unit tests | 48 of 48 pass |
 | Accuracy, 8 / 2 Mbps line, Hemat | read 8.01 / 2.01 Mbps |
 | Accuracy, 30 / 10 Mbps line, Normal | read 30.03 / 9.79 Mbps |
 | Browser e2e, 8 / 2 Mbps line | 87 of 87 checks pass, 6.8 MB used per test |
@@ -161,10 +161,12 @@ Honest notes on the tests:
 | `i18n.js` | Indonesian and English text |
 | `sw.js`, `manifest.webmanifest`, `icons/` | install to home screen, open offline |
 | `tests/` | unit tests, fake rate-limited server, accuracy check, browser e2e |
-| `scripts/launch-verdict.mjs` | reads the public counts and writes the launch-test status and verdict |
+| `scripts/launch-verdict.mjs` | reads the public counts and writes the launch-test status, the verdict and `summary.json` |
 | `scripts/endpoint-watch.mjs` | checks the test endpoints, the live page, the counters and the holiday list |
 | `.github/workflows/` | runs the two scripts on a schedule |
 | `docs/launch-day.md` | the checklist the launch-day issue is made from |
+| `docs/needs-me.json` | what the launch test still needs from a person, with one-tap links |
+| `docs/review-request.md` | the request to a lawyer or YLKI to read both letters, with the letters attached |
 | `design.md` | design rules for this app |
 
 ## The launch test runs itself
@@ -175,7 +177,9 @@ from 28 November to 12 December 2026 (Jakarta time). It passes with at least 30 
 
 - **Every night at 00:35 Jakarta time** a GitHub Action reads the three public download counts and writes
   [STATUS.md on the `launch-status` branch](https://github.com/juw12/lelet/blob/launch-status/STATUS.md).
-  Downloads from before the test starts are subtracted.
+  Downloads from before the test starts are subtracted. The same run writes
+  [summary.json](https://github.com/juw12/lelet/blob/launch-status/summary.json): the numbers as data plus the
+  to-do list from `docs/needs-me.json`, for a dashboard to read.
 - **On 28 November** it opens an issue with the launch-day checklist and the invitation text.
 - **On 13 December** it opens an issue with the verdict, then stops changing the numbers.
 - **Every 6 hours** a second Action checks that Cloudflare's test endpoints still answer and still allow this

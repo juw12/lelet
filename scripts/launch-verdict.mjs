@@ -7,6 +7,9 @@
 // as a snapshot, and writes STATUS.md. On the first run after the test window closes it writes
 // VERDICT.md and marks the result as final, so later traffic cannot change it.
 //
+// Each run also writes summary.json: the same result as plain data, plus the list of things that
+// still need Juwen (docs/needs-me.json), so a dashboard can show both without parsing STATUS.md.
+//
 // The pass and stop numbers below were written down before launch. Do not change them afterwards.
 
 import { mkdir, readFile, writeFile, appendFile } from 'node:fs/promises';
@@ -148,6 +151,12 @@ const OUTCOME_TEXT = {
   },
 };
 
+const RUNNING_STATE = {
+  met: 'All three targets are met so far.',
+  short: 'Past the stop line, targets not met yet.',
+  stop: 'Still below the stop line.',
+};
+
 function scoreTable(result, config) {
   const rows = [
     '| What is counted | Counted | Needed | Stop line |',
@@ -203,11 +212,7 @@ export function renderStatus(result, config = CONFIG, now = new Date()) {
       '',
     );
   } else if (result.phase === 'running') {
-    const state = {
-      met: 'All three targets are met so far.',
-      short: 'Past the stop line, targets not met yet.',
-      stop: 'Still below the stop line.',
-    }[result.outcome];
+    const state = RUNNING_STATE[result.outcome];
     parts.push(`${state} ${result.daysLeft} day(s) left; counting ends ${formatWib(config.end)}.`, '');
   } else {
     parts.push(`${OUTCOME_TEXT[result.outcome].line} See VERDICT.md.`, '');
@@ -252,6 +257,51 @@ export function renderVerdict(result, config = CONFIG) {
 
 export function verdictTitle(result) {
   return OUTCOME_TEXT[result.outcome]?.title || '';
+}
+
+// The same result as plain data, for dashboards. needsMe is the "items" list of docs/needs-me.json.
+export function buildSummary(result, status = {}, needsMe = [], config = CONFIG, now = new Date()) {
+  const nowMs = new Date(now).getTime();
+  const repoUrl = `https://github.com/${config.repo}`;
+  const issueUrl = (number) => (number ? `${repoUrl}/issues/${number}` : null);
+  const counts = (snapshot) => (snapshot ? { at: snapshot.at, ...snapshot.counts } : null);
+
+  let headline = HEADLINES[result.phase];
+  if (result.phase === 'running') headline = `${headline} ${RUNNING_STATE[result.outcome]}`;
+  if (result.phase === 'final') headline = `${headline} ${OUTCOME_TEXT[result.outcome].line}`;
+
+  return {
+    schema: 1,
+    name: 'Lelet',
+    updated: new Date(now).toISOString(),
+    updatedText: formatWib(now),
+    phase: result.phase,
+    outcome: result.outcome,
+    headline,
+    nextStep: result.phase === 'final' ? OUTCOME_TEXT[result.outcome].next : null,
+    totals: result.totals,
+    need: config.need,
+    stop: config.stop,
+    labels: LABELS,
+    start: config.start,
+    end: config.end,
+    startText: formatWib(config.start),
+    endText: formatWib(config.end),
+    decisionDay: config.decisionDay,
+    checkpoint: { ...config.checkpoint, atText: formatWib(config.checkpoint.at) },
+    daysToStart: Math.max(0, Math.ceil((Date.parse(config.start) - nowMs) / 86400000)),
+    daysLeft: result.daysLeft,
+    lateBaseline: result.lateBaseline,
+    raw: { baseline: counts(result.baseline), latest: counts(result.latest) },
+    links: {
+      app: 'https://juw12.github.io/lelet/',
+      repo: repoUrl,
+      status: `${repoUrl}/blob/launch-status/STATUS.md`,
+      launchIssue: issueUrl(status.launchIssue),
+      verdictIssue: issueUrl(status.issue),
+    },
+    needsMe,
+  };
 }
 
 async function fetchCounts(config) {
@@ -316,6 +366,9 @@ export async function main(argv = process.argv.slice(2)) {
 
   await writeFile(statusFile, `${JSON.stringify(status, null, 2)}\n`);
   await writeFile(path.join(options.dir, 'STATUS.md'), renderStatus(result, CONFIG, now));
+  const needsMe = await readJson(new URL('../docs/needs-me.json', import.meta.url), { items: [] });
+  const summary = buildSummary(result, status, needsMe.items || [], CONFIG, now);
+  await writeFile(path.join(options.dir, 'summary.json'), `${JSON.stringify(summary, null, 2)}\n`);
   if (result.phase === 'final') {
     await writeFile(path.join(options.dir, 'VERDICT.md'), renderVerdict(result, CONFIG));
   }

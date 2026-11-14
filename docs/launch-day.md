@@ -19,6 +19,8 @@ Message (Indonesian):
 One tap to open WhatsApp with the text ready, then pick the person:
 [send the invitation](https://wa.me/?text=Halo%21%20Aku%20lagi%20bikin%20Lelet%2C%20alat%20gratis%20untuk%20cek%20apakah%20internet%20rumah%20lebih%20lambat%20dari%20paket%20yang%20dibayar.%20Kalau%20memang%20lambat%2C%20Lelet%20menuliskan%20surat%20keluhannya.%20Boleh%20bantu%20coba%20satu%20tes%20malam%20ini%3F%20Tanpa%20akun%2C%20sekitar%201%20menit%3A%20https%3A%2F%2Fjuw12.github.io%2Flelet%2F)
 
+Not on WhatsApp? Same text: [Telegram](https://t.me/share/url?url=https%3A%2F%2Fjuw12.github.io%2Flelet%2F&text=Halo%21%20Aku%20lagi%20bikin%20Lelet%2C%20alat%20gratis%20untuk%20cek%20apakah%20internet%20rumah%20lebih%20lambat%20dari%20paket%20yang%20dibayar.%20Kalau%20memang%20lambat%2C%20Lelet%20menuliskan%20surat%20keluhannya.%20Boleh%20bantu%20coba%20satu%20tes%20malam%20ini%3F%20Tanpa%20akun%2C%20sekitar%201%20menit.) or [e-mail](mailto:?subject=Boleh%20bantu%20coba%20Lelet%3F&body=Halo%21%20Aku%20lagi%20bikin%20Lelet%2C%20alat%20gratis%20untuk%20cek%20apakah%20internet%20rumah%20lebih%20lambat%20dari%20paket%20yang%20dibayar.%20Kalau%20memang%20lambat%2C%20Lelet%20menuliskan%20surat%20keluhannya.%20Boleh%20bantu%20coba%20satu%20tes%20malam%20ini%3F%20Tanpa%20akun%2C%20sekitar%201%20menit%3A%20https%3A%2F%2Fjuw12.github.io%2Flelet%2F).
+
 - [ ] 30 people messaged
 
 ## At 20:00: one reminder to the people who answered

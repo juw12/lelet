@@ -5,6 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 
 import {
+  buildSummary,
   CONFIG,
   countsFromAssets,
   evaluate,
@@ -140,4 +141,48 @@ test('the command line run saves snapshots, then freezes the result once final',
   const recorded = JSON.parse(await readFile(path.join(dir, 'status.json'), 'utf8'));
   assert.equal(recorded.issue, 7);
   assert.equal(recorded.snapshots.length, 2);
+
+  // The dashboard file is written next to it, with the frozen result and the to-do list from docs/.
+  const summary = JSON.parse(await readFile(path.join(dir, 'summary.json'), 'utf8'));
+  assert.equal(summary.phase, 'final');
+  assert.equal(summary.outcome, 'stop');
+  assert.deepEqual(summary.totals, { testers: 6, regulars: 1, letters: 0 });
+  assert.equal(summary.links.verdictIssue, 'https://github.com/juw12/lelet/issues/7');
+  assert.ok(summary.needsMe.some((item) => item.id === 'count-off'));
+});
+
+test('the summary before the start counts down to launch day and carries the to-do list', () => {
+  const now = '2026-11-14T05:00:00Z';
+  const result = evaluate([snap(now, 2, 0, 0)], CONFIG, now);
+  const todo = [{ id: 'invite', title: 'Send the invitations', status: 'last-tap', due: '2026-11-28', links: [] }];
+  const summary = buildSummary(result, {}, todo, CONFIG, now);
+  assert.equal(summary.schema, 1);
+  assert.equal(summary.phase, 'before');
+  assert.equal(summary.outcome, 'waiting');
+  // 14 Nov 12:00 WIB to 28 Nov 00:00 WIB is 13.5 days.
+  assert.equal(summary.daysToStart, 14);
+  assert.equal(summary.updatedText, 'Sat 14 Nov 2026, 12:00 WIB');
+  assert.deepEqual(summary.need, { testers: 30, regulars: 10, letters: 5 });
+  assert.deepEqual(summary.stop, { testers: 10, letters: 1 });
+  assert.deepEqual(summary.raw.latest, { at: now, testers: 2, regulars: 0, letters: 0 });
+  assert.deepEqual(summary.needsMe, todo);
+  assert.equal(summary.links.launchIssue, null);
+  assert.equal(summary.links.status, 'https://github.com/juw12/lelet/blob/launch-status/STATUS.md');
+});
+
+test('the summary while running says where things stand, and names the next step only at the end', () => {
+  const running = evaluate([snap(BASELINE, 3, 1, 0), snap('2026-12-01T17:35:00Z', 15, 4, 2)], CONFIG, '2026-12-01T17:35:00Z');
+  const midway = buildSummary(running, { launchIssue: 3 }, [], CONFIG, '2026-12-01T17:35:00Z');
+  assert.equal(midway.daysToStart, 0);
+  assert.equal(midway.daysLeft, 11);
+  assert.deepEqual(midway.totals, { testers: 12, regulars: 3, letters: 2 });
+  assert.match(midway.headline, /running\. Past the stop line/);
+  assert.equal(midway.nextStep, null);
+  assert.equal(midway.links.launchIssue, 'https://github.com/juw12/lelet/issues/3');
+
+  const done = evaluate([snap(BASELINE, 3, 0, 0), snap(FINAL, 33, 10, 5)], CONFIG, FINAL);
+  const closed = buildSummary(done, {}, [], CONFIG, FINAL);
+  assert.equal(closed.outcome, 'met');
+  assert.match(closed.headline, /over\. All three targets were met/);
+  assert.match(closed.nextStep, /Rp 15,000/);
 });
