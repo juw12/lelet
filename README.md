@@ -98,6 +98,7 @@ Then open `http://localhost:8080/`. On `localhost` you can point the app at a te
 npm test             # 16 unit tests of the logic (node --test, no packages needed)
 npm run accuracy     # engine against a rate-limited local server
 npm run e2e          # 50 browser checks (Python + Playwright)
+python tests/live_check.py   # one real test on the published page
 ```
 
 Results on 2026-11-14 (Windows 11, Node 26, Edge 157):
@@ -108,6 +109,7 @@ Results on 2026-11-14 (Windows 11, Node 26, Edge 157):
 | Accuracy, 8 / 2 Mbps line, Hemat | read 8.00 / 1.98 Mbps |
 | Accuracy, 30 / 10 Mbps line, Normal | read 30.05 / 9.85 Mbps |
 | Browser e2e, 8 / 2 Mbps line | 50 of 50 checks pass, read 8.02 / 1.97 Mbps, 6.8 MB used |
+| Published page, real Hemat test | 8 of 8 checks pass: 3.5 s, 11.2 MB, no console or CSP errors |
 
 Honest notes on the tests:
 
@@ -117,6 +119,9 @@ Honest notes on the tests:
 - The simulated line is a token bucket on localhost. It checks the arithmetic of the engine, not real-world radio,
   Wi-Fi or peering.
 - `tests/e2e.py` uses Playwright's Chromium when present and falls back to an installed Edge or Chrome.
+- The published-page check ran on an office line of unknown true speed (it read 68.7 / 28.8 Mbps and, as
+  designed for a fast line in Hemat mode, marked the result "less certain"). It shows the page works end to
+  end; it says nothing about accuracy.
 
 ## Files
 
