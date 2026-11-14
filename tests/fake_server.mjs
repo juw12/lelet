@@ -3,6 +3,8 @@
 // Serves the app's static files and Cloudflare-style endpoints:
 //   GET  /__down?bytes=N   N bytes, at DOWN Mbps shared across all connections
 //   POST /__up             body accepted, reply held until a line of UP Mbps would have delivered it
+//   GET  /count/NAME.txt   stand-in for the anonymous counter files; every hit is recorded
+//   GET  /count-log        the recorded hits as JSON, { NAME: hits }
 //
 // Usage: node tests/fake_server.mjs [port] [down_mbps] [up_mbps] [latency_ms]
 import http from 'node:http';
@@ -33,6 +35,7 @@ export function createLine({ down = 8, up = 2, latency = 20 } = {}) {
   let lastTick = performance.now();
   let upFreeAt = 0;
   const block = Buffer.alloc(CHUNK, 48);
+  const countHits = {};
 
   // One clock for every download: bytes are released by elapsed time, so timer jitter cannot change the rate.
   const timer = setInterval(() => {
@@ -69,6 +72,18 @@ export function createLine({ down = 8, up = 2, latency = 20 } = {}) {
     if (req.method === 'OPTIONS') {
       res.writeHead(204, { ...cors, 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 'Access-Control-Allow-Headers': 'content-type' });
       res.end();
+      return;
+    }
+    if (url.pathname === '/count-log') {
+      res.writeHead(200, { ...cors, 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(countHits));
+      return;
+    }
+    const counted = /^\/count\/([a-z-]+)\.txt$/.exec(url.pathname);
+    if (counted) {
+      countHits[counted[1]] = (countHits[counted[1]] || 0) + 1;
+      res.writeHead(200, { ...cors, 'Content-Type': 'text/plain' });
+      res.end('');
       return;
     }
     if (url.pathname === '/__down') {

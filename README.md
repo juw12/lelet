@@ -27,7 +27,9 @@ case is, and writes the complaint for you.
 4. **Surat** - copy the formal letter, or the short WhatsApp version, and send it to your provider's customer
    service. Print or save as PDF from the same page.
 5. **After sending** - under the letter, enter the date you sent it and the ticket number, then press
-   "Tandai terkirim". Lelet counts the 7 working days the letter gives the provider and shows the deadline.
+   "Tandai terkirim". Lelet counts the 7 working days the letter gives the provider, shows the deadline, and
+   offers a calendar reminder (`.ics`) for that day. It keeps a copy of the letter as you sent it. If the
+   provider gives you the ticket number later, you can add it then.
 6. **No fix by the deadline?** - open "Surat kedua". It is addressed to the complaint service of the Ministry of
    Communication and Digital Affairs (Komdigi), with a copy to the provider, and carries the date of your first
    letter, your ticket number and your numbers. The app lists the channels: call centre 159 and lapor.go.id
@@ -78,8 +80,10 @@ It is labelled as an estimate everywhere it appears.
   Article 19 paragraph (1)). The wording of both letters (the first and the second) has not been reviewed by a
   lawyer.
 - The 7 working days are the deadline the letter itself sets, not a period fixed by law. Lelet counts Monday to
-  Friday, starting the day after you sent the letter. It does not know public holidays, so the real deadline can be
-  later than the date shown.
+  Friday, starting the day after you sent the letter, and leaves out Indonesia's national holidays for 2026 and
+  2027 (from the government's joint decrees, read on setneg.go.id on 2026-11-14). Joint leave days (cuti bersama)
+  still count as working days; the app says so when one falls in the wait. The list ends on 31 December 2027 and
+  the government can add or move a holiday, so check a deadline that matters.
 - Lelet does not send anything for you and cannot see whether the provider answered. "Sent" is what you tell it.
 - The test uses Cloudflare's public speed-test endpoints. They are not a documented public API and carry no
   service promise. If Cloudflare limits or changes them, the app shows "server busy" and the test must point at
@@ -87,10 +91,18 @@ It is labelled as an estimate everywhere it appears.
 
 ## Privacy
 
-- No account, no backend, no analytics, no cookies, no third-party scripts or fonts.
+- No account, no backend, no cookies, no third-party scripts or fonts.
 - Tests, your plan, and the sent date and ticket number of your letter are kept in your browser's `localStorage`
   only. Export (JSON or CSV) and delete are in the app.
-- The only network traffic is the test itself, to Cloudflare, which sees your IP address like any site you visit.
+- The test traffic goes to Cloudflare, which sees your IP address like any site you visit.
+- **Three anonymous counts.** To learn whether anyone uses Lelet, the published page counts three moments, once
+  per device: the first test, the 10th test, and a letter marked as sent. It does this by downloading an empty
+  file from this repository's [`counters` release](https://github.com/juw12/lelet/releases/tag/counters); GitHub's
+  public download counter is the tally. No identifier, test result, plan or letter text is sent. GitHub sees your
+  IP address, as it already does when the page loads from GitHub Pages.
+- Counting is off when your browser sends Do Not Track or Global Privacy Control, when you press "Matikan
+  hitungan" in the footer, or when you open the page with `?count=off`. Sample data is never counted, and copies
+  of the app on other addresses (including `localhost`) count nothing.
 - A Content-Security-Policy in `index.html` blocks every other destination.
 
 ## Run it yourself
@@ -107,20 +119,22 @@ Then open `http://localhost:8080/`. On `localhost` you can point the app at a te
 ## Tests
 
 ```
-npm test             # 19 unit tests of the logic (node --test, no packages needed)
+npm test             # 46 unit tests of the logic and the two scripts (node --test, no packages needed)
 npm run accuracy     # engine against a rate-limited local server
-npm run e2e          # 71 browser checks (Python + Playwright)
+npm run e2e          # 87 browser checks (Python + Playwright)
 python tests/live_check.py   # one real test on the published page
+npm run verdict      # write the launch-test status from the public counts
+npm run watch        # check the test endpoints, the live page and the counters
 ```
 
 Results on 2026-11-14 (Windows 11, Node 26, Edge 157):
 
 | Check | Result |
 |---|---|
-| Unit tests | 19 of 19 pass |
-| Accuracy, 8 / 2 Mbps line, Hemat | read 8.01 / 2.00 Mbps |
-| Accuracy, 30 / 10 Mbps line, Normal | read 30.00 / 9.87 Mbps |
-| Browser e2e, 8 / 2 Mbps line | 71 of 71 checks pass, read 8.00 / 1.99 Mbps, 6.8 MB used |
+| Unit tests | 46 of 46 pass |
+| Accuracy, 8 / 2 Mbps line, Hemat | read 8.01 / 2.01 Mbps |
+| Accuracy, 30 / 10 Mbps line, Normal | read 30.03 / 9.79 Mbps |
+| Browser e2e, 8 / 2 Mbps line | 87 of 87 checks pass, 6.8 MB used per test |
 | Published page, real Hemat test | 8 of 8 checks pass: 4.6 s, 10.7 MB, no console or CSP errors |
 
 Honest notes on the tests:
@@ -142,11 +156,36 @@ Honest notes on the tests:
 | `index.html`, `styles.css`, `theme.js` | page shell, look, light and dark |
 | `app.js` | screens: Tes, Paket, Bukti, Surat |
 | `engine.js` | the measurement (browser and Node) |
-| `core.js` | pure logic: summary, verdict, case strength, both letters, working-day count, import and export |
+| `core.js` | pure logic: summary, verdict, case strength, both letters, working-day count with holidays, calendar reminder, import and export |
+| `counter.js` | the three anonymous counts and their off switch |
 | `i18n.js` | Indonesian and English text |
 | `sw.js`, `manifest.webmanifest`, `icons/` | install to home screen, open offline |
 | `tests/` | unit tests, fake rate-limited server, accuracy check, browser e2e |
+| `scripts/launch-verdict.mjs` | reads the public counts and writes the launch-test status and verdict |
+| `scripts/endpoint-watch.mjs` | checks the test endpoints, the live page, the counters and the holiday list |
+| `.github/workflows/` | runs the two scripts on a schedule |
+| `docs/launch-day.md` | the checklist the launch-day issue is made from |
 | `design.md` | design rules for this app |
+
+## The launch test runs itself
+
+Whether Lelet is worth more work is decided by a 14-day test with fixed numbers, not by opinion. The test runs
+from 28 November to 12 December 2026 (Jakarta time). It passes with at least 30 devices that ran a first test,
+10 that reached a 10th test, and 5 letters marked as sent. It is a stop with fewer than 10 devices or no letter.
+
+- **Every night at 00:35 Jakarta time** a GitHub Action reads the three public download counts and writes
+  [STATUS.md on the `launch-status` branch](https://github.com/juw12/lelet/blob/launch-status/STATUS.md).
+  Downloads from before the test starts are subtracted.
+- **On 28 November** it opens an issue with the launch-day checklist and the invitation text.
+- **On 13 December** it opens an issue with the verdict, then stops changing the numbers.
+- **Every 6 hours** a second Action checks that Cloudflare's test endpoints still answer and still allow this
+  page, that the live page loads, that the counter files exist and that the holiday list has not run out. It
+  opens one issue when a check fails and closes it when the check passes again. It runs from GitHub's servers,
+  not from Indonesia, so it cannot see a block that only affects Indonesian networks.
+
+What the counts cannot say: a device is not a person (one person with a phone and a laptop counts twice, a
+cleared browser counts again), people who turned counting off are missing, and anyone can download the files by
+hand. Read the numbers as a rough floor for honest use, not as an audit.
 
 ## Roadmap
 
@@ -154,7 +193,7 @@ Lelet is the first rung of a ladder. Each rung only starts when the one below ha
 
 1. **Now:** proof, a complaint letter, a deadline count and a second letter for one person. Free.
 2. **Next:** opt-in, anonymous sharing of results, to build an honest map of delivered-versus-sold speed per
-   provider and area. Nothing is shared today.
+   provider and area. No test result is shared today.
 3. **Then:** switching advice based on that map ("in your area, this provider delivers more of what it sells").
 4. **Later, only if the data proves demand:** a virtual operator that buys capacity wholesale and sells it with a
    delivered-speed guarantee.

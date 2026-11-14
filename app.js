@@ -5,12 +5,15 @@
 import * as core from './core.js';
 import { runTest, MODES, DEFAULT_BASE } from './engine.js';
 import { makeT } from './i18n.js';
+import { COUNTER_BASE, EVENTS, dueEvents, countingAllowed, counterUrl } from './counter.js';
 
 const STORE_KEY = 'lelet.v1';
 const TABS = ['tes', 'paket', 'bukti', 'surat'];
 const PLAN_FIELDS = ['provider', 'name', 'mbps', 'price', 'custId', 'person', 'city'];
 const AUTO_CHOICES = [0, 15, 30, 60];
 const REPO_URL = 'https://github.com/juw12/lelet';
+const APP_URL = `${location.origin}${location.pathname}`;
+const SENT_TEXT_MAX = 40000;
 const PROVIDERS = [
   'IndiHome',
   'First Media',
@@ -59,6 +62,8 @@ function loadState() {
     tests: [],
     settings: { mode: 'hemat', via: 'wifi', auto: 0 },
     sent: null, // { at, ticket } once the visitor marks the first letter as sent
+    counted: [], // anonymous signals this device has already sent, see counter.js
+    countOff: false, // the visitor turned anonymous counting off
   };
   try {
     const saved = JSON.parse(localStorage.getItem(STORE_KEY) || 'null');
@@ -72,6 +77,8 @@ function loadState() {
     if (settings.via === 'lan') fresh.settings.via = 'lan';
     if (AUTO_CHOICES.includes(settings.auto)) fresh.settings.auto = settings.auto;
     fresh.sent = cleanSent(saved.sent);
+    if (Array.isArray(saved.counted)) fresh.counted = EVENTS.filter((name) => saved.counted.includes(name));
+    fresh.countOff = saved.countOff === true;
   } catch (error) {
     // unreadable storage: start clean
   }
@@ -82,7 +89,10 @@ function cleanSent(raw) {
   if (!raw || typeof raw !== 'object') return null;
   const at = Number(raw.at);
   if (!Number.isFinite(at) || at <= 0 || at > Date.now() + 86400000) return null;
-  return { at, ticket: String(raw.ticket || '').slice(0, 40) };
+  const sent = { at, ticket: String(raw.ticket || '').slice(0, 40) };
+  // the letter as it was sent, so it can still be read, copied and printed later
+  if (typeof raw.text === 'string' && raw.text.trim()) sent.text = raw.text.slice(0, SENT_TEXT_MAX);
+  return sent;
 }
 
 function cleanPlan(raw) {
@@ -147,6 +157,55 @@ function testBase() {
 
 const BASE = testBase();
 
+// ---------- anonymous counting (see counter.js) ----------
+
+function counterBase() {
+  if (location.hostname === 'juw12.github.io') return COUNTER_BASE;
+  // Anywhere else nothing is counted, except against a local stand-in while developing on this machine.
+  if (!['localhost', '127.0.0.1'].includes(location.hostname)) return '';
+  try {
+    const wanted = new URL(new URLSearchParams(location.search).get('counter') || '');
+    if (['localhost', '127.0.0.1'].includes(wanted.hostname)) return wanted.href;
+  } catch (error) {
+    // no stand-in given
+  }
+  return '';
+}
+
+const COUNT_BASE = counterBase();
+const BROWSER_SAYS_NO = navigator.doNotTrack === '1' || navigator.globalPrivacyControl === true;
+const countSending = new Set();
+
+if (new URLSearchParams(location.search).get('count') === 'off' && !state.countOff) {
+  state.countOff = true;
+  save();
+}
+
+const ownTests = () => state.tests.filter((test) => !test.sample).length;
+const countState = () => ({ tests: ownTests(), sent: Boolean(state.sent) && !hasSample(), done: state.counted });
+
+function reportCounts() {
+  if (!countingAllowed({ base: COUNT_BASE, optOut: state.countOff, dnt: BROWSER_SAYS_NO })) return;
+  for (const name of dueEvents(countState())) {
+    if (countSending.has(name)) continue;
+    countSending.add(name);
+    fetch(counterUrl(COUNT_BASE, name), { mode: 'no-cors', cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer' })
+      .then(() => {
+        if (!state.counted.includes(name)) state.counted.push(name);
+        save();
+      })
+      .catch(() => {
+        // offline or blocked: tried again on the next visit
+      })
+      .finally(() => countSending.delete(name));
+  }
+}
+
+// Tests brought in from a backup were already counted on the device that ran them.
+function skipCounts() {
+  state.counted.push(...dueEvents(countState()));
+}
+
 function dropSample() {
   state.tests = state.tests.filter((test) => !test.sample);
   if (state.plan.sample) state.plan = emptyPlan();
@@ -172,6 +231,24 @@ function toast(text) {
 function effectiveTheme() {
   if (state.theme) return state.theme;
   return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+// Said in the footer on every screen: what is counted, and the switch to stop it.
+function countNote() {
+  if (!COUNT_BASE) return null;
+  if (BROWSER_SAYS_NO) return h('p', { id: 'count-note', text: t('foot.count.signal') });
+  return h(
+    'p',
+    { id: 'count-note' },
+    `${t(state.countOff ? 'foot.count.off' : 'foot.count.on')} `,
+    h('button', {
+      type: 'button',
+      class: 'btn quiet',
+      id: 'count-btn',
+      'data-act': 'count',
+      text: t(state.countOff ? 'foot.count.turnon' : 'foot.count.turnoff'),
+    }),
+  );
 }
 
 function renderChrome() {
@@ -205,6 +282,8 @@ function renderChrome() {
     h('p', { text: t('foot.free') }),
     h('p', { text: t('foot.privacy') }),
     h('p', null, `${t('foot.legal')} `, h('a', { href: REPO_URL, rel: 'noopener', text: t('foot.source') })),
+    h('p', null, h('button', { type: 'button', class: 'btn quiet', id: 'share-btn', 'data-act': 'share', text: t('foot.share') })),
+    countNote(),
   );
 }
 
@@ -754,6 +833,15 @@ function parseDateInput(value) {
   return Number.isFinite(at) && at <= endOfToday.getTime() ? at : null;
 }
 
+// Day keys (YYYY-MM-DD) as readable dates, for the list of skipped holidays.
+const dayList = (keys) =>
+  keys
+    .map((key) => {
+      const [year, month, day] = key.split('-').map(Number);
+      return core.fmtDate(new Date(year, month - 1, day, 12).getTime(), state.lang);
+    })
+    .join(', ');
+
 // What happens after the first letter: mark it sent, count the wait, offer the second letter.
 function followCard() {
   if (hasSample()) return null;
@@ -795,13 +883,49 @@ function followCard() {
     ? t('surat.follow.over', { date: core.fmtDate(wait.dueAt, state.lang) })
     : t('surat.follow.wait', { n: wait.workdaysLeft, date: core.fmtDate(wait.dueAt, state.lang) });
 
+  // How the days were counted, said out loud: which holidays were skipped and what Lelet cannot know.
+  const countNotes = [
+    wait.holidays.length ? t('surat.follow.skipped', { days: dayList(wait.holidays) }) : t('surat.follow.counted'),
+  ];
+  if (wait.jointLeave.length) countNotes.push(t('surat.follow.joint', { days: dayList(wait.jointLeave) }));
+  if (wait.beyondData) countNotes.push(t('surat.follow.beyond'));
+
+  const lateTicket = state.sent.ticket
+    ? null
+    : h(
+        'div',
+        { class: 'late-ticket' },
+        h(
+          'label',
+          { class: 'field' },
+          h('span', { text: t('surat.follow.ticket.late') }),
+          h('input', { type: 'text', id: 'late-ticket', 'data-sent': 'ticket', value: sentDraft.ticket, maxlength: '40', autocomplete: 'off' }),
+        ),
+        h('button', { type: 'button', class: 'btn', 'data-act': 'ticket', text: t('surat.follow.ticket.save') }),
+      );
+
+  const sentCopy = state.sent.text
+    ? h(
+        'details',
+        { id: 'sent-copy' },
+        h('summary', { text: t('surat.follow.copy') }),
+        h('pre', { class: 'sent-text', id: 'sent-text', text: state.sent.text }),
+        h(
+          'div',
+          { class: 'row' },
+          h('button', { type: 'button', class: 'btn', 'data-act': 'copysent', text: t('surat.copy') }),
+          h('button', { type: 'button', class: 'btn', 'data-act': 'printsent', text: t('surat.print') }),
+        ),
+      )
+    : null;
+
   return h(
     'section',
     { class: 'card', id: 'follow' },
     heading,
     h('p', { class: 'follow-sent', text: sentLine }),
     h('p', { class: `follow-status${wait.due ? ' over' : ''}`, id: 'follow-status', text: status }),
-    h('p', { class: 'hint', text: t('surat.follow.holiday') }),
+    h('div', { id: 'follow-count' }, countNotes.map((note) => h('p', { class: 'hint', text: note }))),
     h(
       'ol',
       { class: 'where' },
@@ -813,8 +937,11 @@ function followCard() {
       letter.kind === 'lanjut'
         ? null
         : h('button', { type: 'button', class: 'btn', 'data-act': 'kind', 'data-val': 'lanjut', text: t('surat.follow.open') }),
+      wait.due ? null : h('button', { type: 'button', class: 'btn', 'data-act': 'ics', text: t('surat.follow.remind') }),
       h('button', { type: 'button', class: 'btn quiet', 'data-act': 'unsent', text: t('surat.follow.undo') }),
     ),
+    lateTicket,
+    sentCopy,
   );
 }
 
@@ -954,6 +1081,17 @@ function nextAutoAt() {
   return Math.max(lastAt, autoSince) + state.settings.auto * 60000;
 }
 
+// After a failed test: can this page still reach its own host? If yes, the line works and the test
+// server is the problem, which is not evidence of slow internet. HEAD skips the offline cache.
+async function appReachable() {
+  try {
+    const response = await fetch(`manifest.webmanifest?probe=${Date.now()}`, { method: 'HEAD', cache: 'no-store' });
+    return response.ok;
+  } catch (error) {
+    return false;
+  }
+}
+
 async function startTest() {
   if (run.active) return;
   run.error = '';
@@ -1003,11 +1141,12 @@ async function startTest() {
     state.tests = core.mergeTests(state.tests, [test]);
     invalidateLetter();
     save();
+    reportCounts();
   } catch (error) {
     if (error && error.name === 'AbortError') run.note = 'tes.cancelled';
     else if (navigator.onLine === false) run.error = 'tes.err.offline';
     else if (/http-429/.test(String(error && error.message))) run.error = 'tes.err.busy';
-    else run.error = 'tes.err.fail';
+    else run.error = (await appReachable()) ? 'tes.err.server' : 'tes.err.fail';
   } finally {
     run.active = false;
     run.ctl = null;
@@ -1032,14 +1171,16 @@ async function copyText(text) {
     await navigator.clipboard.writeText(text);
     return true;
   } catch (error) {
-    const area = $('#letter-text');
-    if (!area) return false;
-    area.focus();
+    // older browsers and pages without clipboard permission: copy from a temporary text box
+    const area = h('textarea', { class: 'offscreen', readonly: '', 'aria-hidden': 'true', value: text });
+    document.body.append(area);
     area.select();
     try {
       return document.execCommand('copy');
     } catch (failure) {
       return false;
+    } finally {
+      area.remove();
     }
   }
 }
@@ -1060,6 +1201,7 @@ function importBackup(file) {
         delete state.plan.sample;
       }
       if (!state.sent) state.sent = cleanSent(data.sent);
+      skipCounts();
       invalidateLetter();
       save();
       render();
@@ -1168,10 +1310,12 @@ const ACTIONS = {
       toast(t('surat.follow.baddate'));
       return;
     }
-    state.sent = { at, ticket: $('#sent-ticket').value.trim().slice(0, 40) };
+    // keep the letter exactly as it was sent: the live letter keeps changing as new tests come in
+    state.sent = cleanSent({ at, ticket: $('#sent-ticket').value.trim(), text: letterText() });
     sentDraft.date = '';
     sentDraft.ticket = '';
     save();
+    reportCounts();
     render();
     toast(t('surat.follow.saved'));
   },
@@ -1183,6 +1327,51 @@ const ACTIONS = {
     delete letter.edits['lanjut.en'];
     save();
     render();
+  },
+  ticket() {
+    const value = ($('#late-ticket') ? $('#late-ticket').value : '').trim().slice(0, 40);
+    if (!state.sent || !value) return;
+    state.sent.ticket = value;
+    sentDraft.ticket = '';
+    const edited = letter.edits['lanjut.id'] !== undefined || letter.edits['lanjut.en'] !== undefined;
+    save();
+    render();
+    // an edited second letter is never overwritten; say how to get the ticket into it
+    toast(t(edited ? 'surat.follow.ticket.kept' : 'surat.follow.ticket.saved'));
+  },
+  ics() {
+    if (!state.sent) return;
+    const calendar = core.buildICS({ sentAt: state.sent.at, provider: state.plan.provider, lang: state.lang, url: APP_URL });
+    if (!calendar) return;
+    const dueKey = core.dayKey(core.followUp(state.sent.at).dueAt);
+    download(`lelet-pengingat-${dueKey}.ics`, calendar, 'text/calendar;charset=utf-8');
+    toast(t('surat.follow.remind.done'));
+  },
+  async copysent() {
+    if (state.sent && state.sent.text && (await copyText(state.sent.text))) toast(t('surat.copied'));
+  },
+  printsent() {
+    if (!state.sent || !state.sent.text) return;
+    $('#print-letter').textContent = state.sent.text;
+    window.print();
+  },
+  count() {
+    state.countOff = !state.countOff;
+    save();
+    renderChrome();
+    reportCounts();
+  },
+  async share() {
+    const message = t('share.text');
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: 'Lelet', text: message, url: APP_URL });
+      } catch (error) {
+        // the visitor closed the share sheet
+      }
+      return;
+    }
+    if (await copyText(`${message} ${APP_URL}`)) toast(t('share.copied'));
   },
   async copy() {
     const done = await copyText(letterText());
@@ -1266,3 +1455,4 @@ if (location.protocol === 'https:' && 'serviceWorker' in navigator) {
 }
 
 render();
+reportCounts();

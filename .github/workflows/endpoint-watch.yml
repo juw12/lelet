@@ -1,0 +1,53 @@
+name: Endpoint watch
+
+# Every six hours: are the speed-test endpoint, the live app and the launch counters still there?
+# A failure opens one issue. When everything is back, the issue is closed with a note.
+
+on:
+  schedule:
+    - cron: '20 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: endpoint-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GITHUB_TOKEN: ${{ github.token }}
+      TITLE: Lelet check failed
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v7
+
+      - name: Run the checks
+        id: watch
+        run: node scripts/endpoint-watch.mjs
+
+      - name: Open or close the issue
+        env:
+          OK: ${{ steps.watch.outputs.ok }}
+        run: |
+          number=$(gh issue list --state open --limit 100 --json number,title \
+            --jq "[.[] | select(.title == \"$TITLE\")][0].number // empty")
+          if [ "$OK" = "true" ]; then
+            if [ -n "$number" ]; then
+              gh issue close "$number" --comment "$(cat watch.md)"
+            fi
+          elif [ -z "$number" ]; then
+            gh issue create --title "$TITLE" --body-file watch.md --assignee "$GITHUB_REPOSITORY_OWNER"
+          else
+            echo "Issue #$number is already open."
+          fi
+
+      - name: Mark the run as failed when a check failed
+        if: steps.watch.outputs.ok != 'true'
+        run: exit 1

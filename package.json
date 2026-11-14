@@ -9,6 +9,8 @@
     "test": "node --test tests/",
     "accuracy": "node tests/accuracy.mjs",
     "serve": "node tests/fake_server.mjs 8765 8 2 20",
-    "e2e": "python tests/e2e.py"
+    "e2e": "python tests/e2e.py",
+    "verdict": "node scripts/launch-verdict.mjs",
+    "watch": "node scripts/endpoint-watch.mjs"
   }
 }

@@ -13,6 +13,7 @@ import socket
 import subprocess
 import sys
 import time
+import urllib.request
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
@@ -50,6 +51,23 @@ def start_line(port):
     if "line:" not in first_line:
         raise RuntimeError(f"fake line did not start: {first_line!r}")
     return server
+
+
+def count_log(port):
+    """What the stand-in counter has received so far, as {name: hits}."""
+    direct = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+    with direct.open(f"http://127.0.0.1:{port}/count-log", timeout=5) as reply:
+        return json.loads(reply.read().decode("utf-8"))
+
+
+def wait_counts(port, expected, timeout=5.0):
+    """Counter signals are sent in the background; give them a moment, then report what arrived."""
+    deadline = time.time() + timeout
+    while True:
+        hits = count_log(port)
+        if hits == expected or time.time() > deadline:
+            return hits
+        time.sleep(0.2)
 
 
 def stored(page):
@@ -91,20 +109,23 @@ def launch_browser(playwright):
 def main():
     port = free_port()
     server = start_line(port)
-    url = f"http://127.0.0.1:{port}/?server=http://127.0.0.1:{port}"
+    url = f"http://127.0.0.1:{port}/?server=http://127.0.0.1:{port}&counter=http://127.0.0.1:{port}/count/"
     problems = []
+    expected_problems = []  # console noise from the page that is pointed at a dead test server on purpose
+    requests_seen = []
 
     try:
         with sync_playwright() as playwright:
             browser = launch_browser(playwright)
 
-            def new_page(width, height):
+            def new_page(width, height, address=url, sink=problems):
                 context = browser.new_context(viewport={"width": width, "height": height}, locale="id-ID")
                 page = context.new_page()
-                page.on("console", lambda message: problems.append(message.text) if message.type == "error" else None)
-                page.on("pageerror", lambda error: problems.append(str(error)))
+                page.on("console", lambda message: sink.append(message.text) if message.type == "error" else None)
+                page.on("pageerror", lambda error: sink.append(str(error)))
                 page.on("dialog", lambda dialog: dialog.accept())
-                page.goto(url)
+                page.on("request", lambda request: requests_seen.append(request.url))
+                page.goto(address)
                 page.wait_for_selector("h1")
                 return page
 
@@ -223,6 +244,24 @@ def main():
             check("the wait is counted in working days", "hari kerja" in status_text and "Tunggu 7" in status_text, status_text)
             check("second letter is offered once the first is marked sent", page.locator(second_kind).count() >= 1)
             check("still one primary button after marking sent", page.locator("#view .btn.primary").count() == 1)
+            count_text = page.inner_text("#follow-count")
+            check("how the working days were counted is said under the status", "Sabtu" in count_text or "libur" in count_text.lower(), count_text)
+            kept = page.text_content("#sent-text") or ""
+            check(
+                "the letter as it was sent is kept, with copy and print",
+                "Contoh Fiber" in kept and "Pasal 19" in kept and page.locator("#sent-copy [data-act=printsent]").count() == 1,
+            )
+            with page.expect_download() as reminder:
+                page.click("[data-act=ics]")
+            reminder_name = reminder.value.suggested_filename
+            reminder_text = Path(reminder.value.path()).read_text(encoding="utf-8")
+            check(
+                "the deadline downloads as a calendar reminder",
+                reminder_name.startswith("lelet-pengingat-") and reminder_name.endswith(".ics") and "BEGIN:VEVENT" in reminder_text,
+                reminder_name,
+            )
+            once_each = {"first-test": 1, "letter-sent": 1}
+            check("first test and sent letter are each counted once", wait_counts(port, once_each) == once_each, count_log(port))
             shot(page, "05b-surat-terkirim-id-terang")
 
             page.click(f"#follow {second_kind}")
@@ -255,6 +294,25 @@ def main():
             page.wait_for_selector("#sent-date")
             check("removing the sent mark clears it and hides the second letter", stored(page).get("sent") is None and page.locator(second_kind).count() == 0)
             check("letter returns to the first complaint", "Pengaduan lanjutan" not in page.input_value("#letter-text"))
+
+            # a ticket number that only arrives after the letter was marked sent
+            page.click("[data-act=sent]")
+            page.wait_for_selector("#late-ticket")
+            page.fill("#late-ticket", "TKT-901")
+            page.click("[data-act=ticket]")
+            page.wait_for_function("!document.querySelector('#late-ticket')")
+            check("a ticket number can be added after marking sent", (stored(page).get("sent") or {}).get("ticket") == "TKT-901")
+            page.click(f"#follow {second_kind}")
+            check("second letter picks up the late ticket number", "nomor tiket TKT-901" in page.input_value("#letter-text"))
+            page.click("[data-act=unsent]")
+            page.wait_for_selector("#sent-date")
+            time.sleep(0.6)
+            check("marking sent a second time is not counted again", count_log(port) == once_each, count_log(port))
+            check("share button is in the footer", page.locator("#foot #share-btn").count() == 1)
+            check(
+                "footer says what is counted and offers the switch",
+                "menghitung tiga hal" in page.inner_text("#count-note") and page.locator("#count-btn").count() == 1,
+            )
 
             page.click("#lang-btn")
             check("English letter cites Article 19", "Article 19" in page.input_value("#letter-text"))
@@ -308,12 +366,52 @@ def main():
             desk.click("[data-act=sample-remove]")
             after = stored(desk)
             check("removing the sample leaves no tests and no sample plan", after["tests"] == [] and after["plan"]["provider"] == "")
+            time.sleep(0.6)
+            check("sample data is never counted", count_log(port) == once_each, count_log(port))
+
+            # ---- counting switched off, then on again ----
+            quiet = new_page(390, 844, url + "&count=off")
+            quiet.evaluate(
+                """(tests) => {
+                    const saved = JSON.parse(localStorage.getItem('lelet.v1') || '{}');
+                    saved.tests = tests;
+                    localStorage.setItem('lelet.v1', JSON.stringify(saved));
+                }""",
+                [reading],
+            )
+            quiet.reload()
+            quiet.wait_for_selector("#count-btn")
+            time.sleep(0.8)
+            check(
+                "with counting off, a device with a test sends nothing",
+                count_log(port) == once_each and len(stored(quiet)["tests"]) == 1 and "dimatikan" in quiet.inner_text("#count-note"),
+                count_log(port),
+            )
+            quiet.click("#count-btn")
+            twice = {"first-test": 2, "letter-sent": 1}
+            check("turning counting back on sends the signal that was held", wait_counts(port, twice) == twice, count_log(port))
+            check("the switch is remembered on the device", stored(quiet).get("countOff") is False and stored(quiet).get("counted") == ["first-test"])
+
+            # ---- a test server that cannot be reached is named as such, not blamed on the visitor's line ----
+            dead = new_page(390, 844, f"http://127.0.0.1:{port}/?server=http://127.0.0.1:{free_port()}", expected_problems)
+            dead.click("[data-act=start]")
+            try:
+                dead.wait_for_function(
+                    "document.querySelector('#view').innerText.includes('server tes tidak terjangkau')", timeout=60000
+                )
+                named = True
+            except Exception:
+                named = False
+            check("a dead test server is reported as the server's problem", named, dead.inner_text("#view")[:160])
+            check("a failed test stores no result", len(stored(dead).get("tests", [])) == 0)
 
             browser.close()
     finally:
         server.terminate()
 
     check("no console errors, page errors or CSP violations", not problems, problems[:3])
+    outside = [address for address in requests_seen if not address.startswith(("http://127.0.0.1:", "blob:", "data:"))]
+    check("the test run never contacts GitHub, Cloudflare or any other outside host", not outside, outside[:3])
     failed = [name for name, passed in results if not passed]
     print(f"\n{len(results) - len(failed)}/{len(results)} checks passed", flush=True)
     if failed:

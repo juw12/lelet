@@ -122,6 +122,7 @@ export async function measureUp(base, cfg, ping, signal, onProgress) {
   const link = linkSignals(signal, cfg.upMs * 2);
   const startedAt = now();
   const done = [];
+  let colo = '';
   let size = 128 * 1024;
   let used = 0;
   const filler = new Uint8Array(1024 * 1024).fill(97);
@@ -133,6 +134,7 @@ export async function measureUp(base, cfg, ping, signal, onProgress) {
       const sentAt = now();
       const res = await fetch(`${base}/__up?r=${nonce()}`, { method: 'POST', body: new Blob(parts), cache: 'no-store', signal: link.signal });
       if (!res.ok) throw new Error(`http-${res.status}`);
+      colo = colo || res.headers.get('cf-meta-colo') || '';
       await res.arrayBuffer();
       const raw = now() - sentAt;
       const ms = Math.max(raw - Math.min(ping, raw / 2), 1); // take off the round trip that is not upload time
@@ -160,7 +162,7 @@ export async function measureUp(base, cfg, ping, signal, onProgress) {
   const long = done.filter((d) => d.ms >= MIN_UPLOAD_MS);
   const speeds = (long.length ? long : [done[done.length - 1]]).map((d) => d.mbps);
   const spread = Math.max(...speeds) / Math.max(Math.min(...speeds), 1e-9);
-  return { up: medianOf(speeds), bytes: used, conf: long.length && spread <= 3 ? 'ok' : 'low' };
+  return { up: medianOf(speeds), bytes: used, conf: long.length && spread <= 3 ? 'ok' : 'low', colo };
 }
 
 export async function runTest({ base = DEFAULT_BASE, mode = 'hemat', signal, onProgress } = {}) {
@@ -180,7 +182,8 @@ export async function runTest({ base = DEFAULT_BASE, mode = 'hemat', signal, onP
     mode,
     conf: down.conf,
     confUp: up.conf,
-    colo: latency.colo,
+    // The download reply stopped naming the test server, the upload reply still does.
+    colo: latency.colo || up.colo,
     asn: latency.asn,
     ms: now() - startedAt,
   };

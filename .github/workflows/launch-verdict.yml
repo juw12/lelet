@@ -1,0 +1,77 @@
+name: Launch verdict
+
+# Reads the three anonymous launch counters once a night, writes STATUS.md to the launch-status
+# branch, opens a reminder issue on launch day and a verdict issue when the 14 days are over.
+
+on:
+  schedule:
+    # 00:35 Jakarta time. The counts lag by about 15 minutes, so not on the hour.
+    - cron: '35 17 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: launch-status
+  cancel-in-progress: false
+
+jobs:
+  count:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GITHUB_TOKEN: ${{ github.token }}
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v7
+
+      - name: Get the saved counts
+        uses: actions/checkout@v7
+        with:
+          ref: launch-status
+          path: status
+
+      - name: Read the counters and score them
+        id: verdict
+        run: node scripts/launch-verdict.mjs --dir status
+
+      - name: Launch day reminder
+        if: steps.verdict.outputs.launch_due == 'true'
+        run: |
+          url=$(gh issue create \
+            --title "Launch day: send the 30 invitations at 10:00" \
+            --body-file docs/launch-day.md \
+            --assignee "$GITHUB_REPOSITORY_OWNER")
+          node scripts/launch-verdict.mjs --dir status --launch-issue "${url##*/}"
+
+      - name: Post the verdict
+        if: steps.verdict.outputs.final == 'true' && steps.verdict.outputs.issue == ''
+        env:
+          TITLE: ${{ steps.verdict.outputs.title }}
+        run: |
+          number=$(gh issue list --state all --limit 100 --json number,title \
+            --jq '[.[] | select(.title | startswith("Launch test verdict"))][0].number // empty')
+          if [ -z "$number" ]; then
+            url=$(gh issue create \
+              --title "$TITLE" \
+              --body-file status/VERDICT.md \
+              --assignee "$GITHUB_REPOSITORY_OWNER")
+            number="${url##*/}"
+          fi
+          node scripts/launch-verdict.mjs --dir status --issue "$number"
+
+      - name: Save the counts
+        working-directory: status
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Nothing changed."
+            exit 0
+          fi
+          git commit --quiet -m "Launch status $(date -u +%F)"
+          git push --quiet origin HEAD:launch-status

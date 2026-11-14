@@ -1015,6 +1015,46 @@ details {
   padding-top: 12px;
 }
 
+#follow > details,
+#follow > .late-ticket {
+  margin-top: 16px;
+}
+
+.late-ticket .btn {
+  margin-top: 10px;
+}
+
+#follow-count .hint + .hint {
+  margin-top: 4px;
+}
+
+pre.sent-text {
+  margin: 10px 0 0;
+  padding: 12px;
+  max-height: 320px;
+  overflow: auto;
+  border: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+#follow details > .row {
+  margin-top: 12px;
+}
+
+/* a text box used only to copy text on browsers without the clipboard API */
+.offscreen {
+  position: fixed;
+  top: 0;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
 summary {
   cursor: pointer;
   font-weight: 600;
@@ -1044,6 +1084,10 @@ details li + li {
 }
 
 .foot p + p {
+  margin-top: 6px;
+}
+
+.foot .btn {
   margin-top: 6px;
 }
 

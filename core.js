@@ -291,16 +291,48 @@ const startOfDay = (ts) => {
   d.setHours(0, 0, 0, 0);
   return d;
 };
-const isWorkday = (d) => d.getDay() !== 0 && d.getDay() !== 6;
 
-// Counts Monday to Friday only. The app does not know public holidays, so the real deadline can be later.
+// Indonesian national holidays, from the yearly joint ministerial decree (SKB 3 Menteri), as published by
+// the State Secretariat: setneg.go.id "Inilah SKB 3 Menteri Libur Nasional dan Cuti Bersama" 2026 and 2027.
+// Read 14 November 2026. Add the next year when its decree is published (usually September).
+export const HOLIDAYS = [
+  '2026-01-01', '2026-01-16', '2026-02-17', '2026-03-19', '2026-03-21', '2026-03-22', '2026-04-03', '2026-04-05',
+  '2026-05-01', '2026-05-14', '2026-05-27', '2026-05-31', '2026-06-01', '2026-06-16', '2026-08-17', '2026-08-25',
+  '2026-12-25',
+  '2027-01-01', '2027-01-05', '2027-02-06', '2027-03-08', '2027-03-10', '2027-03-11', '2027-03-26', '2027-03-28',
+  '2027-05-01', '2027-05-06', '2027-05-17', '2027-05-20', '2027-06-01', '2027-06-06', '2027-08-15', '2027-08-17',
+  '2027-12-25', '2027-12-26',
+];
+// Joint leave (cuti bersama) binds civil servants; private companies decide for themselves. These days are
+// still counted as working days, and the app only mentions them as a possible reason for a slower reply.
+export const JOINT_LEAVE = [
+  '2026-02-16', '2026-03-18', '2026-03-20', '2026-03-23', '2026-03-24', '2026-05-15', '2026-05-28', '2026-12-24',
+  '2027-02-05', '2027-03-09', '2027-03-12', '2027-03-15', '2027-03-25', '2027-05-18', '2027-05-19', '2027-12-24',
+];
+export const HOLIDAYS_UNTIL = '2027-12-31'; // after this date the count falls back to Monday to Friday
+
+const HOLIDAY_SET = new Set(HOLIDAYS);
+const JOINT_LEAVE_SET = new Set(JOINT_LEAVE);
+const isWeekday = (d) => d.getDay() !== 0 && d.getDay() !== 6;
+const isWorkday = (d) => isWeekday(d) && !HOLIDAY_SET.has(dayKey(d.getTime()));
+
+// Counts Monday to Friday and skips national holidays. Also reports which days it skipped or flagged,
+// so the screen can show its working instead of asking to be trusted.
 export function followUp(sentAt, now = Date.now(), workdays = REPLY_WORKDAYS) {
   if (!(Number(sentAt) > 0) || !Number.isFinite(Number(sentAt))) return null;
   const cursor = startOfDay(Number(sentAt));
+  const holidays = []; // weekday holidays inside the wait, as day keys
+  const jointLeave = []; // joint-leave days inside the wait: counted, but worth a mention
   let counted = 0;
   while (counted < workdays) {
     cursor.setDate(cursor.getDate() + 1);
-    if (isWorkday(cursor)) counted += 1;
+    const key = dayKey(cursor.getTime());
+    if (isWorkday(cursor)) {
+      counted += 1;
+      if (JOINT_LEAVE_SET.has(key)) jointLeave.push(key);
+    } else if (isWeekday(cursor)) {
+      holidays.push(key);
+    }
   }
   const dueAt = cursor.getTime(); // last working day the provider still has to reply
   const today = startOfDay(now);
@@ -310,7 +342,78 @@ export function followUp(sentAt, now = Date.now(), workdays = REPLY_WORKDAYS) {
   for (const d = new Date(Math.max(today.getTime(), firstCounted.getTime())); d.getTime() <= dueAt; d.setDate(d.getDate() + 1)) {
     if (isWorkday(d)) workdaysLeft += 1;
   }
-  return { sentAt: Number(sentAt), dueAt, workdaysLeft, due: today.getTime() > dueAt };
+  return {
+    sentAt: Number(sentAt),
+    dueAt,
+    workdaysLeft,
+    due: today.getTime() > dueAt,
+    holidays,
+    jointLeave,
+    beyondData: dayKey(dueAt) > HOLIDAYS_UNTIL,
+  };
+}
+
+// A calendar file (.ics) for the reply deadline, so the visitor does not have to remember to come back.
+// All-day event on the first day after the deadline, with an alarm at 09:00 that morning.
+const icsEscape = (value) =>
+  String(value)
+    .replace(/\\/g, '\\\\')
+    .replace(/;/g, '\\;')
+    .replace(/,/g, '\\,')
+    .replace(/\r?\n/g, '\\n');
+const icsFold = (line) => {
+  const parts = [];
+  let rest = line;
+  while (rest.length > 70) {
+    parts.push(rest.slice(0, 70));
+    rest = ` ${rest.slice(70)}`;
+  }
+  parts.push(rest);
+  return parts.join('\r\n');
+};
+const icsDay = (date) => dayKey(date.getTime()).replace(/-/g, '');
+
+export function buildICS({ sentAt, provider = '', lang = 'id', url = '', now = Date.now() }) {
+  const wait = followUp(sentAt, now);
+  if (!wait) return '';
+  const name = String(provider || '').trim() || (lang === 'id' ? 'provider' : 'the provider');
+  const start = startOfDay(wait.dueAt);
+  start.setDate(start.getDate() + 1);
+  const end = new Date(start);
+  end.setDate(end.getDate() + 1);
+  const dueText = fmtDate(wait.dueAt, lang);
+  const summary = lang === 'id' ? `Lelet: cek balasan ${name}` : `Lelet: check for a reply from ${name}`;
+  const description =
+    lang === 'id'
+      ? `Batas ${REPLY_WORKDAYS} hari kerja untuk balasan ${name} berakhir ${dueText}. Belum ada penyelesaian? Buka Lelet dan kirim surat kedua ke Komdigi.${url ? ` ${url}` : ''}`
+      : `The ${REPLY_WORKDAYS} working days for a reply from ${name} ended on ${dueText}. No solution yet? Open Lelet and send the second letter to Komdigi.${url ? ` ${url}` : ''}`;
+  const stamp = new Date(now).toISOString().replace(/[-:]/g, '').replace(/\.\d+Z$/, 'Z');
+  return (
+    [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Lelet//Reply deadline//ID',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+      'BEGIN:VEVENT',
+      `UID:lelet-${icsDay(startOfDay(wait.sentAt))}-${icsDay(start)}@lelet`,
+      `DTSTAMP:${stamp}`,
+      `DTSTART;VALUE=DATE:${icsDay(start)}`,
+      `DTEND;VALUE=DATE:${icsDay(end)}`,
+      `SUMMARY:${icsEscape(summary)}`,
+      `DESCRIPTION:${icsEscape(description)}`,
+      'TRANSP:TRANSPARENT',
+      'BEGIN:VALARM',
+      'ACTION:DISPLAY',
+      `DESCRIPTION:${icsEscape(summary)}`,
+      'TRIGGER:PT9H',
+      'END:VALARM',
+      'END:VEVENT',
+      'END:VCALENDAR',
+    ]
+      .map(icsFold)
+      .join('\r\n') + '\r\n'
+  );
 }
 
 export function buildEscalation({ plan, tests, lang = 'id', sentAt, ticket = '', today = Date.now() }) {

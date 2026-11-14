@@ -1,7 +1,7 @@
 // Lelet service worker: lets the app open without a connection (useful when the internet is the problem).
 // Network first, so a new version always wins when the device is online. Test traffic is never touched.
 
-const CACHE = 'lelet-v2';
+const CACHE = 'lelet-v3';
 const SHELL = [
   './',
   'index.html',
@@ -9,6 +9,7 @@ const SHELL = [
   'theme.js',
   'app.js',
   'core.js',
+  'counter.js',
   'engine.js',
   'i18n.js',
   'manifest.webmanifest',

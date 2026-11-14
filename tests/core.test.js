@@ -164,6 +164,71 @@ test('the wait after the first letter counts working days only', () => {
   }
 });
 
+test('national holidays are not counted as working days', () => {
+  const day = (year, month, date, hour = 9) => new Date(year, month - 1, date, hour).getTime();
+
+  // Sent Friday 18 December 2026. Friday 25 December is a national holiday, Thursday 24 is joint leave.
+  // Counted: 21, 22, 23, 24, 28, 29, 30 December.
+  const christmas = core.followUp(day(2026, 12, 18), day(2026, 12, 19));
+  assert.equal(core.dayKey(christmas.dueAt), '2026-12-30');
+  assert.deepEqual(christmas.holidays, ['2026-12-25']);
+  assert.deepEqual(christmas.jointLeave, ['2026-12-24']);
+  assert.equal(christmas.beyondData, false);
+  assert.equal(christmas.workdaysLeft, 7);
+  // On the holiday itself, the days left are 28, 29, 30 December.
+  assert.equal(core.followUp(day(2026, 12, 18), day(2026, 12, 25)).workdaysLeft, 3);
+
+  // Sent Friday 5 March 2027: Nyepi (8) and Idulfitri (10, 11) are skipped; 9, 12 and 15 are joint leave.
+  const lebaran = core.followUp(day(2027, 3, 5), day(2027, 3, 5));
+  assert.equal(core.dayKey(lebaran.dueAt), '2027-03-19'); // counted: 9, 12, 15, 16, 17, 18, 19 March
+  assert.deepEqual(lebaran.holidays, ['2027-03-08', '2027-03-10', '2027-03-11']);
+  assert.deepEqual(lebaran.jointLeave, ['2027-03-09', '2027-03-12', '2027-03-15']);
+
+  // A holiday on a weekend changes nothing and is not listed.
+  const weekendHoliday = core.followUp(day(2027, 12, 20), day(2027, 12, 20));
+  assert.equal(core.dayKey(weekendHoliday.dueAt), '2027-12-29');
+  assert.deepEqual(weekendHoliday.holidays, []);
+
+  // Past the end of the holiday list the count still works, and says it is on its own.
+  const later = core.followUp(day(2027, 12, 28), day(2027, 12, 28));
+  assert.equal(core.dayKey(later.dueAt), '2028-01-06');
+  assert.equal(later.beyondData, true);
+});
+
+test('holiday list is well formed and matches the decree counts', () => {
+  const isDay = (key) => /^\d{4}-\d{2}-\d{2}$/.test(key) && core.dayKey(new Date(`${key}T12:00:00`).getTime()) === key;
+  for (const key of [...core.HOLIDAYS, ...core.JOINT_LEAVE]) assert.ok(isDay(key), `bad day key ${key}`);
+  assert.deepEqual([...core.HOLIDAYS].sort(), core.HOLIDAYS, 'holidays are in date order');
+  assert.equal(new Set(core.HOLIDAYS).size, core.HOLIDAYS.length);
+  const inYear = (list, year) => list.filter((key) => key.startsWith(String(year))).length;
+  assert.equal(inYear(core.HOLIDAYS, 2026), 17);
+  assert.equal(inYear(core.HOLIDAYS, 2027), 18);
+  assert.equal(inYear(core.JOINT_LEAVE, 2026), 8);
+  assert.equal(inYear(core.JOINT_LEAVE, 2027), 8);
+  assert.ok(core.HOLIDAYS.every((key) => key <= core.HOLIDAYS_UNTIL));
+  assert.ok(!core.HOLIDAYS.some((key) => core.JOINT_LEAVE.includes(key)), 'a day is a holiday or joint leave, not both');
+});
+
+test('calendar reminder is a valid all-day event on the day after the deadline', () => {
+  const sentAt = at(6, 9); // due 17 November 2026
+  const ics = core.buildICS({ sentAt, provider: 'Contoh Net; Batam, ID', lang: 'id', url: 'https://example.test/', now: at(6, 10) });
+  const rows = ics.split('\r\n');
+  assert.equal(rows[0], 'BEGIN:VCALENDAR');
+  assert.equal(rows[rows.length - 2], 'END:VCALENDAR');
+  assert.ok(ics.endsWith('\r\n'));
+  assert.ok(rows.includes('DTSTART;VALUE=DATE:20261118'));
+  assert.ok(rows.includes('DTEND;VALUE=DATE:20261119'));
+  assert.ok(rows.includes('TRIGGER:PT9H'));
+  assert.ok(rows.every((row) => row.length <= 75), 'lines are folded');
+  const unfolded = ics.replace(/\r\n /g, '');
+  assert.ok(unfolded.includes('SUMMARY:Lelet: cek balasan Contoh Net\\; Batam\\, ID'), 'text is escaped');
+  assert.ok(unfolded.includes('17 November 2026'));
+  assert.ok(unfolded.includes('https://example.test/'));
+  assert.ok(/DTSTAMP:\d{8}T\d{6}Z/.test(unfolded));
+  assert.ok(core.buildICS({ sentAt, lang: 'en', now: at(6, 10) }).replace(/\r\n /g, '').includes('check for a reply from the provider'));
+  assert.equal(core.buildICS({ sentAt: null }), '');
+});
+
 test('second letter goes to the regulator and carries the first complaint and the numbers', () => {
   const { plan, tests } = core.sampleData(at(10, 12));
   const filled = { ...plan, person: 'Budi Santoso', custId: 'A-123', city: 'Batam' };
