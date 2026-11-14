@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Lelet - buktikan internet Anda lebih lambat dari paket</title>
+    <meta
+      name="description"
+      content="Ukur kecepatan internet, bandingkan dengan paket yang Anda bayar, dan dapatkan surat keluhan siap kirim. Gratis, tanpa akun, data tetap di perangkat Anda."
+    />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://speed.cloudflare.com http://127.0.0.1:* http://localhost:*; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="theme-color" content="#F4EFE6" />
+    <meta property="og:title" content="Lelet - internet lelet? Buktikan." />
+    <meta property="og:description" content="Tes kecepatan, bandingkan dengan paket, kirim surat keluhan berisi angka." />
+    <meta property="og:type" content="website" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="icons/icon-192.png" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="theme.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#view">Langsung ke isi</a>
+    <header class="top">
+      <a class="brand" href="#tes" aria-label="Lelet">
+        <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+          <rect x="4" y="7" width="24" height="4" rx="2" class="mark-ghost" />
+          <rect x="4" y="14" width="24" height="4" rx="2" class="mark-ghost" />
+          <rect x="4" y="21" width="9" height="4" rx="2" class="mark-solid" />
+        </svg>
+        <span class="brand-name">Lelet</span>
+        <span class="brand-tag" id="tagline"></span>
+      </a>
+      <div class="top-actions">
+        <button type="button" class="chip" id="lang-btn" data-act="lang"></button>
+        <button type="button" class="chip" id="theme-btn" data-act="theme">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2a8 8 0 1 0 0 16V2z" /><circle cx="10" cy="10" r="7.25" fill="none" stroke-width="1.5" /></svg>
+        </button>
+      </div>
+    </header>
+
+    <nav class="tabs" id="tabs"></nav>
+
+    <main id="view" tabindex="-1">
+      <noscript><p class="notice">Lelet perlu JavaScript untuk mengukur kecepatan. / Lelet needs JavaScript to measure speed.</p></noscript>
+    </main>
+
+    <footer class="foot" id="foot"></footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <pre class="print-letter" id="print-letter" aria-hidden="true"></pre>
+    <input type="file" id="import-file" accept="application/json,.json" hidden />
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
