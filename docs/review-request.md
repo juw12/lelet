@@ -1,115 +1,60 @@
-# Request for a legal read of the two letters (draft, not sent)
+# Legal read of the letters: request and status
 
-Lelet writes two letters for a home-internet customer: a complaint to the provider, and a second
-letter to the regulator when the provider does not answer in 7 working days. A reading check by an
-AI assistant found that all five cited articles of UU 8/1999 exist and are quoted correctly. That is
-not a legal review. Nobody qualified has read the letters yet.
+Lelet writes three texts for a home-internet customer: a complaint letter to the provider, a short
+WhatsApp version of it, and a second letter to the regulator (Komdigi) when the provider does not answer
+in 7 working days. Nobody qualified to give legal advice has read them yet.
 
-This page is the request to send to a lawyer or to YLKI. Sending it is Juwen's step.
+**Status on 14 Nov 2026:** the review page is written and checked against the app; the request is about
+to go to YLKI by e-mail. This line is updated when it is sent and when an answer arrives.
 
-- YLKI complaint and consultation service: https://ylki.or.id/layanan-pengaduan-ylki/
-- The app, with sample data so the letters can be seen without testing: https://juw12.github.io/lelet/
+## The page a reviewer reads
 
-## The request (Indonesian, ready to copy)
+[`docs/permohonan-tinjauan.md`](permohonan-tinjauan.md), in Indonesian. It holds:
 
-> Selamat siang,
->
-> Saya membuat Lelet (https://juw12.github.io/lelet/), alat gratis untuk konsumen internet rumah. Lelet mengukur
-> kecepatan, lalu menuliskan surat keluhan kepada penyedia layanan dan, bila tidak ada jawaban dalam
-> 7 hari kerja, surat lanjutan kepada Komdigi. Surat dikirim oleh konsumen sendiri, bukan oleh Lelet.
->
-> Sebelum dipakai banyak orang, saya mohon kesediaan Bapak/Ibu membaca kedua contoh surat di bawah
-> dan memberi masukan atas lima pertanyaan ini:
->
-> 1. Apakah rujukan pasal UU No. 8 Tahun 1999 (Pasal 4 huruf c, d, h; Pasal 7 huruf g; Pasal 19
->    ayat (1)) tepat untuk keluhan kecepatan internet di bawah paket?
-> 2. Apakah kecepatan di bawah paket dapat disebut "kerugian konsumen" menurut Pasal 19 ayat (1),
->    atau sebaiknya surat hanya bersandar pada Pasal 4 huruf h dan Pasal 7 huruf g?
-> 3. Kebanyakan paket memakai kata "hingga" (up to). Apakah surat perlu menanggapi hal itu?
-> 4. Surat meminta tanggapan "dalam 7 hari kerja" sebagai permintaan konsumen, bukan sebagai
->    tenggat menurut undang-undang. Apakah rumusan itu aman?
-> 5. Adakah peraturan kualitas layanan telekomunikasi yang sebaiknya dirujuk (misalnya peraturan
->    menteri tentang standar kualitas layanan), dan apakah ada kalimat yang berisiko bagi pengirim?
->
-> Lelet gratis dan tidak mengambil data pengguna. Masukan singkat pun sangat membantu.
->
-> Terima kasih.
-> Juwen Lie
+- a short summary of what Lelet does and who sends the letters (the customer, never Lelet);
+- five questions for the reviewer;
+- what was checked and what was not;
+- the five cited articles of UU 8/1999, quoted word for word, with the source links;
+- two telecom service-quality regulations that were found but not read, so the letters do not cite them;
+- all three texts, whole, built from sample data.
 
-## Letter 1: complaint to the provider (sample data, not a real customer)
+The page is built by `scripts/review-pack.mjs` from `core.js`. `tests/review-pack.test.js` fails when the
+page and the app disagree, so a reviewer always reads what the app really writes. After a change to the
+letters, run `npm run review-pack`.
 
-> 14 November 2026
->
-> Kepada Yth.
-> Layanan Pelanggan Contoh Net
->
-> Perihal: Keluhan kecepatan internet tidak sesuai paket
->
-> Dengan hormat,
->
-> Saya, [nama Anda], pelanggan Contoh Net dengan paket "Rumah 50" yang dijual dengan kecepatan 50 Mbps seharga Rp 350.000 per bulan.
->
-> Saya mengukur koneksi saya 12 kali pada 3 hari berbeda (11 November 2026 - 13 November 2026) dengan Lelet, tes lewat peramban ke server Cloudflare. Hasilnya:
-> - Median unduh: 20,4 Mbps = 41% dari kecepatan paket (50 Mbps)
-> - Median unggah: 10,5 Mbps; median latensi: 23 ms
-> - 6 dari 12 tes berada di bawah 50% kecepatan paket; 12 dari 12 di bawah 80%
-> - Waktu terburuk: malam (18.00-23.00), median 12,8 Mbps
-> - 4 dari 12 tes dilakukan lewat kabel LAN, sisanya lewat Wi-Fi
->
-> Berdasarkan Undang-Undang Nomor 8 Tahun 1999 tentang Perlindungan Konsumen (Pasal 4 huruf c, d, dan h, Pasal 7 huruf g, serta Pasal 19 ayat (1)), saya meminta:
-> 1. Penjelasan tertulis dan pemeriksaan teknis jaringan di alamat saya.
-> 2. Perbaikan sehingga kecepatan sesuai dengan paket.
-> 3. Jika tidak dapat diperbaiki, kompensasi atau penyesuaian tagihan untuk masa layanan yang tidak sesuai paket (perkiraan saya sendiri: sekitar Rp 207.550 per bulan).
->
-> Saya menunggu tanggapan dalam 7 hari kerja. Jika tidak ada penyelesaian, saya akan meneruskan keluhan ini ke Kementerian Komunikasi dan Digital (Komdigi), YLKI, atau Badan Penyelesaian Sengketa Konsumen (BPSK).
->
-> Catatan: ini hasil pengukuran saya sendiri sebagai bukti awal. Mohon dibandingkan dengan pembacaan dari perangkat Anda.
->
-> Hormat saya,
-> [nama Anda]
->
-> [Lampiran: daftar semua tes, satu baris per tes]
+## The five questions, in English
 
-## Letter 2: follow-up to the regulator (sample data, not a real customer)
+1. Do the cited articles of UU 8/1999 (Article 4 letters c, d, h; Article 7 letter g; Article 19
+   paragraph (1)) fit a complaint about internet speed below the plan?
+2. Can speed below the plan be called "consumer loss" under Article 19 paragraph (1), or should the
+   letters lean only on Article 4 letter h and Article 7 letter g?
+3. Most plans say "up to" a speed. The letters compare the measurement with the plan speed the customer
+   types in and do not answer "up to". Should they, and how?
+4. The letters ask for an answer "within 7 working days" as the customer's own request, not as a legal
+   deadline, and say the complaint will then go to Komdigi, YLKI or BPSK. Is that wording fair and safe
+   for the sender?
+5. Is there a telecom service-quality regulation the letters should cite? Is any other sentence risky
+   for the sender, including the customer's own rupiah estimate?
 
-> 14 November 2026
->
-> Kepada Yth.
-> Layanan Pengaduan Kementerian Komunikasi dan Digital (Komdigi)
-> Tembusan: Layanan Pelanggan Contoh Net
->
-> Perihal: Pengaduan lanjutan - kecepatan internet Contoh Net tidak sesuai paket, keluhan pertama belum diselesaikan
->
-> Dengan hormat,
->
-> Saya, [nama Anda], pelanggan Contoh Net dengan paket "Rumah 50", yang dijual dengan kecepatan 50 Mbps seharga Rp 350.000 per bulan.
->
-> Pada 2 November 2026 saya mengirim keluhan tertulis ke layanan pelanggan Contoh Net dan meminta tanggapan dalam 7 hari kerja. Batas waktu itu berakhir pada 11 November 2026. Sampai surat ini dibuat, saya belum menerima penyelesaian yang memadai.
->
-> Hasil pengukuran saya (12 tes pada 3 hari, 11 November 2026 - 13 November 2026, dengan Lelet, tes lewat peramban ke server Cloudflare):
-> - Median unduh: 20,4 Mbps = 41% dari kecepatan paket (50 Mbps)
-> - Median unggah: 10,5 Mbps; median latensi: 23 ms
-> - 6 dari 12 tes berada di bawah 50% kecepatan paket; 12 dari 12 di bawah 80%
-> - Waktu terburuk: malam (18.00-23.00), median 12,8 Mbps
-> - 4 dari 12 tes dilakukan lewat kabel LAN, sisanya lewat Wi-Fi
->
-> Berdasarkan Undang-Undang Nomor 8 Tahun 1999 tentang Perlindungan Konsumen (Pasal 4 huruf c, d, dan h, Pasal 7 huruf g, serta Pasal 19 ayat (1)), saya memohon:
-> 1. Pengaduan ini dicatat dan diteruskan kepada Contoh Net untuk dijawab secara tertulis.
-> 2. Pemeriksaan apakah layanan di alamat saya sesuai dengan kecepatan yang dijual.
-> 3. Bantuan penyelesaian, termasuk kompensasi atau penyesuaian tagihan bila layanan terbukti tidak sesuai paket (perkiraan saya sendiri: sekitar Rp 207.550 per bulan).
->
-> Salinan keluhan pertama saya lampirkan terpisah. Daftar semua tes ada di bawah.
->
-> Catatan: ini hasil pengukuran saya sendiri sebagai bukti awal, bukan pengukuran resmi. Mohon dibandingkan dengan data penyelenggara.
->
-> Hormat saya,
-> [nama Anda]
-> Kontak: [nomor telepon atau email Anda]
->
-> [Lampiran: daftar semua tes, satu baris per tes]
+## What was checked, and by whom
 
-## What was already checked, and by whom
+An AI assistant compared each cited article with the text of the law on 14 Nov 2026: 5 of 5 exist and
+none is misquoted. It also read the status of the law on the audit board's legal database: "Berlaku"
+(in force). The same page lists Constitutional Court ruling 235/PUU-XXIII/2025 on Article 31; the letters
+do not cite Article 31, and the ruling itself was not read.
 
-An AI assistant compared each cited article with the text of the law on 14 Nov 2026
-(https://peraturan.bpk.go.id/Details/33784/uu-no-8-tahun-1999): 5 of 5 exist and none is misquoted.
-It could not judge questions 1 to 5 above. Those need a person who is allowed to give legal advice.
+- Law text read: https://jdih.kemenkeu.go.id/api/download/FullText/1999/8TAHUN~1999UU.htm
+- Status page: https://peraturan.bpk.go.id/Details/45288/uu-no-8-tahun-1999
+
+An earlier version of this page linked a different record on the audit board's site by mistake. The
+quotes were always taken from the law text above, so the 5-of-5 result did not change; the link is fixed.
+
+That is a reading check, not a legal review. Questions 1 to 5 need a person who is allowed to give legal
+advice. Until an answer is in, the app keeps its "not legal advice" line and the letters stay as they are.
+
+## Who can review it
+
+1. **YLKI** (Yayasan Lembaga Konsumen Indonesia), the consumer foundation: https://ylki.or.id/kontak/
+2. **BPKN**, the national consumer protection agency, through its own portal: https://pengaduan.bpkn.go.id
+   (asks for the sender's identity, so it is Juwen's step).
+3. A university legal-aid clinic or a paid consultation with a consumer-law lawyer (Juwen's step).

@@ -119,7 +119,11 @@ export function summarize(tests, plan) {
 
 // ---------- formatting ----------
 
-const LOCALE = { id: 'id-ID', en: 'en-GB' };
+export const LOCALE = { id: 'id-ID', en: 'en-GB', zh: 'zh-CN' };
+
+// Letters go to an Indonesian provider and regulator, so they exist in Indonesian and English only.
+// Any other screen language gets the Indonesian letter.
+export const letterLang = (lang) => (lang === 'en' ? 'en' : 'id');
 
 export function fmtNum(value, lang = 'id', digits = 1) {
   if (!Number.isFinite(value)) return '-';
@@ -188,6 +192,7 @@ function resultBullets(s, lang) {
 }
 
 export function buildLetter({ plan, tests, lang = 'id', kind = 'formal', today = Date.now() }) {
+  lang = letterLang(lang);
   const s = summarize(tests, plan);
   if (!s.n || !s.promised) return '';
   const provider = (plan.provider || '').trim() || (lang === 'id' ? '[nama provider]' : '[provider name]');
@@ -374,6 +379,7 @@ const icsFold = (line) => {
 const icsDay = (date) => dayKey(date.getTime()).replace(/-/g, '');
 
 export function buildICS({ sentAt, provider = '', lang = 'id', url = '', now = Date.now() }) {
+  lang = letterLang(lang);
   const wait = followUp(sentAt, now);
   if (!wait) return '';
   const name = String(provider || '').trim() || (lang === 'id' ? 'provider' : 'the provider');
@@ -417,6 +423,7 @@ export function buildICS({ sentAt, provider = '', lang = 'id', url = '', now = D
 }
 
 export function buildEscalation({ plan, tests, lang = 'id', sentAt, ticket = '', today = Date.now() }) {
+  lang = letterLang(lang);
   const s = summarize(tests, plan);
   const wait = followUp(sentAt, today);
   if (!s.n || !s.promised || !wait) return '';

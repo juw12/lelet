@@ -11,6 +11,7 @@
     "serve": "node tests/fake_server.mjs 8765 8 2 20",
     "e2e": "python tests/e2e.py",
     "verdict": "node scripts/launch-verdict.mjs",
-    "watch": "node scripts/endpoint-watch.mjs"
+    "watch": "node scripts/endpoint-watch.mjs",
+    "review-pack": "node scripts/review-pack.mjs"
   }
 }

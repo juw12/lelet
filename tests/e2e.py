@@ -334,6 +334,20 @@ def main():
             check("theme button switches to dark", page.evaluate("document.documentElement.dataset.theme") == "dark")
             shot(page, "07-surat-wa-en-gelap")
             page.click("#lang-btn")
+            check("third language is Chinese", page.evaluate("document.documentElement.lang") == "zh")
+            zh_page = page.inner_text("body")
+            check("Chinese screen has Chinese labels", "投诉信" in zh_page and "复制信函" in zh_page)
+            check("Chinese screen says the letter stays Indonesian", "信函用印尼语书写" in zh_page)
+            zh_letter = page.input_value("#letter-text")
+            check("letter on the Chinese screen is Indonesian", "Paket saya" in zh_letter and "Contoh Fiber" in zh_letter, zh_letter[:80])
+            check("language button now offers Indonesian", page.inner_text("#lang-btn").strip() == "ID")
+            check(
+                "Chinese screen does not overflow sideways",
+                page.evaluate("document.documentElement.scrollWidth - document.documentElement.clientWidth") <= 0,
+            )
+            shot(page, "07b-surat-wa-zh-gelap")
+            page.click("#lang-btn")
+            check("language button comes back to Indonesian", page.evaluate("document.documentElement.lang") == "id")
             go(page, "tes")
             shot(page, "08-tes-hasil-id-gelap")
             page.reload()

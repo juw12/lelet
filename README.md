@@ -78,7 +78,8 @@ It is labelled as an estimate everywhere it appears.
   and hours are what make the pattern hard to dismiss.
 - The letter cites Law No. 8 of 1999 on Consumer Protection (Article 4 letters c, d and h, Article 7 letter g,
   Article 19 paragraph (1)). The wording of both letters (the first and the second) has not been reviewed by a
-  lawyer.
+  lawyer. The page a reviewer reads is [docs/permohonan-tinjauan.md](docs/permohonan-tinjauan.md); who it was
+  sent to and what came back is in [docs/review-request.md](docs/review-request.md).
 - The 7 working days are the deadline the letter itself sets, not a period fixed by law. Lelet counts Monday to
   Friday, starting the day after you sent the letter, and leaves out Indonesia's national holidays for 2026 and
   2027 (from the government's joint decrees, read on setneg.go.id on 2026-11-14). Joint leave days (cuti bersama)
@@ -119,22 +120,23 @@ Then open `http://localhost:8080/`. On `localhost` you can point the app at a te
 ## Tests
 
 ```
-npm test             # 48 unit tests of the logic and the two scripts (node --test, no packages needed)
+npm test             # 56 unit tests of the logic, the scripts and the review page (node --test, no packages needed)
 npm run accuracy     # engine against a rate-limited local server
-npm run e2e          # 87 browser checks (Python + Playwright)
+npm run e2e          # 94 browser checks (Python + Playwright)
 python tests/live_check.py   # one real test on the published page
 npm run verdict      # write the launch-test status from the public counts
 npm run watch        # check the test endpoints, the live page and the counters
+npm run review-pack  # rebuild the page a legal reviewer reads, from the letters the app writes
 ```
 
 Results on 2026-11-14 (Windows 11, Node 26, Edge 157):
 
 | Check | Result |
 |---|---|
-| Unit tests | 48 of 48 pass |
-| Accuracy, 8 / 2 Mbps line, Hemat | read 8.01 / 2.01 Mbps |
-| Accuracy, 30 / 10 Mbps line, Normal | read 30.03 / 9.79 Mbps |
-| Browser e2e, 8 / 2 Mbps line | 87 of 87 checks pass, 6.8 MB used per test |
+| Unit tests | 56 of 56 pass |
+| Accuracy, 8 / 2 Mbps line, Hemat | read 8.05 / 2.12 Mbps |
+| Accuracy, 30 / 10 Mbps line, Normal | read 30.23 / 9.84 Mbps |
+| Browser e2e, 8 / 2 Mbps line | 94 of 94 checks pass, 7.0 MB used per test |
 | Published page, real Hemat test | 8 of 8 checks pass: 3.5 s, 11.2 MB, no console or CSP errors |
 
 Honest notes on the tests:
@@ -158,7 +160,7 @@ Honest notes on the tests:
 | `engine.js` | the measurement (browser and Node) |
 | `core.js` | pure logic: summary, verdict, case strength, both letters, working-day count with holidays, calendar reminder, import and export |
 | `counter.js` | the three anonymous counts and their off switch |
-| `i18n.js` | Indonesian and English text |
+| `i18n.js` | Indonesian, English and Chinese text |
 | `sw.js`, `manifest.webmanifest`, `icons/` | install to home screen, open offline |
 | `tests/` | unit tests, fake rate-limited server, accuracy check, browser e2e |
 | `scripts/launch-verdict.mjs` | reads the public counts and writes the launch-test status, the verdict and `summary.json` |
@@ -166,7 +168,9 @@ Honest notes on the tests:
 | `.github/workflows/` | runs the two scripts on a schedule |
 | `docs/launch-day.md` | the checklist the launch-day issue is made from |
 | `docs/needs-me.json` | what the launch test still needs from a person, with one-tap links |
-| `docs/review-request.md` | the request to a lawyer or YLKI to read both letters, with the letters attached |
+| `docs/permohonan-tinjauan.md` | the page a legal reviewer reads (Indonesian): five questions, the cited articles, all three texts whole |
+| `docs/review-request.md` | status of that review: who was asked, when, and what was checked so far |
+| `scripts/review-pack.mjs` | builds `docs/permohonan-tinjauan.md` from the letters `core.js` writes |
 | `design.md` | design rules for this app |
 
 ## The launch test runs itself

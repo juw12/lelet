@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 
 import * as core from '../core.js';
 import { steadyMbps, MODES } from '../engine.js';
-import { STRINGS, makeT } from '../i18n.js';
+import { STRINGS, makeT, LANGS, LANG_LABELS, nextLang } from '../i18n.js';
 
 const at = (day, hour, minute = 0) => new Date(2026, 10, day, hour, minute).getTime(); // local time, November 2026
 const reading = (ts, down, extra = {}) => ({ ts, down, up: 5, ping: 20, jitter: 2, bytes: 1e7, mode: 'hemat', via: 'wifi', conf: 'ok', ...extra });
@@ -304,20 +304,55 @@ test('CSV has a header and one row per test', () => {
   assert.equal(rows[1], '2026-11-02 08:05,8.12,5.00,20,2.0,10.0,hemat,lan,ok,CGK');
 });
 
-test('Indonesian and English texts have the same keys and placeholders', () => {
+test('every language has the same keys and placeholders as Indonesian', () => {
   const idKeys = Object.keys(STRINGS.id).sort();
-  const enKeys = Object.keys(STRINGS.en).sort();
-  assert.deepEqual(enKeys, idKeys);
   const holes = (text) => (text.match(/\{\w+\}/g) || []).sort();
-  for (const key of idKeys) {
-    assert.deepEqual(holes(STRINGS.en[key]), holes(STRINGS.id[key]), `placeholders differ in "${key}"`);
-    assert.ok(STRINGS.id[key].trim() && STRINGS.en[key].trim(), `empty text in "${key}"`);
+  assert.deepEqual(Object.keys(STRINGS).sort(), [...LANGS].sort());
+  for (const lang of LANGS) {
+    assert.deepEqual(Object.keys(STRINGS[lang]).sort(), idKeys, `keys differ in "${lang}"`);
+    assert.ok(LANG_LABELS[lang], `no button label for "${lang}"`);
+    for (const key of idKeys) {
+      assert.deepEqual(holes(STRINGS[lang][key]), holes(STRINGS.id[key]), `placeholders differ in "${lang}" "${key}"`);
+      assert.ok(STRINGS[lang][key].trim(), `empty text in "${lang}" "${key}"`);
+    }
   }
   assert.equal(makeT('en')('tes.auto.min', { n: 15 }), '15 min');
   assert.equal(makeT('xx')('nav.tes'), 'Tes');
   assert.equal(makeT('en')('bukti.r.testsval', { n: 1, d: 1 }), '1 test, 1 day');
   assert.equal(makeT('en')('bukti.r.testsval', { n: 4, d: 2 }), '4 tests, 2 days');
   assert.equal(makeT('id')('bukti.r.testsval', { n: 1, d: 1 }), STRINGS.id['bukti.r.testsval'].replace('{n}', '1').replace('{d}', '1'));
+  assert.equal(makeT('zh')('bukti.r.testsval', { n: 4, d: 2 }), '4 次，2 天');
+});
+
+test('the language button walks through every language and comes back', () => {
+  assert.equal(nextLang('id'), 'en');
+  assert.equal(nextLang('en'), 'zh');
+  assert.equal(nextLang('zh'), 'id');
+  assert.equal(nextLang('xx'), 'id');
+});
+
+test('a Chinese screen still gets the Indonesian letter, reminder and second letter', () => {
+  assert.equal(core.letterLang('zh'), 'id');
+  assert.equal(core.letterLang('en'), 'en');
+  assert.equal(core.letterLang(undefined), 'id');
+  const plan = { provider: 'Contoh Net', name: 'Rumah 50', mbps: 50, price: 350000 };
+  const tests = [reading(at(2, 8), 10), reading(at(3, 20), 12, { via: 'lan' })];
+  const today = at(18, 10);
+  for (const kind of ['formal', 'wa']) {
+    assert.equal(core.buildLetter({ plan, tests, lang: 'zh', kind, today }), core.buildLetter({ plan, tests, lang: 'id', kind, today }));
+  }
+  assert.ok(core.buildLetter({ plan, tests, lang: 'zh', today }).includes('Dengan hormat'));
+  assert.equal(
+    core.buildEscalation({ plan, tests, lang: 'zh', sentAt: at(4, 9), today }),
+    core.buildEscalation({ plan, tests, lang: 'id', sentAt: at(4, 9), today }),
+  );
+  assert.equal(
+    core.buildICS({ sentAt: at(4, 9), provider: 'Contoh Net', lang: 'zh', now: today }),
+    core.buildICS({ sentAt: at(4, 9), provider: 'Contoh Net', lang: 'id', now: today }),
+  );
+  // Numbers and dates on the screen do follow the screen language.
+  assert.ok(core.fmtDate(at(2, 8), 'zh').includes('2026年11月2日'));
+  assert.equal(core.fmtRp(350000, 'zh'), 'Rp 350,000');
 });
 
 test('steady-state speed: constant line is read correctly, a stall is flagged', () => {

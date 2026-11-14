@@ -4,7 +4,7 @@
 
 import * as core from './core.js';
 import { runTest, MODES, DEFAULT_BASE } from './engine.js';
-import { makeT } from './i18n.js';
+import { makeT, LANGS, LANG_LABELS, nextLang } from './i18n.js';
 import { COUNTER_BASE, EVENTS, dueEvents, countingAllowed, counterUrl } from './counter.js';
 
 const STORE_KEY = 'lelet.v1';
@@ -68,7 +68,7 @@ function loadState() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORE_KEY) || 'null');
     if (!saved || typeof saved !== 'object') return fresh;
-    if (saved.lang === 'en') fresh.lang = 'en';
+    if (LANGS.includes(saved.lang)) fresh.lang = saved.lang;
     if (saved.theme === 'light' || saved.theme === 'dark') fresh.theme = saved.theme;
     fresh.plan = cleanPlan(saved.plan);
     if (Array.isArray(saved.tests)) fresh.tests = core.mergeTests([], saved.tests);
@@ -258,7 +258,7 @@ function renderChrome() {
   $('.skip').textContent = t('app.skip');
 
   const langButton = $('#lang-btn');
-  langButton.textContent = state.lang === 'id' ? 'EN' : 'ID';
+  langButton.textContent = LANG_LABELS[nextLang(state.lang)];
   langButton.setAttribute('aria-label', t('head.lang'));
   $('#theme-btn').setAttribute('aria-label', t('head.theme'));
   const themeColor = $('meta[name="theme-color"]');
@@ -533,7 +533,7 @@ function settingsCard() {
   }));
   let autoHint = t('tes.auto.hint');
   if (auto > 0) {
-    const time = new Date(nextAutoAt()).toLocaleTimeString(state.lang === 'id' ? 'id-ID' : 'en-GB', {
+    const time = new Date(nextAutoAt()).toLocaleTimeString(core.LOCALE[state.lang] || core.LOCALE.id, {
       hour: '2-digit',
       minute: '2-digit',
     });
@@ -808,7 +808,7 @@ function viewBukti() {
 
 // ---------- Surat ----------
 
-const letterKey = () => `${letter.kind}.${state.lang}`;
+const letterKey = () => `${letter.kind}.${core.letterLang(state.lang)}`;
 
 function letterText() {
   const edited = letter.edits[letterKey()];
@@ -817,7 +817,7 @@ function letterText() {
     letter.kind === 'lanjut' && state.sent
       ? core.buildEscalation({ plan: state.plan, tests: state.tests, lang: state.lang, sentAt: state.sent.at, ticket: state.sent.ticket })
       : core.buildLetter({ plan: state.plan, tests: state.tests, lang: state.lang, kind: letter.kind });
-  return body && hasSample() ? `${t('surat.sampletag')}\n\n${body}` : body;
+  return body && hasSample() ? `${makeT(core.letterLang(state.lang))('surat.sampletag')}\n\n${body}` : body;
 }
 
 const dateInputValue = (ts) => core.dayKey(ts); // YYYY-MM-DD in local time
@@ -977,6 +977,7 @@ function viewSurat() {
     if (!wait.due) warnings.push(t('surat.warn.early', { date: core.fmtDate(wait.dueAt, state.lang) }));
     warnings.push(t('surat.warn.second'));
   }
+  if (core.letterLang(state.lang) !== state.lang) warnings.push(t('surat.lang.note'));
 
   const kinds = [
     { value: 'formal', label: t('surat.kind.formal') },
@@ -1216,7 +1217,7 @@ function importBackup(file) {
 
 const ACTIONS = {
   lang() {
-    state.lang = state.lang === 'id' ? 'en' : 'id';
+    state.lang = nextLang(state.lang);
     t = makeT(state.lang);
     save();
     render();
