@@ -134,6 +134,85 @@ test('no letter without tests or without a plan speed', () => {
   assert.equal(core.buildLetter({ plan: { ...plan, mbps: '' }, tests }), '');
 });
 
+test('the wait after the first letter counts working days only', () => {
+  // Sent Friday 6 November 2026: the 7 working days are 9-13 and 16-17 November.
+  const sentAt = at(6, 9);
+  const early = core.followUp(sentAt, at(10, 12));
+  assert.equal(new Date(early.dueAt).getDate(), 17);
+  assert.equal(early.workdaysLeft, 6);
+  assert.equal(early.due, false);
+
+  const lastDay = core.followUp(sentAt, at(17, 23));
+  assert.equal(lastDay.workdaysLeft, 1);
+  assert.equal(lastDay.due, false);
+
+  const after = core.followUp(sentAt, at(18, 0, 1));
+  assert.equal(after.workdaysLeft, 0);
+  assert.equal(after.due, true);
+
+  // A weekend in the middle of the wait is not counted.
+  assert.equal(core.followUp(sentAt, at(14, 12)).workdaysLeft, 2);
+  assert.equal(core.followUp(sentAt, at(15, 12)).workdaysLeft, 2);
+
+  // On the day it is sent the count is the full 7, whatever the weekday.
+  assert.equal(core.followUp(sentAt, at(6, 15)).workdaysLeft, 7);
+  assert.equal(core.followUp(at(7, 9), at(7, 15)).workdaysLeft, 7);
+  assert.equal(core.followUp(at(9, 9), at(9, 15)).workdaysLeft, 7);
+
+  for (const bad of [null, undefined, 0, -5, 'x', NaN, Infinity]) {
+    assert.equal(core.followUp(bad, at(10, 12)), null);
+  }
+});
+
+test('second letter goes to the regulator and carries the first complaint and the numbers', () => {
+  const { plan, tests } = core.sampleData(at(10, 12));
+  const filled = { ...plan, person: 'Budi Santoso', custId: 'A-123', city: 'Batam' };
+  const base = { plan: filled, tests, sentAt: at(6, 9), ticket: 'TKT-778' };
+
+  const id = core.buildEscalation({ ...base, lang: 'id', today: at(18, 10) });
+  const wantedId = [
+    'Komdigi',
+    'Tembusan: Layanan Pelanggan Contoh Net',
+    'Pengaduan lanjutan',
+    '6 November 2026',
+    'nomor tiket TKT-778',
+    'berakhir pada 17 November 2026',
+    'Pasal 19',
+    '50 Mbps',
+    '41%',
+    'Rp 207.550',
+    'Budi Santoso',
+    'A-123',
+    'Batam, 18 November 2026',
+    'bukan pengukuran resmi',
+    'Lampiran',
+  ];
+  for (const part of wantedId) {
+    assert.ok(id.includes(part), `Indonesian second letter should contain "${part}"`);
+  }
+  assert.ok(!id.includes('baru berakhir'), 'after the deadline the letter says the wait ended');
+  assert.equal(id.split('\n').filter((row) => /^\d\d\. /.test(row)).length, 12, 'one attachment row per test');
+
+  const idEarly = core.buildEscalation({ ...base, lang: 'id', today: at(10, 12) });
+  assert.ok(idEarly.includes('baru berakhir pada 17 November 2026'), 'before the deadline the letter says so');
+
+  const en = core.buildEscalation({ ...base, lang: 'en', today: at(18, 10) });
+  for (const part of ['Komdigi', 'Follow-up complaint', 'ticket number TKT-778', 'That period ended on', 'Article 19', '50 Mbps', '41%', 'not an official measurement']) {
+    assert.ok(en.includes(part), `English second letter should contain "${part}"`);
+  }
+  assert.ok(core.buildEscalation({ ...base, lang: 'en', today: at(10, 12) }).includes('That period ends on'));
+
+  const noTicket = core.buildEscalation({ ...base, ticket: '', lang: 'id', today: at(18, 10) });
+  assert.ok(!noTicket.includes('nomor tiket'));
+});
+
+test('no second letter without tests, a plan speed or a sent date', () => {
+  const { plan, tests } = core.sampleData(at(10, 12));
+  assert.equal(core.buildEscalation({ plan, tests: [], sentAt: at(6, 9) }), '');
+  assert.equal(core.buildEscalation({ plan: { ...plan, mbps: '' }, tests, sentAt: at(6, 9) }), '');
+  assert.equal(core.buildEscalation({ plan, tests, sentAt: null }), '');
+});
+
 test('imported tests are cleaned, de-duplicated and sorted', () => {
   assert.equal(core.sanitizeTest(null), null);
   assert.equal(core.sanitizeTest({ ts: 'x', down: 1, up: 1, ping: 1 }), null);

@@ -62,6 +62,8 @@ def no_sideways_scroll(page):
 
 def shot(page, name):
     SHOTS.mkdir(exist_ok=True)
+    # A toast stays up for 2.6 s; wait for it to go so it does not cover the page in the picture.
+    page.locator("#toast.show").wait_for(state="hidden", timeout=6000)
     page.screenshot(path=str(SHOTS / f"{name}.png"), full_page=True)
 
 
@@ -208,6 +210,52 @@ def main():
             check("phone: no sideways scroll on Surat", no_sideways_scroll(page))
             shot(page, "05-surat-id-terang")
 
+            # ---- after the letter is sent: the wait, then the second letter ----
+            second_kind = "[data-act=kind][data-val=lanjut]"
+            check("follow-up card is offered under the letter", page.locator("#follow #sent-date").count() == 1)
+            check("no second letter before the first is marked sent", page.locator(second_kind).count() == 0)
+            page.fill("#sent-ticket", "TKT-778")
+            page.click("[data-act=sent]")
+            page.wait_for_selector("#follow-status")
+            saved_mark = stored(page).get("sent") or {}
+            check("sent date and ticket are saved on the device", saved_mark.get("ticket") == "TKT-778" and saved_mark.get("at", 0) > 0, saved_mark)
+            status_text = page.inner_text("#follow-status")
+            check("the wait is counted in working days", "hari kerja" in status_text and "Tunggu 7" in status_text, status_text)
+            check("second letter is offered once the first is marked sent", page.locator(second_kind).count() >= 1)
+            check("still one primary button after marking sent", page.locator("#view .btn.primary").count() == 1)
+            shot(page, "05b-surat-terkirim-id-terang")
+
+            page.click(f"#follow {second_kind}")
+            second = page.input_value("#letter-text")
+            for part in ["Pengaduan lanjutan", "Komdigi", "nomor tiket TKT-778", "Contoh Fiber", "Pasal 19", "bukan pengukuran resmi"]:
+                check(f"second letter contains '{part}'", part in second)
+            check("sending the second letter early is flagged", "belum lewat" in page.inner_text("#view"))
+            check("phone: no sideways scroll on the second letter", no_sideways_scroll(page))
+            shot(page, "05c-surat-kedua-id-terang")
+
+            page.evaluate(
+                """() => {
+                    const saved = JSON.parse(localStorage.getItem('lelet.v1'));
+                    saved.sent.at = Date.now() - 20 * 24 * 60 * 60 * 1000;
+                    localStorage.setItem('lelet.v1', JSON.stringify(saved));
+                }"""
+            )
+            page.reload()
+            page.wait_for_selector("#follow-status")
+            overdue_text = page.inner_text("#follow-status")
+            check("sent mark survives a reload", (stored(page).get("sent") or {}).get("ticket") == "TKT-778")
+            check("after 7 working days the app says the wait is over", "sudah lewat" in overdue_text and page.locator("#follow-status.over").count() == 1, overdue_text)
+            page.click(f"#follow {second_kind}")
+            late = page.input_value("#letter-text")
+            check("late second letter says the deadline has passed", "berakhir pada" in late and "baru berakhir" not in late)
+            check("no early warning once the wait is over", "belum lewat" not in page.inner_text("#view"))
+            shot(page, "05d-surat-kedua-lewat-id-terang")
+
+            page.click("[data-act=unsent]")
+            page.wait_for_selector("#sent-date")
+            check("removing the sent mark clears it and hides the second letter", stored(page).get("sent") is None and page.locator(second_kind).count() == 0)
+            check("letter returns to the first complaint", "Pengaduan lanjutan" not in page.input_value("#letter-text"))
+
             page.click("#lang-btn")
             check("English letter cites Article 19", "Article 19" in page.input_value("#letter-text"))
             check("page language switches to en", page.evaluate("document.documentElement.lang") == "en")
@@ -252,6 +300,7 @@ def main():
             shot(desk, "09-bukti-contoh-desktop")
             go(desk, "surat")
             check("sample letter is tagged, with a do-not-send warning", desk.input_value("#letter-text").startswith("[CONTOH") and "Jangan dikirim" in desk.inner_text("#view"))
+            check("sample data never gets a sent mark or a second letter", desk.locator("#follow").count() == 0)
             shot(desk, "10-surat-contoh-desktop")
             go(desk, "tes")
             shot(desk, "11-tes-contoh-desktop")

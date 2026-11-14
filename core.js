@@ -167,6 +167,26 @@ function testLines(tests, lang) {
 
 const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 
+function resultBullets(s, lang) {
+  const num = (v, digits = 1) => fmtNum(v, lang, digits);
+  const pct = num(s.pct, 0);
+  const bullets = [];
+  if (lang === 'en') {
+    bullets.push(`- Median download: ${num(s.down)} Mbps = ${pct}% of the plan speed (${num(s.promised, 0)} Mbps)`);
+    bullets.push(`- Median upload: ${num(s.up)} Mbps; median latency: ${Math.round(s.ping)} ms`);
+    bullets.push(`- ${s.below50} of ${plural(s.n, 'test was', 'tests were')} below 50% of the plan speed; ${s.below80} of ${s.n} were below 80%`);
+    if (s.worstBand) bullets.push(`- Worst time of day: ${BAND_TEXT.en[s.worstBand.id]}, median ${num(s.worstBand.down)} Mbps`);
+    bullets.push(`- ${s.wired} of ${plural(s.n, 'test was', 'tests were')} run over a LAN cable, the rest over Wi-Fi`);
+  } else {
+    bullets.push(`- Median unduh: ${num(s.down)} Mbps = ${pct}% dari kecepatan paket (${num(s.promised, 0)} Mbps)`);
+    bullets.push(`- Median unggah: ${num(s.up)} Mbps; median latensi: ${Math.round(s.ping)} ms`);
+    bullets.push(`- ${s.below50} dari ${s.n} tes berada di bawah 50% kecepatan paket; ${s.below80} dari ${s.n} di bawah 80%`);
+    if (s.worstBand) bullets.push(`- Waktu terburuk: ${BAND_TEXT.id[s.worstBand.id]}, median ${num(s.worstBand.down)} Mbps`);
+    bullets.push(`- ${s.wired} dari ${s.n} tes dilakukan lewat kabel LAN, sisanya lewat Wi-Fi`);
+  }
+  return bullets;
+}
+
 export function buildLetter({ plan, tests, lang = 'id', kind = 'formal', today = Date.now() }) {
   const s = summarize(tests, plan);
   if (!s.n || !s.promised) return '';
@@ -196,20 +216,7 @@ export function buildLetter({ plan, tests, lang = 'id', kind = 'formal', today =
     ].join('\n');
   }
 
-  const bullets = [];
-  if (lang === 'en') {
-    bullets.push(`- Median download: ${num(s.down)} Mbps = ${pct}% of the plan speed (${num(s.promised, 0)} Mbps)`);
-    bullets.push(`- Median upload: ${num(s.up)} Mbps; median latency: ${Math.round(s.ping)} ms`);
-    bullets.push(`- ${s.below50} of ${plural(s.n, 'test was', 'tests were')} below 50% of the plan speed; ${s.below80} of ${s.n} were below 80%`);
-    if (s.worstBand) bullets.push(`- Worst time of day: ${BAND_TEXT.en[s.worstBand.id]}, median ${num(s.worstBand.down)} Mbps`);
-    bullets.push(`- ${s.wired} of ${plural(s.n, 'test was', 'tests were')} run over a LAN cable, the rest over Wi-Fi`);
-  } else {
-    bullets.push(`- Median unduh: ${num(s.down)} Mbps = ${pct}% dari kecepatan paket (${num(s.promised, 0)} Mbps)`);
-    bullets.push(`- Median unggah: ${num(s.up)} Mbps; median latensi: ${Math.round(s.ping)} ms`);
-    bullets.push(`- ${s.below50} dari ${s.n} tes berada di bawah 50% kecepatan paket; ${s.below80} dari ${s.n} di bawah 80%`);
-    if (s.worstBand) bullets.push(`- Waktu terburuk: ${BAND_TEXT.id[s.worstBand.id]}, median ${num(s.worstBand.down)} Mbps`);
-    bullets.push(`- ${s.wired} dari ${s.n} tes dilakukan lewat kabel LAN, sisanya lewat Wi-Fi`);
-  }
+  const bullets = resultBullets(s, lang);
 
   if (lang === 'en') {
     return [
@@ -269,6 +276,123 @@ export function buildLetter({ plan, tests, lang = 'id', kind = 'formal', today =
     '',
     'Hormat saya,',
     person,
+    '',
+    'Lampiran - semua tes:',
+    testLines(tests, lang),
+  ].join('\n');
+}
+
+// ---------- follow-through: the wait after the first letter, and the second letter ----------
+
+export const REPLY_WORKDAYS = 7; // the first letter asks for a reply "within 7 working days"
+
+const startOfDay = (ts) => {
+  const d = new Date(ts);
+  d.setHours(0, 0, 0, 0);
+  return d;
+};
+const isWorkday = (d) => d.getDay() !== 0 && d.getDay() !== 6;
+
+// Counts Monday to Friday only. The app does not know public holidays, so the real deadline can be later.
+export function followUp(sentAt, now = Date.now(), workdays = REPLY_WORKDAYS) {
+  if (!(Number(sentAt) > 0) || !Number.isFinite(Number(sentAt))) return null;
+  const cursor = startOfDay(Number(sentAt));
+  let counted = 0;
+  while (counted < workdays) {
+    cursor.setDate(cursor.getDate() + 1);
+    if (isWorkday(cursor)) counted += 1;
+  }
+  const dueAt = cursor.getTime(); // last working day the provider still has to reply
+  const today = startOfDay(now);
+  const firstCounted = startOfDay(Number(sentAt));
+  firstCounted.setDate(firstCounted.getDate() + 1); // the day the letter was sent is not counted
+  let workdaysLeft = 0; // working days still to wait, today included
+  for (const d = new Date(Math.max(today.getTime(), firstCounted.getTime())); d.getTime() <= dueAt; d.setDate(d.getDate() + 1)) {
+    if (isWorkday(d)) workdaysLeft += 1;
+  }
+  return { sentAt: Number(sentAt), dueAt, workdaysLeft, due: today.getTime() > dueAt };
+}
+
+export function buildEscalation({ plan, tests, lang = 'id', sentAt, ticket = '', today = Date.now() }) {
+  const s = summarize(tests, plan);
+  const wait = followUp(sentAt, today);
+  if (!s.n || !s.promised || !wait) return '';
+  const provider = (plan.provider || '').trim() || (lang === 'id' ? '[nama provider]' : '[provider name]');
+  const person = (plan.person || '').trim() || (lang === 'id' ? '[nama Anda]' : '[your name]');
+  const custId = (plan.custId || '').trim();
+  const planName = (plan.name || '').trim();
+  const city = (plan.city || '').trim();
+  const ticketNo = String(ticket || '').trim();
+  const num = (v, digits = 1) => fmtNum(v, lang, digits);
+  const period = s.first && dayKey(s.first) !== dayKey(s.last) ? `${fmtDate(s.first, lang)} - ${fmtDate(s.last, lang)}` : fmtDate(s.first, lang);
+  const bullets = resultBullets(s, lang);
+
+  if (lang === 'en') {
+    return [
+      `${city ? city + ', ' : ''}${fmtDate(today, lang)}`,
+      '',
+      'To: Complaint Service, Ministry of Communication and Digital Affairs (Komdigi)',
+      `Copy: Customer Service, ${provider}`,
+      '',
+      `Subject: Follow-up complaint - ${provider} internet speed below the plan, first complaint not resolved`,
+      '',
+      'Dear Sir or Madam,',
+      '',
+      `My name is ${person}. I subscribe to ${provider}${planName ? `, plan "${planName}"` : ''}${custId ? `, customer ID ${custId}` : ''}, sold as ${num(s.promised, 0)} Mbps${s.price ? ` for ${fmtRp(s.price, lang)} per month` : ''}.`,
+      '',
+      `On ${fmtDate(wait.sentAt, lang)} I sent a written complaint to ${provider} customer service${ticketNo ? ` (ticket number ${ticketNo})` : ''} and asked for a reply within ${REPLY_WORKDAYS} working days. That period ${wait.due ? 'ended' : 'ends'} on ${fmtDate(wait.dueAt, lang)}. As of the date of this letter I have not received a satisfactory solution.`,
+      '',
+      `My measurements (${plural(s.n, 'test', 'tests')} on ${plural(s.days, 'day', 'days')}, ${period}, with Lelet, a browser test against Cloudflare servers):`,
+      ...bullets,
+      '',
+      'Under Law No. 8 of 1999 on Consumer Protection (Article 4 letters c, d and h, Article 7 letter g and Article 19 paragraph (1)), I ask for:',
+      `1. This complaint to be recorded and passed to ${provider} for a written answer.`,
+      '2. A check of whether the service at my address matches the speed that was sold.',
+      `3. Help in reaching a settlement, including compensation or a bill adjustment if the service is found not to match the plan${s.rpLost ? ` (my own estimate: about ${fmtRp(s.rpLost, lang)} per month)` : ''}.`,
+      '',
+      'I attach a copy of my first complaint separately. The full list of tests is below.',
+      '',
+      'Note: these are my own measurements, offered as initial evidence. They are not an official measurement. Please compare them with the provider\'s data.',
+      '',
+      'Yours faithfully,',
+      person,
+      'Contact: [your phone number or email]',
+      '',
+      'Attachment - all tests:',
+      testLines(tests, lang),
+    ].join('\n');
+  }
+
+  return [
+    `${city ? city + ', ' : ''}${fmtDate(today, lang)}`,
+    '',
+    'Kepada Yth.',
+    'Layanan Pengaduan Kementerian Komunikasi dan Digital (Komdigi)',
+    `Tembusan: Layanan Pelanggan ${provider}`,
+    '',
+    `Perihal: Pengaduan lanjutan - kecepatan internet ${provider} tidak sesuai paket, keluhan pertama belum diselesaikan`,
+    '',
+    'Dengan hormat,',
+    '',
+    `Saya, ${person}, pelanggan ${provider}${planName ? ` dengan paket "${planName}"` : ''}${custId ? `, ID pelanggan ${custId}` : ''}, yang dijual dengan kecepatan ${num(s.promised, 0)} Mbps${s.price ? ` seharga ${fmtRp(s.price, lang)} per bulan` : ''}.`,
+    '',
+    `Pada ${fmtDate(wait.sentAt, lang)} saya mengirim keluhan tertulis ke layanan pelanggan ${provider}${ticketNo ? ` (nomor tiket ${ticketNo})` : ''} dan meminta tanggapan dalam ${REPLY_WORKDAYS} hari kerja. Batas waktu itu ${wait.due ? 'berakhir' : 'baru berakhir'} pada ${fmtDate(wait.dueAt, lang)}. Sampai surat ini dibuat, saya belum menerima penyelesaian yang memadai.`,
+    '',
+    `Hasil pengukuran saya (${s.n} tes pada ${s.days} hari, ${period}, dengan Lelet, tes lewat peramban ke server Cloudflare):`,
+    ...bullets,
+    '',
+    'Berdasarkan Undang-Undang Nomor 8 Tahun 1999 tentang Perlindungan Konsumen (Pasal 4 huruf c, d, dan h, Pasal 7 huruf g, serta Pasal 19 ayat (1)), saya memohon:',
+    `1. Pengaduan ini dicatat dan diteruskan kepada ${provider} untuk dijawab secara tertulis.`,
+    '2. Pemeriksaan apakah layanan di alamat saya sesuai dengan kecepatan yang dijual.',
+    `3. Bantuan penyelesaian, termasuk kompensasi atau penyesuaian tagihan bila layanan terbukti tidak sesuai paket${s.rpLost ? ` (perkiraan saya sendiri: sekitar ${fmtRp(s.rpLost, lang)} per bulan)` : ''}.`,
+    '',
+    'Salinan keluhan pertama saya lampirkan terpisah. Daftar semua tes ada di bawah.',
+    '',
+    'Catatan: ini hasil pengukuran saya sendiri sebagai bukti awal, bukan pengukuran resmi. Mohon dibandingkan dengan data penyelenggara.',
+    '',
+    'Hormat saya,',
+    person,
+    'Kontak: [nomor telepon atau email Anda]',
     '',
     'Lampiran - semua tes:',
     testLines(tests, lang),

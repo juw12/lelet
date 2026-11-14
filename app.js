@@ -58,6 +58,7 @@ function loadState() {
     plan: emptyPlan(),
     tests: [],
     settings: { mode: 'hemat', via: 'wifi', auto: 0 },
+    sent: null, // { at, ticket } once the visitor marks the first letter as sent
   };
   try {
     const saved = JSON.parse(localStorage.getItem(STORE_KEY) || 'null');
@@ -70,10 +71,18 @@ function loadState() {
     if (MODES[settings.mode]) fresh.settings.mode = settings.mode;
     if (settings.via === 'lan') fresh.settings.via = 'lan';
     if (AUTO_CHOICES.includes(settings.auto)) fresh.settings.auto = settings.auto;
+    fresh.sent = cleanSent(saved.sent);
   } catch (error) {
     // unreadable storage: start clean
   }
   return fresh;
+}
+
+function cleanSent(raw) {
+  if (!raw || typeof raw !== 'object') return null;
+  const at = Number(raw.at);
+  if (!Number.isFinite(at) || at <= 0 || at > Date.now() + 86400000) return null;
+  return { at, ticket: String(raw.ticket || '').slice(0, 40) };
 }
 
 function cleanPlan(raw) {
@@ -110,6 +119,7 @@ function save() {
 
 const run = { active: false, ctl: null, phase: '', down: null, up: null, frac: 0, error: '', note: '' };
 const letter = { kind: 'formal', edits: {} };
+const sentDraft = { date: '', ticket: '' }; // the "I sent it" form before it is saved
 let autoSince = Date.now();
 let quickOpen = false; // keep the inline plan fields on screen while the visitor is still typing in them
 let live = null; // references to the meter elements, for updates while a test runs
@@ -724,8 +734,88 @@ const letterKey = () => `${letter.kind}.${state.lang}`;
 function letterText() {
   const edited = letter.edits[letterKey()];
   if (edited !== undefined) return edited;
-  const body = core.buildLetter({ plan: state.plan, tests: state.tests, lang: state.lang, kind: letter.kind });
+  const body =
+    letter.kind === 'lanjut' && state.sent
+      ? core.buildEscalation({ plan: state.plan, tests: state.tests, lang: state.lang, sentAt: state.sent.at, ticket: state.sent.ticket })
+      : core.buildLetter({ plan: state.plan, tests: state.tests, lang: state.lang, kind: letter.kind });
   return body && hasSample() ? `${t('surat.sampletag')}\n\n${body}` : body;
+}
+
+const dateInputValue = (ts) => core.dayKey(ts); // YYYY-MM-DD in local time
+
+function parseDateInput(value) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value || '');
+  if (!match) return null;
+  const day = new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]), 12, 0, 0);
+  if (day.getMonth() !== Number(match[2]) - 1) return null; // 31 February and the like
+  const endOfToday = new Date();
+  endOfToday.setHours(23, 59, 59, 999);
+  const at = day.getTime(); // noon, so the day stays the same in any time zone shift
+  return Number.isFinite(at) && at <= endOfToday.getTime() ? at : null;
+}
+
+// What happens after the first letter: mark it sent, count the wait, offer the second letter.
+function followCard() {
+  if (hasSample()) return null;
+  const heading = h('h2', { text: t('surat.follow') });
+
+  if (!state.sent) {
+    return h(
+      'section',
+      { class: 'card', id: 'follow' },
+      heading,
+      h('p', { class: 'hint', text: t('surat.follow.intro') }),
+      h(
+        'label',
+        { class: 'field' },
+        h('span', { text: t('surat.follow.date') }),
+        h('input', {
+          type: 'date',
+          id: 'sent-date',
+          'data-sent': 'date',
+          value: sentDraft.date || dateInputValue(Date.now()),
+          max: dateInputValue(Date.now()),
+        }),
+      ),
+      h(
+        'label',
+        { class: 'field' },
+        h('span', null, t('surat.follow.ticket'), h('em', { text: ` (${t('paket.optional')})` })),
+        h('input', { type: 'text', id: 'sent-ticket', 'data-sent': 'ticket', value: sentDraft.ticket, maxlength: '40', autocomplete: 'off' }),
+      ),
+      h('button', { type: 'button', class: 'btn', 'data-act': 'sent', text: t('surat.follow.mark') }),
+    );
+  }
+
+  const wait = core.followUp(state.sent.at);
+  const sentLine = state.sent.ticket
+    ? t('surat.follow.sent.ticket', { date: core.fmtDate(state.sent.at, state.lang), ticket: state.sent.ticket })
+    : t('surat.follow.sent', { date: core.fmtDate(state.sent.at, state.lang) });
+  const status = wait.due
+    ? t('surat.follow.over', { date: core.fmtDate(wait.dueAt, state.lang) })
+    : t('surat.follow.wait', { n: wait.workdaysLeft, date: core.fmtDate(wait.dueAt, state.lang) });
+
+  return h(
+    'section',
+    { class: 'card', id: 'follow' },
+    heading,
+    h('p', { class: 'follow-sent', text: sentLine }),
+    h('p', { class: `follow-status${wait.due ? ' over' : ''}`, id: 'follow-status', text: status }),
+    h('p', { class: 'hint', text: t('surat.follow.holiday') }),
+    h(
+      'ol',
+      { class: 'where' },
+      ['surat.follow.step.1', 'surat.follow.step.2', 'surat.follow.step.3'].map((key) => h('li', { text: t(key) })),
+    ),
+    h(
+      'div',
+      { class: 'row' },
+      letter.kind === 'lanjut'
+        ? null
+        : h('button', { type: 'button', class: 'btn', 'data-act': 'kind', 'data-val': 'lanjut', text: t('surat.follow.open') }),
+      h('button', { type: 'button', class: 'btn quiet', 'data-act': 'unsent', text: t('surat.follow.undo') }),
+    ),
+  );
 }
 
 const waLink = (text) => `https://wa.me/?text=${encodeURIComponent(text)}`;
@@ -752,6 +842,20 @@ function viewSurat() {
   if (hasSample()) warnings.push(t('surat.warn.sample'));
   if (summary.verdict === 'ok') warnings.push(t('surat.warn.ok'));
   else if (summary.strength.level === 'lemah') warnings.push(t('surat.warn.weak', { n: summary.n, d: summary.days }));
+
+  if (letter.kind === 'lanjut' && (!state.sent || hasSample())) letter.kind = 'formal';
+  const isSecond = letter.kind === 'lanjut';
+  if (isSecond) {
+    const wait = core.followUp(state.sent.at);
+    if (!wait.due) warnings.push(t('surat.warn.early', { date: core.fmtDate(wait.dueAt, state.lang) }));
+    warnings.push(t('surat.warn.second'));
+  }
+
+  const kinds = [
+    { value: 'formal', label: t('surat.kind.formal') },
+    { value: 'wa', label: t('surat.kind.wa') },
+  ];
+  if (state.sent && !hasSample()) kinds.push({ value: 'lanjut', label: t('surat.kind.lanjut') });
 
   const text = letterText();
   const isWa = letter.kind === 'wa';
@@ -784,10 +888,7 @@ function viewSurat() {
   return [
     title,
     ...warnings.map((warning) => h('p', { class: 'notice', text: warning })),
-    segmented(t('surat.kind'), 'kind', letter.kind, [
-      { value: 'formal', label: t('surat.kind.formal') },
-      { value: 'wa', label: t('surat.kind.wa') },
-    ]),
+    segmented(t('surat.kind'), 'kind', letter.kind, kinds),
     h(
       'label',
       { class: 'field' },
@@ -795,6 +896,7 @@ function viewSurat() {
       h('textarea', { class: `letter${isWa ? ' short' : ''}`, id: 'letter-text', spellcheck: 'false', value: text }),
     ),
     ...actions,
+    followCard(),
     h(
       'section',
       { class: 'card' },
@@ -957,6 +1059,7 @@ function importBackup(file) {
         state.plan = cleanPlan(data.plan);
         delete state.plan.sample;
       }
+      if (!state.sent) state.sent = cleanSent(data.sent);
       invalidateLetter();
       save();
       render();
@@ -1036,7 +1139,7 @@ const ACTIONS = {
   json() {
     const plan = { ...state.plan };
     delete plan.sample;
-    const backup = { app: 'lelet', v: 1, exported: new Date().toISOString(), plan, tests: state.tests };
+    const backup = { app: 'lelet', v: 1, exported: new Date().toISOString(), plan, tests: state.tests, sent: state.sent };
     download(`lelet-${core.dayKey(Date.now())}.json`, JSON.stringify(backup, null, 2), 'application/json');
   },
   import() {
@@ -1047,13 +1150,38 @@ const ACTIONS = {
   clear() {
     if (!window.confirm(t('bukti.clear.ask'))) return;
     state.tests = [];
+    state.sent = null;
     if (state.plan.sample) state.plan = emptyPlan();
     invalidateLetter();
     save();
     render();
   },
   kind(value) {
-    letter.kind = value === 'wa' ? 'wa' : 'formal';
+    letter.kind = ['wa', 'lanjut'].includes(value) ? value : 'formal';
+    render();
+    if (value === 'lanjut') window.scrollTo(0, 0);
+  },
+  sent() {
+    if (hasSample() || !state.tests.length) return;
+    const at = parseDateInput($('#sent-date').value);
+    if (!at) {
+      toast(t('surat.follow.baddate'));
+      return;
+    }
+    state.sent = { at, ticket: $('#sent-ticket').value.trim().slice(0, 40) };
+    sentDraft.date = '';
+    sentDraft.ticket = '';
+    save();
+    render();
+    toast(t('surat.follow.saved'));
+  },
+  unsent() {
+    if (!window.confirm(t('surat.follow.undo.ask'))) return;
+    state.sent = null;
+    if (letter.kind === 'lanjut') letter.kind = 'formal';
+    delete letter.edits['lanjut.id'];
+    delete letter.edits['lanjut.en'];
+    save();
     render();
   },
   async copy() {
@@ -1095,6 +1223,10 @@ document.addEventListener('input', (event) => {
       const verdict = $('#sec-verdict');
       if (verdict) fillVerdict(verdict);
     }
+    return;
+  }
+  if (target.dataset && target.dataset.sent) {
+    sentDraft[target.dataset.sent] = target.value;
     return;
   }
   if (target.id === 'letter-text') {

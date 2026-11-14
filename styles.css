@@ -588,6 +588,7 @@ main {
 
 input[type='text'],
 input[type='number'],
+input[type='date'],
 textarea {
   width: 100%;
   min-height: 48px;
@@ -982,6 +983,31 @@ ol.where {
 
 ol.where li + li {
   margin-top: 6px;
+}
+
+/* ---------- after the letter is sent ---------- */
+
+#follow > .btn,
+#follow > .row {
+  margin-top: 14px;
+}
+
+.follow-sent {
+  margin-top: 8px;
+  font-family: var(--mono);
+  font-size: 0.86rem;
+  color: var(--ink-2);
+}
+
+.follow-status {
+  margin-top: 6px;
+  padding-left: 12px;
+  border-left: 3px solid var(--rule);
+  font-weight: 600;
+}
+
+.follow-status.over {
+  border-left-color: var(--accent);
 }
 
 details {
