@@ -1,6 +1,6 @@
 {
   "note": "What the launch test still needs from Juwen. Edited by hand; read by scripts/launch-verdict.mjs.",
-  "updated": "2026-11-14",
+  "updated": "2026-11-16",
   "statuses": {
     "done": "finished",
     "last-tap": "prepared, one tap left for Juwen",
@@ -26,7 +26,7 @@
       "title": "Send the 30 invitations, one by one",
       "status": "last-tap",
       "due": "2026-11-28",
-      "detail": "Sat 28 Nov at 10:00. The text is written; each link opens the app with the message ready. Choosing the person and pressing send is yours.",
+      "detail": "Sat 28 Nov at 10:00. The text is written; each link opens the app with the message ready. A script on your PC does the e-mail part: that morning it mails you a preview, and it sends to the people in your contact list only after you press Approve on the ReachPilot card. The contact list is still empty, so today it would send nothing. WhatsApp and Telegram stay one tap per person, because no tool may send from your account.",
       "links": [
         {
           "label": "WhatsApp",
@@ -59,10 +59,14 @@
       "title": "Ask YLKI to read the letters",
       "status": "done",
       "due": null,
-      "detail": "Sent on 14 Nov 2026 at 17:24 WIB to YLKI's consumer address, from Juwen's Gmail, with the review page attached as a PDF and five questions. No answer yet. Sending the request is not a legal review: the letters stay unchanged until a qualified person answers.",
+      "detail": "Sent on 14 Nov 2026 at 17:24 WIB to YLKI's consumer address, from Juwen's Gmail, with the review page attached as a PDF and five questions. No answer yet. On 16 Nov the page was made easier to answer (choices per question, the right to decline, the six places most likely to be wrong, what happens with an answer); the three letters and the question numbers are the same as in the PDF. Sending the request is not a legal review: the letters stay unchanged until a qualified person answers.",
       "links": [
         {
-          "label": "The page YLKI got",
+          "label": "The page YLKI got (14 Nov)",
+          "url": "https://github.com/juw12/lelet/blob/29258011b540f41154738565f2ef9e8592d31444/docs/permohonan-tinjauan.md"
+        },
+        {
+          "label": "Current page (16 Nov)",
           "url": "https://github.com/juw12/lelet/blob/main/docs/permohonan-tinjauan.md"
         },
         {
@@ -74,9 +78,9 @@
     {
       "id": "review-reply",
       "title": "Read YLKI's answer and decide what changes",
-      "status": "yours",
+      "status": "last-tap",
       "due": "2026-11-27",
-      "detail": "The answer goes to your Gmail inbox, which no tool reads. When it arrives, paste it into a chat and the letters, the tests and this page get updated. If nothing has come by Fri 27 Nov, the launch test still runs with the 'not legal advice' line; ask the second reader.",
+      "detail": "A script on your PC runs every hour. It cannot read the inbox yet: the mail script in your Google account needs its new version first (about 2 minutes, the ReachPilot card has the button). After that it looks for YLKI's answer by itself, saves it on the PC only, and shows it on the card. If nothing has come by Tue 24 Nov it sends one reminder with the same PDF, and no second one; on Thu 3 Dec it closes the request as unanswered. Deciding what changes in the letters stays with you. Until then the launch test runs with the 'not legal advice' line.",
       "links": [
         {
           "label": "Gmail: mail from YLKI",

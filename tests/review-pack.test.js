@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 
 import * as core from '../core.js';
-import { buildReviewPack, CITED_ARTICLES, LAW_SOURCES, PACK_PATH, sampleCase } from '../scripts/review-pack.mjs';
+import { buildReviewPack, CITED_ARTICLES, LAW_SOURCES, NOTED_ARTICLES, PACK_PATH, sampleCase } from '../scripts/review-pack.mjs';
 
 test('the review page on disk is exactly what the app builds today', async () => {
   const onDisk = await readFile(PACK_PATH, 'utf8');
@@ -54,4 +54,38 @@ test('the review page says plainly that no qualified person has read the letters
   const pack = buildReviewPack();
   assert.ok(pack.includes('Belum ada orang yang berwenang memberi nasihat hukum yang membaca surat-surat ini.'));
   assert.ok(pack.includes('bukan tinjauan hukum'));
+});
+
+test('related articles the letters do not cite are quoted next to their source, and stay out of the letters', () => {
+  const pack = buildReviewPack();
+  const { first, short, second } = sampleCase();
+  assert.equal(NOTED_ARTICLES.length, 5);
+  for (const [article, text, why] of NOTED_ARTICLES) {
+    assert.ok(pack.includes(`| ${article} | "${text}" | ${why} |`), article);
+  }
+  for (const letter of [first, short, second]) {
+    assert.doesNotMatch(letter, /Pasal (23|45|52)\b/);
+    assert.doesNotMatch(letter, /Pasal 19 ayat \(3\)/);
+  }
+});
+
+test('the reader keeps five numbered questions, each with lettered choices, and may decline', () => {
+  const pack = buildReviewPack();
+  const questions = pack.split('## Lima pertanyaan')[1].split('\n## ')[0];
+  const numbered = questions.split('\n').filter((line) => /^\d\. /.test(line));
+  assert.deepEqual(numbered.map((line) => line[0]), ['1', '2', '3', '4', '5']);
+  for (const line of questions.split('\n').filter((entry) => entry.includes('Pertanyaan:'))) {
+    assert.ok(line.includes('Sekarang:'), line.slice(0, 40));
+    assert.ok(line.includes('(a)') && line.includes('(b)'), line.slice(0, 40));
+  }
+  assert.equal(questions.split('Pertanyaan:').length - 1, 6);
+  assert.ok(pack.includes('Anda tidak berkewajiban menjawab.'));
+  assert.ok(pack.includes('tunjukkan lembaga yang lebih tepat'));
+});
+
+test('the review page promises nothing is published or named without written permission', () => {
+  const pack = buildReviewPack();
+  assert.ok(pack.includes('Jawaban lewat e-mail tidak saya publikasikan.'));
+  assert.ok(pack.includes('tanpa izin tertulis'));
+  assert.ok(pack.includes('satu pesan susulan saja'));
 });
