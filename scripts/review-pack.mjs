@@ -143,10 +143,10 @@ export function buildReviewPack() {
   const number = (value, digits) => core.fmtNum(value, 'id', digits);
   const estimate = `${core.fmtRp(summary.price, 'id')} x (1 - ${number(summary.down, 2)} / ${number(summary.promised, 0)}) = ${core.fmtRp(summary.rpLost, 'id')}`;
 
-  return [
+  const lines = [
     '# Permohonan tinjauan: surat keluhan yang disusun Lelet',
     '',
-    '**Cara cepat menjawab, sekitar 15 menit:** [Ringkasan](#ringkasan), lalu [Lima pertanyaan](#lima-pertanyaan), lalu tabel [Yang sudah diperiksa dan yang belum](#yang-sudah-diperiksa-dan-yang-belum). Tiga surat di bagian bawah adalah salinan lengkap dari aplikasi; untuk menjawab kelima pertanyaan, surat-surat itu boleh dilewati.',
+    '**Cara cepat menjawab, sekitar 15 menit:** [Ringkasan](#ringkasan), lalu [Lima pertanyaan](#lima-pertanyaan), lalu tabel [Yang sudah diperiksa dan yang belum](#yang-sudah-diperiksa-dan-yang-belum). Tiga surat di bagian bawah adalah salinan lengkap dari aplikasi; untuk menjawab kelima pertanyaan, surat-surat itu boleh dilewati. {{SIZE}}',
     '',
     'Saya memohon masukan atas lima pertanyaan di halaman ini tentang tiga surat keluhan yang disusun Lelet (https://juw12.github.io/lelet/), alat gratis untuk pelanggan internet rumah.',
     '',
@@ -176,10 +176,10 @@ export function buildReviewPack() {
     '',
     '## Yang sudah diperiksa dan yang belum',
     '',
-    '| Hal | Keadaan pada 16 November 2026 |',
+    '| Hal | Keadaan pada 17 November 2026 |',
     '|---|---|',
     `| Kelima pasal yang dikutip ada, dan isinya sesuai naskah undang-undang | Sudah dibandingkan kata demi kata pada 14 November 2026 dan sekali lagi pada 16 November 2026. Ini pemeriksaan bacaan dengan bantuan AI, bukan tinjauan hukum. Naskahnya: ${LAW_SOURCES.fullText} |`,
-    `| Lima pasal terkait yang tidak dikutip surat (Pasal 19 ayat (3), 23, 45 ayat (1), 52 huruf a dan e) | Bunyinya sudah dibandingkan kata demi kata pada 16 November 2026, dengan bantuan AI. Apakah pasal-pasal itu berlaku untuk kasus ini: belum dinilai. Naskahnya: ${LAW_SOURCES.fullText} |`,
+    `| Enam pasal terkait yang tidak dikutip surat (Pasal 19 ayat (2) dan (3), 23, 45 ayat (1), 52 huruf a dan e) | Bunyinya sudah dibandingkan kata demi kata pada 16 dan 17 November 2026, dengan bantuan AI. Apakah pasal-pasal itu berlaku untuk kasus ini: belum dinilai. Naskahnya: ${LAW_SOURCES.fullText} |`,
     `| UU No. 8 Tahun 1999 masih berlaku | Basis data peraturan BPK mencantumkan status "Berlaku" (dibaca 16 November 2026): ${LAW_SOURCES.status} |`,
     `| Putusan Mahkamah Konstitusi | Halaman BPK yang sama mencantumkan Putusan Nomor 235/PUU-XXIII/2025 terkait Pasal 31. Surat tidak mengutip Pasal 31. Putusan itu belum saya baca, jadi kemungkinan pengaruhnya pada pasal lain yang dikutip surat (Pasal 4, 7, dan 19) belum saya nilai; saya menandainya sebagai hal yang belum diperiksa, dan saya akan memeriksanya pada putaran pemeriksaan mingguan berikutnya, 24 November 2026. Halamannya: ${LAW_SOURCES.status} |`,
     '| Ketepatan pasal untuk kasus kecepatan internet | Belum. Lihat pertanyaan 1 dan 2. |',
@@ -287,7 +287,19 @@ export function buildReviewPack() {
     '- Jawaban lewat e-mail tidak saya publikasikan. Nama Anda atau lembaga Anda tidak saya sebut di aplikasi, di repositori, atau di tempat lain tanpa izin tertulis. Lelet tidak akan menyatakan "sudah ditinjau" tanpa izin itu.',
     '- Bila tidak ada jawaban, saya mengirim satu pesan susulan saja, lalu berhenti.',
     '',
-  ].join('\n');
+  ];
+  const page = lines.join('\n');
+
+  // The quick-path line claims "about 15 minutes"; state the measured size so the claim can be checked.
+  // Measured on the part before the letters — the part a reader actually has to read to answer.
+  const head = page.slice(0, page.indexOf('## Surat 1: keluhan kepada penyedia layanan'));
+  const words = head.split(/\s+/).filter(Boolean).length;
+  const numbers = (value) => String(value).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  return page.replace(
+    '{{SIZE}}',
+    `Bagian itu, sebelum ketiga surat, ${numbers(words)} kata — kira-kira ${Math.round(words / 200)} menit membaca biasa, `
+      + `sekitar ${Math.round(words / 160)} menit bila tabel dan tautan di dalamnya ikut diperiksa.`,
+  );
 }
 
 async function main() {

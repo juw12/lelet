@@ -1,6 +1,6 @@
 # Permohonan tinjauan: surat keluhan yang disusun Lelet
 
-**Cara cepat menjawab, sekitar 15 menit:** [Ringkasan](#ringkasan), lalu [Lima pertanyaan](#lima-pertanyaan), lalu tabel [Yang sudah diperiksa dan yang belum](#yang-sudah-diperiksa-dan-yang-belum). Tiga surat di bagian bawah adalah salinan lengkap dari aplikasi; untuk menjawab kelima pertanyaan, surat-surat itu boleh dilewati.
+**Cara cepat menjawab, sekitar 15 menit:** [Ringkasan](#ringkasan), lalu [Lima pertanyaan](#lima-pertanyaan), lalu tabel [Yang sudah diperiksa dan yang belum](#yang-sudah-diperiksa-dan-yang-belum). Tiga surat di bagian bawah adalah salinan lengkap dari aplikasi; untuk menjawab kelima pertanyaan, surat-surat itu boleh dilewati. Bagian itu, sebelum ketiga surat, 2.320 kata — kira-kira 12 menit membaca biasa, sekitar 15 menit bila tabel dan tautan di dalamnya ikut diperiksa.
 
 Saya memohon masukan atas lima pertanyaan di halaman ini tentang tiga surat keluhan yang disusun Lelet (https://juw12.github.io/lelet/), alat gratis untuk pelanggan internet rumah.
 
@@ -30,10 +30,10 @@ Setiap pertanyaan menyebut dahulu apa yang dilakukan surat sekarang, lalu piliha
 
 ## Yang sudah diperiksa dan yang belum
 
-| Hal | Keadaan pada 16 November 2026 |
+| Hal | Keadaan pada 17 November 2026 |
 |---|---|
 | Kelima pasal yang dikutip ada, dan isinya sesuai naskah undang-undang | Sudah dibandingkan kata demi kata pada 14 November 2026 dan sekali lagi pada 16 November 2026. Ini pemeriksaan bacaan dengan bantuan AI, bukan tinjauan hukum. Naskahnya: https://jdih.kemenkeu.go.id/api/download/FullText/1999/8TAHUN~1999UU.htm |
-| Lima pasal terkait yang tidak dikutip surat (Pasal 19 ayat (3), 23, 45 ayat (1), 52 huruf a dan e) | Bunyinya sudah dibandingkan kata demi kata pada 16 November 2026, dengan bantuan AI. Apakah pasal-pasal itu berlaku untuk kasus ini: belum dinilai. Naskahnya: https://jdih.kemenkeu.go.id/api/download/FullText/1999/8TAHUN~1999UU.htm |
+| Enam pasal terkait yang tidak dikutip surat (Pasal 19 ayat (2) dan (3), 23, 45 ayat (1), 52 huruf a dan e) | Bunyinya sudah dibandingkan kata demi kata pada 16 dan 17 November 2026, dengan bantuan AI. Apakah pasal-pasal itu berlaku untuk kasus ini: belum dinilai. Naskahnya: https://jdih.kemenkeu.go.id/api/download/FullText/1999/8TAHUN~1999UU.htm |
 | UU No. 8 Tahun 1999 masih berlaku | Basis data peraturan BPK mencantumkan status "Berlaku" (dibaca 16 November 2026): https://peraturan.bpk.go.id/Details/45288/uu-no-8-tahun-1999 |
 | Putusan Mahkamah Konstitusi | Halaman BPK yang sama mencantumkan Putusan Nomor 235/PUU-XXIII/2025 terkait Pasal 31. Surat tidak mengutip Pasal 31. Putusan itu belum saya baca, jadi kemungkinan pengaruhnya pada pasal lain yang dikutip surat (Pasal 4, 7, dan 19) belum saya nilai; saya menandainya sebagai hal yang belum diperiksa, dan saya akan memeriksanya pada putaran pemeriksaan mingguan berikutnya, 24 November 2026. Halamannya: https://peraturan.bpk.go.id/Details/45288/uu-no-8-tahun-1999 |
 | Ketepatan pasal untuk kasus kecepatan internet | Belum. Lihat pertanyaan 1 dan 2. |
