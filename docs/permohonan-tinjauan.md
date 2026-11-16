@@ -1,14 +1,16 @@
 # Permohonan tinjauan: surat keluhan yang disusun Lelet
 
-Versi 16 November 2026. Disusun oleh Juwen Lie, pembuat Lelet.
+Versi 17 November 2026. Disusun oleh Juwen Lie, pembuat Lelet.
 Ketiga surat dan nomor kelima pertanyaan sama dengan versi 14 November 2026 yang dikirim sebagai PDF. Yang ditambah sesudahnya hanya penjelasan: rumusan pertanyaan, catatan sumber, keterangan tentang penyusun, dan cara menjawab.
 Halaman ini dibuat oleh `scripts/review-pack.mjs` dari kode aplikasi, sehingga ketiga surat di bawah sama persis dengan yang dihasilkan aplikasi.
 
+**Cara cepat menjawab:** cukup "Ringkasan", "Lima pertanyaan", dan tabel "Yang sudah diperiksa dan yang belum" - sekitar 15 menit. Tiga surat di bawah adalah salinan lengkap dari aplikasi; untuk menjawab pertanyaan, surat-surat itu boleh dilewati.
+
 ## Ringkasan
 
-Lelet (https://juw12.github.io/lelet/) adalah alat gratis untuk pelanggan internet rumah. Pelanggan mengukur kecepatan beberapa kali, lalu Lelet menyusun surat keluhan kepada penyedia layanan. Bila tidak ada penyelesaian dalam 7 hari kerja, Lelet menyusun surat kedua kepada Komdigi. Pelanggan mengirim sendiri surat itu atas namanya sendiri. Lelet tidak mengirim apa pun.
+Saya memohon masukan atas lima pertanyaan berikut tentang tiga surat keluhan yang disusun Lelet (https://juw12.github.io/lelet/), alat gratis untuk pelanggan internet rumah. Pelanggan mengukur kecepatan beberapa kali, lalu Lelet menyusun surat keluhan kepada penyedia layanan. Bila tidak ada penyelesaian dalam 7 hari kerja, Lelet menyusun surat kedua kepada Komdigi. Pelanggan mengirim sendiri surat itu atas namanya sendiri. Lelet tidak mengirim apa pun.
 
-Saya bukan pengacara. Belum ada orang yang berwenang memberi nasihat hukum yang membaca surat-surat ini. Yang sudah dilakukan hanya pemeriksaan bacaan: setiap pasal yang dikutip dibandingkan dengan naskah undang-undang, dengan bantuan asisten AI. Karena itu saya memohon masukan atas lima pertanyaan berikut.
+Saya bukan pengacara. Belum ada orang yang berwenang memberi nasihat hukum yang membaca surat-surat ini. Yang sudah dilakukan hanya pemeriksaan bacaan: setiap pasal yang dikutip dibandingkan dengan naskah undang-undang, dengan bantuan asisten AI. Karena itu masukan Anda atas kelima pertanyaan itu sangat berarti bagi saya.
 
 Anda tidak berkewajiban menjawab. Bila permohonan ini bukan untuk Anda, silakan abaikan, teruskan kepada rekan, atau tunjukkan lembaga yang lebih tepat. Setiap pertanyaan dapat dijawab dengan satu huruf, misalnya "1a, 2b, 3b". Jawaban atas satu pertanyaan saja sudah membantu. Cara menjawab: balas e-mail pengantar, atau tulis di https://github.com/juw12/lelet/issues (terbuka untuk umum).
 
@@ -18,7 +20,7 @@ Setiap pertanyaan menyebut dahulu apa yang dilakukan surat sekarang, lalu piliha
 
 1. **Ketepatan pasal.** Sekarang: surat merujuk Pasal 4 huruf c, d, h; Pasal 7 huruf g; dan Pasal 19 ayat (1) UU No. 8 Tahun 1999. Bunyinya ada di tabel "Pasal yang dikutip surat". Pertanyaan: untuk keluhan kecepatan internet di bawah paket, rujukan itu (a) sudah tepat; (b) ada pasal yang sebaiknya dihapus; atau (c) ada pasal yang sebaiknya ditambahkan?
 2. **Kata "kerugian".** Sekarang: surat menyebut Pasal 19 ayat (1) di antara dasar permintaannya, termasuk permintaan kompensasi atau penyesuaian tagihan. Ayat itu berbicara tentang "kerugian konsumen". Pertanyaan: kecepatan di bawah paket (a) dapat disebut kerugian konsumen menurut ayat itu, sehingga rujukan dipertahankan; atau (b) sebaiknya surat hanya bersandar pada Pasal 4 huruf h dan Pasal 7 huruf g?
-3. **Kata "hingga".** Sekarang: surat membandingkan hasil ukur dengan kecepatan paket yang diketik pelanggan, memakai perihal "tidak sesuai paket", dan tidak menanggapi kata "hingga" (up to) yang, sejauh yang saya lihat, dipakai banyak paket. Pertanyaan: (a) biarkan seperti sekarang; (b) tambahkan satu kalimat yang mengakui kata "hingga" dan menyatakan bahwa hasil ukur berulang kali jauh di bawah angka itu; atau (c) ganti "tidak sesuai paket" dengan penyebutan selisihnya saja?
+3. **Kata "hingga".** Sekarang: surat membandingkan hasil ukur dengan kecepatan paket yang diketik pelanggan, memakai perihal "tidak sesuai paket", dan tidak menanggapi kata "hingga" (up to) yang, menurut kesan saya dari brosur paket (belum saya buktikan dengan data), dipakai banyak paket. Pertanyaan: (a) biarkan seperti sekarang; (b) tambahkan satu kalimat yang mengakui kata "hingga" dan menyatakan bahwa hasil ukur berulang kali jauh di bawah angka itu; atau (c) ganti "tidak sesuai paket" dengan penyebutan selisihnya saja?
 4. **Tenggat 7 hari kerja.** Sekarang: surat menulis "Saya menunggu tanggapan dalam 7 hari kerja" sebagai permintaan pelanggan, bukan sebagai tenggat menurut undang-undang, lalu menyebut akan meneruskan keluhan ke Komdigi, YLKI, atau BPSK. Pertanyaan: rumusan itu (a) wajar dan aman bagi pengirim; (b) perlu diubah supaya tidak terbaca sebagai tenggat hukum atau ancaman; atau (c) sebaiknya dihapus?
 5. **Peraturan lain dan kalimat berisiko.** Dua bagian; masing-masing dapat dijawab sendiri.
    - **5a.** Sekarang: surat hanya merujuk UU No. 8 Tahun 1999 dan tidak merujuk peraturan kualitas layanan telekomunikasi apa pun. Dua peraturan yang saya temukan tetapi belum saya baca ada di bawah. Pertanyaan: (a) cukup UU No. 8 Tahun 1999; atau (b) ada peraturan yang sebaiknya dirujuk (mohon sebut nomornya)?
@@ -28,24 +30,24 @@ Setiap pertanyaan menyebut dahulu apa yang dilakukan surat sekarang, lalu piliha
 
 | Hal | Keadaan pada 16 November 2026 |
 |---|---|
-| Kelima pasal yang dikutip ada, dan isinya sesuai naskah undang-undang | Sudah dibandingkan kata demi kata pada 14 November 2026 dan sekali lagi pada 16 November 2026. Ini pemeriksaan bacaan dengan bantuan AI, bukan tinjauan hukum. |
-| Lima pasal terkait yang tidak dikutip surat (Pasal 19 ayat (3), 23, 45 ayat (1), 52 huruf a dan e) | Bunyinya sudah dibandingkan kata demi kata pada 16 November 2026, dengan bantuan AI. Apakah pasal-pasal itu berlaku untuk kasus ini: belum dinilai. |
+| Kelima pasal yang dikutip ada, dan isinya sesuai naskah undang-undang | Sudah dibandingkan kata demi kata pada 14 November 2026 dan sekali lagi pada 16 November 2026. Ini pemeriksaan bacaan dengan bantuan AI, bukan tinjauan hukum. Naskahnya: https://jdih.kemenkeu.go.id/api/download/FullText/1999/8TAHUN~1999UU.htm |
+| Lima pasal terkait yang tidak dikutip surat (Pasal 19 ayat (3), 23, 45 ayat (1), 52 huruf a dan e) | Bunyinya sudah dibandingkan kata demi kata pada 16 November 2026, dengan bantuan AI. Apakah pasal-pasal itu berlaku untuk kasus ini: belum dinilai. Naskahnya: https://jdih.kemenkeu.go.id/api/download/FullText/1999/8TAHUN~1999UU.htm |
 | UU No. 8 Tahun 1999 masih berlaku | Basis data peraturan BPK mencantumkan status "Berlaku" (dibaca 16 November 2026): https://peraturan.bpk.go.id/Details/45288/uu-no-8-tahun-1999 |
-| Putusan Mahkamah Konstitusi | Halaman BPK yang sama mencantumkan Putusan Nomor 235/PUU-XXIII/2025 terkait Pasal 31. Surat tidak mengutip Pasal 31. Putusan itu belum saya baca. |
+| Putusan Mahkamah Konstitusi | Halaman BPK yang sama mencantumkan Putusan Nomor 235/PUU-XXIII/2025 terkait Pasal 31. Surat tidak mengutip Pasal 31. Putusan itu belum saya baca. Halamannya: https://peraturan.bpk.go.id/Details/45288/uu-no-8-tahun-1999 |
 | Ketepatan pasal untuk kasus kecepatan internet | Belum. Lihat pertanyaan 1 dan 2. |
 | Kata "hingga" dalam paket | Belum. Lihat pertanyaan 3. |
-| Peraturan kualitas layanan telekomunikasi | Judul dan status sudah diperiksa, isinya belum dibaca. Lihat pertanyaan 5a. |
+| Peraturan kualitas layanan telekomunikasi | Judul dan status sudah diperiksa, isinya belum dibaca. Lihat pertanyaan 5a. Tautannya: https://peraturan.bpk.go.id/Details/203113/permenkominfo-no-13-tahun-2019 dan https://peraturan.bpk.go.id/Details/203070/permenkominfo-no-5-tahun-2021 |
 
 ## Bagian yang menurut saya paling mungkin keliru
 
 Saya menandainya di sini supaya Anda tidak perlu mencarinya sendiri.
 
-- Pasal 19 ayat (1) berbicara tentang "kerugian konsumen akibat mengkonsumsi barang dan/atau jasa". Surat memakainya untuk kecepatan di bawah paket. (Pertanyaan 2)
-- Perihal surat berbunyi "tidak sesuai paket", padahal surat tidak menanggapi kata "hingga". (Pertanyaan 3)
-- "7 hari kerja" dapat terbaca sebagai tenggat Pasal 19 ayat (3), padahal bukan. (Pertanyaan 4)
-- Angka rupiah dihitung dengan rumus buatan saya. Saya tidak menemukan dasar hukum untuk rumus itu. (Pertanyaan 5b)
-- Surat versi singkat hanya menulis "Pasal 4 dan 19", tanpa huruf dan ayat, sehingga lebih longgar daripada surat lengkap. (Pertanyaan 1)
-- Surat menyebut YLKI dan BPSK sebagai tujuan lanjutan. Saya belum meminta persetujuan YLKI untuk disebut. Bila YLKI berkeberatan, nama itu saya hapus dari surat. (Pertanyaan 4)
+- Pasal 19 ayat (1) berbicara tentang "kerugian konsumen akibat mengkonsumsi barang dan/atau jasa". Surat memakainya untuk kecepatan di bawah paket. (Pertanyaan 2) Risikonya: bila kecepatan di bawah paket tidak termasuk "kerugian" menurut ayat itu, permintaan kompensasi kehilangan dasarnya.
+- Perihal surat berbunyi "tidak sesuai paket", padahal surat tidak menanggapi kata "hingga". (Pertanyaan 3) Risikonya: penyedia dapat menjawab bahwa kata "hingga" membuat angka paket menjadi batas atas, bukan janji.
+- "7 hari kerja" dapat terbaca sebagai tenggat Pasal 19 ayat (3), padahal bukan. (Pertanyaan 4) Risikonya: kalimat itu dapat terbaca sebagai ancaman atau sebagai tenggat yang tidak punya dasar hukum.
+- Angka rupiah dihitung dengan rumus buatan saya. Saya tidak menemukan dasar hukum untuk rumus itu. (Pertanyaan 5b) Risikonya: angka tanpa dasar hukum dapat dianggap tuntutan yang mengada-ada dan melemahkan bagian surat yang lain.
+- Surat versi singkat hanya menulis "Pasal 4 dan 19", tanpa huruf dan ayat, sehingga lebih longgar daripada surat lengkap. (Pertanyaan 1) Risikonya: rujukan yang lebih longgar lebih mudah dibantah.
+- Surat menyebut YLKI dan BPSK sebagai tujuan lanjutan. Saya belum meminta persetujuan YLKI untuk disebut. Bila YLKI berkeberatan, nama itu saya hapus dari surat. (Pertanyaan 4) Risikonya: menyebut lembaga tanpa izin dapat terbaca sebagai mengatasnamakan mereka.
 
 ## Pasal yang dikutip surat
 
@@ -75,7 +77,7 @@ Surat tidak mengutip pasal-pasal ini. Saya mencantumkannya karena berkaitan deng
 
 ## Peraturan yang ditemukan tetapi belum dibaca
 
-Surat tidak mengutip peraturan di bawah ini karena isinya belum saya baca. Judul dan statusnya dibaca di basis data peraturan BPK pada 16 November 2026.
+Surat tidak mengutip peraturan di bawah ini karena isinya belum saya baca. Judul dan statusnya dibaca di basis data peraturan BPK pada 14 November 2026 dan sekali lagi pada 16 November 2026, lewat pencarian judul di situs itu. Pencariannya tidak sistematis, jadi daftar ini bukan daftar lengkap peraturan yang ada.
 
 | Peraturan | Status menurut basis data BPK | Tautan |
 |---|---|---|
@@ -152,6 +154,8 @@ Terima kasih. [nama Anda]
 ## Surat 2: pengaduan lanjutan kepada Komdigi
 
 Disusun bila 7 hari kerja sudah lewat sejak surat pertama dikirim. Dalam contoh ini surat pertama dikirim pada 14 November 2026.
+
+Lampiran tes di Surat 2 sengaja sama dengan Surat 1: surat ini dikirim terpisah ke Komdigi, jadi pembacanya tidak melihat Surat 1. Untuk membaca halaman ini, lampiran itu boleh dilewati.
 
 ```text
 26 November 2026
