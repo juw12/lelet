@@ -146,7 +146,7 @@ export function buildReviewPack() {
   const lines = [
     '# Permohonan tinjauan: surat keluhan yang disusun Lelet',
     '',
-    '**Cara cepat menjawab:** [Ringkasan](#ringkasan), lalu [Lima pertanyaan](#lima-pertanyaan), lalu tabel [Yang sudah diperiksa dan yang belum](#yang-sudah-diperiksa-dan-yang-belum). Tiga surat di bagian bawah adalah salinan lengkap dari aplikasi; untuk menjawab kelima pertanyaan, surat-surat itu boleh dilewati. {{SIZE}}',
+    '**Cara cepat menjawab, sekitar 15 menit:** [Ringkasan](#ringkasan), lalu [Lima pertanyaan](#lima-pertanyaan), lalu tabel [Yang sudah diperiksa dan yang belum](#yang-sudah-diperiksa-dan-yang-belum). Tiga surat di bagian bawah adalah salinan lengkap dari aplikasi; untuk menjawab kelima pertanyaan, surat-surat itu boleh dilewati. {{SIZE}}',
     '',
     'Saya memohon masukan atas lima pertanyaan di halaman ini tentang tiga surat keluhan yang disusun Lelet (https://juw12.github.io/lelet/), alat gratis untuk pelanggan internet rumah.',
     '',
@@ -156,7 +156,7 @@ export function buildReviewPack() {
     '',
     '## Ringkasan',
     '',
-    'Lelet (https://juw12.github.io/lelet/) adalah alat gratis untuk pelanggan internet rumah. Pelanggan mengukur kecepatan beberapa kali, lalu Lelet menyusun surat keluhan kepada penyedia layanan. Bila tidak ada penyelesaian dalam 7 hari kerja, Lelet menyusun surat kedua kepada Komdigi. Pelanggan mengirim sendiri surat itu atas namanya sendiri. Lelet tidak mengirim apa pun.',
+    'Lelet (https://juw12.github.io/lelet/) adalah alat gratis untuk pelanggan internet rumah. Pelanggan mengukur kecepatan beberapa kali, lalu Lelet menyusun surat keluhan kepada penyedia layanan. Bila tidak ada penyelesaian dalam 7 hari kerja, Lelet menyusun surat kedua kepada Komdigi. Pelanggan mengirim sendiri surat itu atas namanya sendiri. Lelet tidak mengirim apa pun (kodenya terbuka: https://github.com/juw12/lelet).',
     '',
     'Saya bukan pengacara. Belum ada orang yang berwenang memberi nasihat hukum yang membaca surat-surat ini. Yang sudah dilakukan hanya pemeriksaan bacaan: setiap pasal yang dikutip dibandingkan dengan naskah undang-undang, dengan bantuan asisten AI. Karena itu masukan Anda atas kelima pertanyaan itu sangat berarti bagi saya.',
     '',
@@ -184,7 +184,7 @@ export function buildReviewPack() {
     `| Putusan Mahkamah Konstitusi | Halaman BPK yang sama mencantumkan Putusan Nomor 235/PUU-XXIII/2025 terkait Pasal 31. Surat tidak mengutip Pasal 31. Putusan itu belum saya baca, jadi kemungkinan pengaruhnya pada pasal lain yang dikutip surat (Pasal 4, 7, dan 19) belum saya nilai; saya menandainya sebagai hal yang belum diperiksa, dan saya akan memeriksanya pada putaran pemeriksaan mingguan berikutnya, 24 November 2026. Halamannya: ${LAW_SOURCES.status} |`,
     '| Ketepatan pasal untuk kasus kecepatan internet | Belum. Lihat pertanyaan 1 dan 2. |',
     '| Kata "hingga" dalam paket | Belum. Lihat pertanyaan 3. |',
-    `| Peraturan kualitas layanan telekomunikasi | Sudah dibaca 17 November 2026; bunyi pasal yang berkaitan ada di bagian "Peraturan kualitas layanan telekomunikasi yang saya temukan". Lihat pertanyaan 5a. Tautannya: ${SERVICE_RULES.map(([, , link]) => link).join(' dan ')} |`,
+    `| Peraturan kualitas layanan telekomunikasi | Ditemukan lewat pencarian judul, tidak menyeluruh. Sudah dibaca 17 November 2026; bunyi pasal yang berkaitan ada di bagian "Peraturan kualitas layanan telekomunikasi yang saya temukan". Lihat pertanyaan 5a. Tautannya: ${SERVICE_RULES.map(([, , link]) => link).join(' dan ')} |`,
     '',
     '## Bagian yang menurut saya paling mungkin keliru',
     '',
@@ -300,7 +300,7 @@ export function buildReviewPack() {
   return page.replace(
     '{{SIZE}}',
     `Bagian itu, sebelum ketiga surat, ${numbers(words)} kata — kira-kira ${Math.round(words / 200)} menit membaca biasa, `
-      + `sekitar ${Math.round(words / 120)} menit bila tabel, tautan, dan pasal di dalamnya ikut diperiksa. Pemeriksaan hukum yang sungguh-sungguh tentu lebih lama; ini hanya perkiraan membaca.`,
+      + `sekitar ${Math.round(words / 170)} menit bila tabel dan tautan di dalamnya ikut diperiksa. Bila pasal-pasalnya ikut dinilai satu per satu, waktunya lebih lama; angka ini hanya perkiraan membaca.`,
   );
 }
 
