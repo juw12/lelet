@@ -1,14 +1,16 @@
 # Permohonan tinjauan: surat keluhan yang disusun Lelet
 
+**Cara cepat menjawab, sekitar 15 menit:** [Ringkasan](#ringkasan), lalu [Lima pertanyaan](#lima-pertanyaan), lalu tabel [Yang sudah diperiksa dan yang belum](#yang-sudah-diperiksa-dan-yang-belum). Tiga surat di bagian bawah adalah salinan lengkap dari aplikasi; untuk menjawab kelima pertanyaan, surat-surat itu boleh dilewati.
+
+Saya memohon masukan atas lima pertanyaan di halaman ini tentang tiga surat keluhan yang disusun Lelet (https://juw12.github.io/lelet/), alat gratis untuk pelanggan internet rumah.
+
 Versi 17 November 2026. Disusun oleh Juwen Lie, pembuat Lelet.
 Ketiga surat dan nomor kelima pertanyaan sama dengan versi 14 November 2026 yang dikirim sebagai PDF. Yang ditambah sesudahnya hanya penjelasan: rumusan pertanyaan, catatan sumber, keterangan tentang penyusun, dan cara menjawab.
-Halaman ini dibuat oleh `scripts/review-pack.mjs` dari kode aplikasi, sehingga ketiga surat di bawah sama persis dengan yang dihasilkan aplikasi.
-
-**Cara cepat menjawab:** cukup "Ringkasan", "Lima pertanyaan", dan tabel "Yang sudah diperiksa dan yang belum" - sekitar 15 menit. Tiga surat di bawah adalah salinan lengkap dari aplikasi; untuk menjawab pertanyaan, surat-surat itu boleh dilewati.
+Halaman ini dibuat oleh `scripts/review-pack.mjs` dari kode aplikasi, sehingga ketiga surat di bawah sama persis dengan yang dihasilkan aplikasi. Kode hitungan anonim yang disebut di "Cara surat dipakai" ada di https://github.com/juw12/lelet/blob/main/counter.js
 
 ## Ringkasan
 
-Saya memohon masukan atas lima pertanyaan berikut tentang tiga surat keluhan yang disusun Lelet (https://juw12.github.io/lelet/), alat gratis untuk pelanggan internet rumah. Pelanggan mengukur kecepatan beberapa kali, lalu Lelet menyusun surat keluhan kepada penyedia layanan. Bila tidak ada penyelesaian dalam 7 hari kerja, Lelet menyusun surat kedua kepada Komdigi. Pelanggan mengirim sendiri surat itu atas namanya sendiri. Lelet tidak mengirim apa pun.
+Lelet (https://juw12.github.io/lelet/) adalah alat gratis untuk pelanggan internet rumah. Pelanggan mengukur kecepatan beberapa kali, lalu Lelet menyusun surat keluhan kepada penyedia layanan. Bila tidak ada penyelesaian dalam 7 hari kerja, Lelet menyusun surat kedua kepada Komdigi. Pelanggan mengirim sendiri surat itu atas namanya sendiri. Lelet tidak mengirim apa pun.
 
 Saya bukan pengacara. Belum ada orang yang berwenang memberi nasihat hukum yang membaca surat-surat ini. Yang sudah dilakukan hanya pemeriksaan bacaan: setiap pasal yang dikutip dibandingkan dengan naskah undang-undang, dengan bantuan asisten AI. Karena itu masukan Anda atas kelima pertanyaan itu sangat berarti bagi saya.
 
@@ -18,7 +20,7 @@ Anda tidak berkewajiban menjawab. Bila permohonan ini bukan untuk Anda, silakan 
 
 Setiap pertanyaan menyebut dahulu apa yang dilakukan surat sekarang, lalu pilihannya.
 
-1. **Ketepatan pasal.** Sekarang: surat merujuk Pasal 4 huruf c, d, h; Pasal 7 huruf g; dan Pasal 19 ayat (1) UU No. 8 Tahun 1999. Bunyinya ada di tabel "Pasal yang dikutip surat". Pertanyaan: untuk keluhan kecepatan internet di bawah paket, rujukan itu (a) sudah tepat; (b) ada pasal yang sebaiknya dihapus; atau (c) ada pasal yang sebaiknya ditambahkan?
+1. **Ketepatan pasal.** Sekarang: surat merujuk Pasal 4 huruf c, d, h; Pasal 7 huruf g; dan Pasal 19 ayat (1) UU No. 8 Tahun 1999. Bunyinya ada di [tabel "Pasal yang dikutip surat"](#pasal-yang-dikutip-surat). Pertanyaan: untuk keluhan kecepatan internet di bawah paket, rujukan itu (a) sudah tepat; (b) ada pasal yang sebaiknya dihapus; atau (c) ada pasal yang sebaiknya ditambahkan?
 2. **Kata "kerugian".** Sekarang: surat menyebut Pasal 19 ayat (1) di antara dasar permintaannya, termasuk permintaan kompensasi atau penyesuaian tagihan. Ayat itu berbicara tentang "kerugian konsumen". Pertanyaan: kecepatan di bawah paket (a) dapat disebut kerugian konsumen menurut ayat itu, sehingga rujukan dipertahankan; atau (b) sebaiknya surat hanya bersandar pada Pasal 4 huruf h dan Pasal 7 huruf g?
 3. **Kata "hingga".** Sekarang: surat membandingkan hasil ukur dengan kecepatan paket yang diketik pelanggan, memakai perihal "tidak sesuai paket", dan tidak menanggapi kata "hingga" (up to) yang, menurut kesan saya dari brosur paket (belum saya buktikan dengan data), dipakai banyak paket. Pertanyaan: (a) biarkan seperti sekarang; (b) tambahkan satu kalimat yang mengakui kata "hingga" dan menyatakan bahwa hasil ukur berulang kali jauh di bawah angka itu; atau (c) ganti "tidak sesuai paket" dengan penyebutan selisihnya saja?
 4. **Tenggat 7 hari kerja.** Sekarang: surat menulis "Saya menunggu tanggapan dalam 7 hari kerja" sebagai permintaan pelanggan, bukan sebagai tenggat menurut undang-undang, lalu menyebut akan meneruskan keluhan ke Komdigi, YLKI, atau BPSK. Pertanyaan: rumusan itu (a) wajar dan aman bagi pengirim; (b) perlu diubah supaya tidak terbaca sebagai tenggat hukum atau ancaman; atau (c) sebaiknya dihapus?
@@ -33,7 +35,7 @@ Setiap pertanyaan menyebut dahulu apa yang dilakukan surat sekarang, lalu piliha
 | Kelima pasal yang dikutip ada, dan isinya sesuai naskah undang-undang | Sudah dibandingkan kata demi kata pada 14 November 2026 dan sekali lagi pada 16 November 2026. Ini pemeriksaan bacaan dengan bantuan AI, bukan tinjauan hukum. Naskahnya: https://jdih.kemenkeu.go.id/api/download/FullText/1999/8TAHUN~1999UU.htm |
 | Lima pasal terkait yang tidak dikutip surat (Pasal 19 ayat (3), 23, 45 ayat (1), 52 huruf a dan e) | Bunyinya sudah dibandingkan kata demi kata pada 16 November 2026, dengan bantuan AI. Apakah pasal-pasal itu berlaku untuk kasus ini: belum dinilai. Naskahnya: https://jdih.kemenkeu.go.id/api/download/FullText/1999/8TAHUN~1999UU.htm |
 | UU No. 8 Tahun 1999 masih berlaku | Basis data peraturan BPK mencantumkan status "Berlaku" (dibaca 16 November 2026): https://peraturan.bpk.go.id/Details/45288/uu-no-8-tahun-1999 |
-| Putusan Mahkamah Konstitusi | Halaman BPK yang sama mencantumkan Putusan Nomor 235/PUU-XXIII/2025 terkait Pasal 31. Surat tidak mengutip Pasal 31. Putusan itu belum saya baca. Halamannya: https://peraturan.bpk.go.id/Details/45288/uu-no-8-tahun-1999 |
+| Putusan Mahkamah Konstitusi | Halaman BPK yang sama mencantumkan Putusan Nomor 235/PUU-XXIII/2025 terkait Pasal 31. Surat tidak mengutip Pasal 31. Putusan itu belum saya baca, jadi kemungkinan pengaruhnya pada pasal lain yang dikutip surat (Pasal 4, 7, dan 19) belum saya nilai; saya menandainya sebagai hal yang belum diperiksa. Halamannya: https://peraturan.bpk.go.id/Details/45288/uu-no-8-tahun-1999 |
 | Ketepatan pasal untuk kasus kecepatan internet | Belum. Lihat pertanyaan 1 dan 2. |
 | Kata "hingga" dalam paket | Belum. Lihat pertanyaan 3. |
 | Peraturan kualitas layanan telekomunikasi | Judul dan status sudah diperiksa, isinya belum dibaca. Lihat pertanyaan 5a. Tautannya: https://peraturan.bpk.go.id/Details/203113/permenkominfo-no-13-tahun-2019 dan https://peraturan.bpk.go.id/Details/203070/permenkominfo-no-5-tahun-2021 |
@@ -96,6 +98,9 @@ Surat tidak mengutip peraturan di bawah ini karena isinya belum saya baca. Judul
 
 Data contoh, bukan pelanggan sungguhan. "Contoh Net" bukan nama penyedia yang nyata.
 
+<details>
+<summary>Buka salinan lengkap Surat 1 (dari aplikasi)</summary>
+
 ```text
 14 November 2026
 
@@ -142,7 +147,12 @@ Lampiran - semua tes:
 12.  2026-11-13 21:18  unduh 10,8 Mbps  unggah 12,0 Mbps  21 ms  Wi-Fi
 ```
 
+</details>
+
 ## Surat 1 versi singkat, untuk pesan WhatsApp
+
+<details>
+<summary>Buka salinan lengkap Surat 1 versi singkat</summary>
 
 ```text
 Halo Contoh Net, saya pelanggan Anda.
@@ -151,11 +161,16 @@ Mohon dicek dan diperbaiki, atau tagihan saya disesuaikan (UU 8/1999 Perlindunga
 Terima kasih. [nama Anda]
 ```
 
+</details>
+
 ## Surat 2: pengaduan lanjutan kepada Komdigi
 
 Disusun bila 7 hari kerja sudah lewat sejak surat pertama dikirim. Dalam contoh ini surat pertama dikirim pada 14 November 2026.
 
 Lampiran tes di Surat 2 sengaja sama dengan Surat 1: surat ini dikirim terpisah ke Komdigi, jadi pembacanya tidak melihat Surat 1. Untuk membaca halaman ini, lampiran itu boleh dilewati.
+
+<details>
+<summary>Buka salinan lengkap Surat 2 (dari aplikasi)</summary>
 
 ```text
 26 November 2026
@@ -206,6 +221,8 @@ Lampiran - semua tes:
 11.  2026-11-13 19:17  unduh 15,6 Mbps  unggah 11,0 Mbps  18 ms  Wi-Fi
 12.  2026-11-13 21:18  unduh 10,8 Mbps  unggah 12,0 Mbps  21 ms  Wi-Fi
 ```
+
+</details>
 
 ## Cara memberi masukan dan apa yang terjadi sesudahnya
 
