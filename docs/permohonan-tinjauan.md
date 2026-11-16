@@ -20,12 +20,12 @@ Anda tidak berkewajiban menjawab. Bila permohonan ini bukan untuk Anda, silakan 
 
 Setiap pertanyaan menyebut dahulu apa yang dilakukan surat sekarang, lalu pilihannya.
 
-1. **Ketepatan pasal.** Sekarang: surat merujuk Pasal 4 huruf c, d, h; Pasal 7 huruf g; dan Pasal 19 ayat (1) UU No. 8 Tahun 1999. Bunyinya ada di [tabel "Pasal yang dikutip surat"](#pasal-yang-dikutip-surat). Pertanyaan: untuk keluhan kecepatan internet di bawah paket, rujukan itu (a) sudah tepat; (b) ada pasal yang sebaiknya dihapus; atau (c) ada pasal yang sebaiknya ditambahkan?
+1. **Ketepatan pasal.** Sekarang: Surat 1, surat lengkap, merujuk Pasal 4 huruf c, d, h; Pasal 7 huruf g; dan Pasal 19 ayat (1) UU No. 8 Tahun 1999. Bunyinya ada di [tabel "Pasal yang dikutip surat"](#pasal-yang-dikutip-surat). Pertanyaan: untuk keluhan kecepatan internet di bawah paket, rujukan itu (a) sudah tepat; (b) ada pasal yang sebaiknya dihapus; atau (c) ada pasal yang sebaiknya ditambahkan? (Pertanyaan ini tentang Surat 1; surat versi singkat menulis "UU 8/1999 Perlindungan Konsumen, Pasal 4 dan 19", tanpa huruf dan ayat — sudah ditandai di bagian risiko.)
 2. **Kata "kerugian".** Sekarang: surat menyebut Pasal 19 ayat (1) di antara dasar permintaannya, termasuk permintaan kompensasi atau penyesuaian tagihan. Ayat itu berbicara tentang "kerugian konsumen". Pertanyaan: kecepatan di bawah paket (a) dapat disebut kerugian konsumen menurut ayat itu, sehingga rujukan dipertahankan; atau (b) sebaiknya surat hanya bersandar pada Pasal 4 huruf h dan Pasal 7 huruf g?
-3. **Kata "hingga".** Sekarang: surat membandingkan hasil ukur dengan kecepatan paket yang diketik pelanggan, memakai perihal "tidak sesuai paket", dan tidak menanggapi kata "hingga" (up to) yang, menurut kesan saya dari brosur paket (belum saya buktikan dengan data), dipakai banyak paket. Pertanyaan: (a) biarkan seperti sekarang; (b) tambahkan satu kalimat yang mengakui kata "hingga" dan menyatakan bahwa hasil ukur berulang kali jauh di bawah angka itu; atau (c) ganti "tidak sesuai paket" dengan penyebutan selisihnya saja?
+3. **Kata "hingga".** Sekarang: surat membandingkan hasil ukur dengan kecepatan paket yang diketik pelanggan. Perihal Surat 1 persisnya berbunyi "Keluhan kecepatan internet tidak sesuai paket". Surat tidak menanggapi kata "hingga" (up to) yang, menurut kesan saya dari brosur paket (belum saya buktikan dengan data), dipakai banyak paket. Pertanyaan: (a) biarkan seperti sekarang; (b) tambahkan satu kalimat yang mengakui kata "hingga" dan menyatakan bahwa hasil ukur berulang kali jauh di bawah angka itu; atau (c) ganti "tidak sesuai paket" dengan penyebutan selisihnya saja?
 4. **Tenggat 7 hari kerja.** Sekarang: surat menulis "Saya menunggu tanggapan dalam 7 hari kerja" sebagai permintaan pelanggan, bukan sebagai tenggat menurut undang-undang, lalu menyebut akan meneruskan keluhan ke Komdigi, YLKI, atau BPSK. Pertanyaan: rumusan itu (a) wajar dan aman bagi pengirim; (b) perlu diubah supaya tidak terbaca sebagai tenggat hukum atau ancaman; atau (c) sebaiknya dihapus?
 5. **Peraturan lain dan kalimat berisiko.** Dua bagian; masing-masing dapat dijawab sendiri.
-   - **5a.** Sekarang: surat hanya merujuk UU No. 8 Tahun 1999 dan tidak merujuk peraturan kualitas layanan telekomunikasi apa pun. Dua peraturan yang saya temukan tetapi belum saya baca ada di bawah. Pertanyaan: (a) cukup UU No. 8 Tahun 1999; atau (b) ada peraturan yang sebaiknya dirujuk (mohon sebut nomornya)?
+   - **5a.** Sekarang: surat hanya merujuk UU No. 8 Tahun 1999 dan tidak merujuk peraturan kualitas layanan telekomunikasi apa pun. Dua peraturan yang saya temukan sudah saya baca pada 17 November 2026; bunyi pasalnya ada di [bagian "Peraturan kualitas layanan telekomunikasi yang saya temukan"](#peraturan-kualitas-layanan-telekomunikasi-yang-saya-temukan). Pertanyaan: (a) cukup UU No. 8 Tahun 1999; atau (b) ada peraturan yang sebaiknya dirujuk (mohon sebut nomornya)?
    - **5b.** Sekarang: surat memuat angka "perkiraan saya sendiri" dalam rupiah. Angka itu dihitung dengan rumus buatan saya, tanpa dasar hukum (lihat "Cara surat dipakai"). Pertanyaan: (a) angka itu boleh tetap; (b) sebaiknya dihapus; atau (c) ada kalimat lain yang berisiko bagi pengirim (mohon sebut)?
 
 ## Yang sudah diperiksa dan yang belum
@@ -35,17 +35,17 @@ Setiap pertanyaan menyebut dahulu apa yang dilakukan surat sekarang, lalu piliha
 | Kelima pasal yang dikutip ada, dan isinya sesuai naskah undang-undang | Sudah dibandingkan kata demi kata pada 14 November 2026 dan sekali lagi pada 16 November 2026. Ini pemeriksaan bacaan dengan bantuan AI, bukan tinjauan hukum. Naskahnya: https://jdih.kemenkeu.go.id/api/download/FullText/1999/8TAHUN~1999UU.htm |
 | Lima pasal terkait yang tidak dikutip surat (Pasal 19 ayat (3), 23, 45 ayat (1), 52 huruf a dan e) | Bunyinya sudah dibandingkan kata demi kata pada 16 November 2026, dengan bantuan AI. Apakah pasal-pasal itu berlaku untuk kasus ini: belum dinilai. Naskahnya: https://jdih.kemenkeu.go.id/api/download/FullText/1999/8TAHUN~1999UU.htm |
 | UU No. 8 Tahun 1999 masih berlaku | Basis data peraturan BPK mencantumkan status "Berlaku" (dibaca 16 November 2026): https://peraturan.bpk.go.id/Details/45288/uu-no-8-tahun-1999 |
-| Putusan Mahkamah Konstitusi | Halaman BPK yang sama mencantumkan Putusan Nomor 235/PUU-XXIII/2025 terkait Pasal 31. Surat tidak mengutip Pasal 31. Putusan itu belum saya baca, jadi kemungkinan pengaruhnya pada pasal lain yang dikutip surat (Pasal 4, 7, dan 19) belum saya nilai; saya menandainya sebagai hal yang belum diperiksa. Halamannya: https://peraturan.bpk.go.id/Details/45288/uu-no-8-tahun-1999 |
+| Putusan Mahkamah Konstitusi | Halaman BPK yang sama mencantumkan Putusan Nomor 235/PUU-XXIII/2025 terkait Pasal 31. Surat tidak mengutip Pasal 31. Putusan itu belum saya baca, jadi kemungkinan pengaruhnya pada pasal lain yang dikutip surat (Pasal 4, 7, dan 19) belum saya nilai; saya menandainya sebagai hal yang belum diperiksa, dan saya akan memeriksanya pada putaran pemeriksaan mingguan berikutnya, 24 November 2026. Halamannya: https://peraturan.bpk.go.id/Details/45288/uu-no-8-tahun-1999 |
 | Ketepatan pasal untuk kasus kecepatan internet | Belum. Lihat pertanyaan 1 dan 2. |
 | Kata "hingga" dalam paket | Belum. Lihat pertanyaan 3. |
-| Peraturan kualitas layanan telekomunikasi | Judul dan status sudah diperiksa, isinya belum dibaca. Lihat pertanyaan 5a. Tautannya: https://peraturan.bpk.go.id/Details/203113/permenkominfo-no-13-tahun-2019 dan https://peraturan.bpk.go.id/Details/203070/permenkominfo-no-5-tahun-2021 |
+| Peraturan kualitas layanan telekomunikasi | Sudah dibaca 17 November 2026; bunyi pasal yang berkaitan ada di bagian "Peraturan kualitas layanan telekomunikasi yang saya temukan". Lihat pertanyaan 5a. Tautannya: https://peraturan.bpk.go.id/Details/203113/permenkominfo-no-13-tahun-2019 dan https://peraturan.bpk.go.id/Details/203070/permenkominfo-no-5-tahun-2021 |
 
 ## Bagian yang menurut saya paling mungkin keliru
 
 Saya menandainya di sini supaya Anda tidak perlu mencarinya sendiri.
 
 - Pasal 19 ayat (1) berbicara tentang "kerugian konsumen akibat mengkonsumsi barang dan/atau jasa". Surat memakainya untuk kecepatan di bawah paket. (Pertanyaan 2) Risikonya: bila kecepatan di bawah paket tidak termasuk "kerugian" menurut ayat itu, permintaan kompensasi kehilangan dasarnya.
-- Perihal surat berbunyi "tidak sesuai paket", padahal surat tidak menanggapi kata "hingga". (Pertanyaan 3) Risikonya: penyedia dapat menjawab bahwa kata "hingga" membuat angka paket menjadi batas atas, bukan janji.
+- Perihal Surat 1 persisnya "Keluhan kecepatan internet tidak sesuai paket", padahal surat tidak menanggapi kata "hingga". (Pertanyaan 3) Risikonya: penyedia dapat menjawab bahwa kata "hingga" membuat angka paket menjadi batas atas, bukan janji.
 - "7 hari kerja" dapat terbaca sebagai tenggat Pasal 19 ayat (3), padahal bukan. (Pertanyaan 4) Risikonya: kalimat itu dapat terbaca sebagai ancaman atau sebagai tenggat yang tidak punya dasar hukum.
 - Angka rupiah dihitung dengan rumus buatan saya. Saya tidak menemukan dasar hukum untuk rumus itu. (Pertanyaan 5b) Risikonya: angka tanpa dasar hukum dapat dianggap tuntutan yang mengada-ada dan melemahkan bagian surat yang lain.
 - Surat versi singkat hanya menulis "Pasal 4 dan 19", tanpa huruf dan ayat, sehingga lebih longgar daripada surat lengkap. (Pertanyaan 1) Risikonya: rujukan yang lebih longgar lebih mudah dibantah.
@@ -67,24 +67,41 @@ Tautan itu menuju berkas naskah di JDIH Kementerian Keuangan (jdih.kemenkeu.go.i
 
 ## Pasal terkait yang tidak dikutip surat
 
-Surat tidak mengutip pasal-pasal ini. Saya mencantumkannya karena berkaitan dengan tenggat dan dengan BPSK yang disebut surat. Bunyinya disalin kata demi kata dari naskah yang sama, dibaca 16 November 2026: https://jdih.kemenkeu.go.id/api/download/FullText/1999/8TAHUN~1999UU.htm
+Surat tidak mengutip pasal-pasal ini. Saya mencantumkannya karena berkaitan dengan tenggat, dengan bentuk ganti rugi, dan dengan BPSK yang disebut surat. Bunyinya disalin kata demi kata dari naskah yang sama, dibaca 16 dan 17 November 2026: https://jdih.kemenkeu.go.id/api/download/FullText/1999/8TAHUN~1999UU.htm
 
 | Pasal | Bunyi dalam UU No. 8 Tahun 1999 | Kaitan dengan surat |
 |---|---|---|
+| Pasal 19 ayat (2) | "Ganti rugi sebagaimana dimaksud pada ayat (1) dapat berupa pengembalian uang atau penggantian barang dan/atau jasa yang sejenis atau setara nilainya, atau perawatan kesehatan dan/atau pemberian santunan yang sesuai dengan ketentuan peraturan perundang-undangan yang berlaku." | Ayat ini menyebut bentuk ganti rugi yang dapat diminta, berkaitan dengan permintaan kompensasi di surat (Pertanyaan 2 dan 5b). |
 | Pasal 19 ayat (3) | "Pemberian ganti rugi dilaksanakan dalam tenggang waktu 7 (tujuh) hari setelah tanggal transaksi." | Surat memakai "7 hari kerja" sebagai permintaan pelanggan, bukan sebagai tenggat ayat ini. |
 | Pasal 23 | "Pelaku usaha yang menolak dan/atau tidak memberi tanggapan dan/atau tidak memenuhi ganti rugi atas tuntutan konsumen sebagaimana dimaksud dalam Pasal 19 ayat (1), ayat (2), ayat (3), dan ayat (4), dapat digugat melalui badan penyelesaian sengketa konsumen atau mengajukan ke badan peradilan di tempat kedudukan konsumen." | Surat menyebut BPSK sebagai tujuan lanjutan bila tidak ada penyelesaian. |
 | Pasal 45 ayat (1) | "Setiap konsumen yang dirugikan dapat menggugat pelaku usaha melalui lembaga yang bertugas menyelesaikan sengketa antara konsumen dan pelaku usaha atau melalui peradilan yang berada di lingkungan peradilan umum." | Sama: BPSK sebagai tujuan lanjutan. |
 | Pasal 52 huruf a (tugas dan wewenang BPSK) | "melaksanakan penanganan dan penyelesaian sengketa konsumen, dengan cara melalui mediasi atau arbitrase atau konsiliasi" | Sama: BPSK sebagai tujuan lanjutan. |
 | Pasal 52 huruf e (tugas dan wewenang BPSK) | "menerima pengaduan baik tertulis maupun tidak tertulis, dari konsumen tentang terjadinya pelanggaran terhadap perlindungan konsumen" | Sama: BPSK sebagai tujuan lanjutan. |
 
-## Peraturan yang ditemukan tetapi belum dibaca
+## Peraturan kualitas layanan telekomunikasi yang saya temukan
 
-Surat tidak mengutip peraturan di bawah ini karena isinya belum saya baca. Judul dan statusnya dibaca di basis data peraturan BPK pada 14 November 2026 dan sekali lagi pada 16 November 2026, lewat pencarian judul di situs itu. Pencariannya tidak sistematis, jadi daftar ini bukan daftar lengkap peraturan yang ada.
+Dua peraturan ini muncul dalam pencarian judul di basis data peraturan BPK (peraturan.bpk.go.id) pada 14 November 2026. Kata kunci persisnya tidak saya catat, dan pencariannya tidak sistematis, jadi daftar ini bukan daftar lengkap peraturan yang ada. Pada 17 November 2026 saya membaca teksnya: Permenkominfo 13/2019 dari berkas naskah di basis data BPK, dan Permenkominfo 5/2021 dari situs JDIH kementerian (https://jdih.komdigi.go.id/produk_hukum/view/id/768/t/peraturan-menteri-komunikasi-dan-informatika-nomor-5-tahun-2021). Pembacaan dibantu asisten AI; kutipan di bawah disalin kata demi kata.
 
-| Peraturan | Status menurut basis data BPK | Tautan |
+| Peraturan | Status menurut sumber | Tautan |
 |---|---|---|
-| Permenkominfo No. 13 Tahun 2019 tentang Penyelenggaraan Jasa Telekomunikasi | Berlaku; diubah dengan Permenkominfo 1/2021 dan 14/2021 | https://peraturan.bpk.go.id/Details/203113/permenkominfo-no-13-tahun-2019 |
-| Permenkominfo No. 5 Tahun 2021 tentang Penyelenggaraan Telekomunikasi | Berlaku; sebagian dicabut dengan Permenkomdigi 7/2026 | https://peraturan.bpk.go.id/Details/203070/permenkominfo-no-5-tahun-2021 |
+| Permenkominfo No. 13 Tahun 2019 tentang Penyelenggaraan Jasa Telekomunikasi | "Berlaku" menurut basis data BPK (17 November 2026); sudah diubah dengan Permenkominfo 2/2020, 1/2021, dan 14/2021, yang isinya belum saya baca | https://peraturan.bpk.go.id/Details/203113/permenkominfo-no-13-tahun-2019 |
+| Permenkominfo No. 5 Tahun 2021 tentang Penyelenggaraan Telekomunikasi | Catatan dua sumber tidak sama dan belum saya selesaikan: basis data BPK menulis "Berlaku, sebagian dicabut dengan Permenkomdigi 7/2026", sedangkan situs JDIH kementerian menandai "Tidak Berlaku" | https://peraturan.bpk.go.id/Details/203070/permenkominfo-no-5-tahun-2021 |
+
+Yang dikatakan peraturan ini tentang kualitas layanan:
+
+Permenkominfo 13/2019 (penyelenggaraan jasa telekomunikasi):
+- Pasal 1 angka 25: "Komitmen Layanan adalah kewajiban Penyelenggara Jasa Telekomunikasi untuk menyediakan layanan di wilayah tertentu dengan komitmen penyediaan layanan sesuai dengan ketentuan peraturan perundang-undangan."
+- Pasal 47 ayat (3) huruf b dan c: dalam evaluasi tahunan, penyelenggara wajib "menyampaikan laporan pencapaian kualitas layanan Jasa Telekomunikasi" dan "memenuhi Komitmen Layanan pada tahun penyelenggaraan yang dievaluasi".
+- Pasal 48 ayat (1): laporan penyelenggaraan tahunan disampaikan paling lambat 30 April tahun berikutnya.
+- Yang belum saya petakan: isi tiga perubahannya, dan ukuran standar kualitas yang terukur itu sendiri. Peraturan ini mencantumkan dalam bagian "Mengingat"-nya peraturan menteri sebelumnya yang mengatur standar kualitas pelayanan (misalnya 14/PER/M.KOMINFO/04/2011); standar yang terukur ada di lapisan itu.
+
+Permenkominfo 5/2021 (penyelenggaraan telekomunikasi):
+- Pasal 7 ayat (1): "Penyelenggara Jaringan Telekomunikasi dan/atau Penyelenggara Jasa Telekomunikasi wajib memenuhi standar kualitas Penyelenggaraan Telekomunikasi."
+- Pasal 7 ayat (2): standar kualitas ditetapkan Dirjen, dengan pertimbangan: a. menjamin persaingan usaha yang sehat; b. menjaga kinerja pelayanan; c. melindungi kepentingan konsumen.
+- Pasal 198 ayat (1): kewajiban penyelenggara antara lain "memenuhi standar kualitas Penyelenggaraan Telekomunikasi", "mempublikasikan pencapaian standar kualitas layanan untuk setiap periode pelaporan secara daring melalui situs web (website) layanan informasi milik Penyelenggara", dan bagi penyelenggara jasa, "memenuhi komitmen layanan dan/atau penyediaan Jasa Telekomunikasi secara menyeluruh"; rekaman data pengukuran kualitas layanan dipelihara selama 1 (satu) tahun buku dan disimpan sampai 1 (satu) tahun buku ke depan.
+- Pasal 198 ayat (2): pelaksana jual kembali wajib "memenuhi ketentuan standar kualitas pelayanan Jasa Telekomunikasi yang telah dikomitmenkan oleh Penyelenggara Jasa Telekomunikasi".
+
+Untuk pertanyaan 5a, yang bisa saya simpulkan dari membaca kedua peraturan ini: keduanya mewajibkan penyedia memenuhi komitmen/standar kualitas layanan dan melaporkan pencapaiannya secara periodik, tetapi ukuran standarnya ada di ketentuan Dirjen yang belum saya petakan. Apakah surat sebaiknya merujuk salah satunya atau ketentuan yang lebih tepat: itu di tangan Anda.
 
 ## Cara surat dipakai
 
@@ -92,7 +109,7 @@ Surat tidak mengutip peraturan di bawah ini karena isinya belum saya baca. Judul
 - Surat menyebut hasilnya "bukti awal" dan meminta penyedia membandingkannya dengan data mereka sendiri.
 - Angka rupiah adalah perkiraan dengan rumus buatan saya, bukan dari peraturan: harga paket x (1 - median unduh / kecepatan paket). Untuk contoh di bawah: Rp 350.000 x (1 - 20,35 / 50) = Rp 207.550 per bulan.
 - Di layar surat, aplikasi menampilkan kalimat ini: "Lelet bukan nasihat hukum dan bukan alat ukur resmi. Angka di sini adalah pengukuran Anda sendiri sebagai bukti awal."
-- Tanpa akun. Hasil tes, data paket, dan isi surat tetap di perangkat pelanggan. Halaman hanya mencatat tiga hitungan anonim, tanpa identitas, untuk mengetahui apakah alat ini dipakai. Seperti saat membuka situs lain, Cloudflare (tes kecepatan) dan GitHub (halaman dan hitungan) melihat alamat IP pengunjung; alamat itu tidak sampai kepada saya dan tidak saya simpan.
+- Tanpa akun. Hasil tes, data paket, dan isi surat tetap di perangkat pelanggan. Halaman hanya mencatat tiga hitungan anonim, tanpa identitas, untuk mengetahui apakah alat ini dipakai. Seperti saat membuka situs lain, Cloudflare (tes kecepatan, https://www.cloudflare.com/) dan GitHub (halaman dan hitungan, https://docs.github.com/en/site-policy) melihat alamat IP pengunjung; alamat itu tidak sampai kepada saya dan tidak saya simpan.
 
 ## Surat 1: keluhan kepada penyedia layanan
 

@@ -70,7 +70,7 @@ test('the review page says plainly that no qualified person has read the letters
 test('related articles the letters do not cite are quoted next to their source, and stay out of the letters', () => {
   const pack = buildReviewPack();
   const { first, short, second } = sampleCase();
-  assert.equal(NOTED_ARTICLES.length, 5);
+  assert.equal(NOTED_ARTICLES.length, 6);
   for (const [article, text, why] of NOTED_ARTICLES) {
     assert.ok(pack.includes(`| ${article} | "${text}" | ${why} |`), article);
   }
