@@ -89,3 +89,15 @@ test('the review page promises nothing is published or named without written per
   assert.ok(pack.includes('tanpa izin tertulis'));
   assert.ok(pack.includes('satu pesan susulan saja'));
 });
+
+test('the top of the review page says who wrote it and how to answer; the usage notes come before the letters', () => {
+  const pack = buildReviewPack();
+  const summary = pack.split('## Ringkasan')[1].split('\n## ')[0];
+  assert.ok(summary.includes('Saya bukan pengacara.'));
+  assert.ok(summary.includes('https://github.com/juw12/lelet/issues'));
+  assert.doesNotMatch(summary, /@/, 'no e-mail address on a public page');
+  assert.ok(pack.includes('Halaman keterangan undang-undang yang sama di basis data peraturan BPK: ' + LAW_SOURCES.status));
+  assert.ok(pack.includes('alamat itu tidak sampai kepada saya dan tidak saya simpan'));
+  assert.ok(pack.indexOf('## Cara surat dipakai') < pack.indexOf('## Surat 1: keluhan'));
+  assert.ok(pack.indexOf('## Surat 1: keluhan') < pack.indexOf('## Surat 2: pengaduan'));
+});

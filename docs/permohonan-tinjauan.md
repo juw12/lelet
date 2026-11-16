@@ -1,16 +1,16 @@
 # Permohonan tinjauan: surat keluhan yang disusun Lelet
 
 Versi 16 November 2026. Disusun oleh Juwen Lie, pembuat Lelet.
-Ketiga surat dan nomor kelima pertanyaan sama dengan versi 14 November 2026 yang dikirim sebagai PDF. Yang diperjelas hanya rumusan pertanyaan dan catatan sumber.
+Ketiga surat dan nomor kelima pertanyaan sama dengan versi 14 November 2026 yang dikirim sebagai PDF. Yang ditambah sesudahnya hanya penjelasan: rumusan pertanyaan, catatan sumber, keterangan tentang penyusun, dan cara menjawab.
 Halaman ini dibuat oleh `scripts/review-pack.mjs` dari kode aplikasi, sehingga ketiga surat di bawah sama persis dengan yang dihasilkan aplikasi.
 
 ## Ringkasan
 
 Lelet (https://juw12.github.io/lelet/) adalah alat gratis untuk pelanggan internet rumah. Pelanggan mengukur kecepatan beberapa kali, lalu Lelet menyusun surat keluhan kepada penyedia layanan. Bila tidak ada penyelesaian dalam 7 hari kerja, Lelet menyusun surat kedua kepada Komdigi. Pelanggan mengirim sendiri surat itu atas namanya sendiri. Lelet tidak mengirim apa pun.
 
-Belum ada orang yang berwenang memberi nasihat hukum yang membaca surat-surat ini. Yang sudah dilakukan hanya pemeriksaan bacaan: setiap pasal yang dikutip dibandingkan dengan naskah undang-undang, dengan bantuan asisten AI. Karena itu saya memohon masukan atas lima pertanyaan berikut.
+Saya bukan pengacara. Belum ada orang yang berwenang memberi nasihat hukum yang membaca surat-surat ini. Yang sudah dilakukan hanya pemeriksaan bacaan: setiap pasal yang dikutip dibandingkan dengan naskah undang-undang, dengan bantuan asisten AI. Karena itu saya memohon masukan atas lima pertanyaan berikut.
 
-Anda tidak berkewajiban menjawab. Bila permohonan ini bukan untuk Anda, silakan abaikan, teruskan kepada rekan, atau tunjukkan lembaga yang lebih tepat. Setiap pertanyaan dapat dijawab dengan satu huruf, misalnya "1a, 2b, 3b". Jawaban atas satu pertanyaan saja sudah membantu.
+Anda tidak berkewajiban menjawab. Bila permohonan ini bukan untuk Anda, silakan abaikan, teruskan kepada rekan, atau tunjukkan lembaga yang lebih tepat. Setiap pertanyaan dapat dijawab dengan satu huruf, misalnya "1a, 2b, 3b". Jawaban atas satu pertanyaan saja sudah membantu. Cara menjawab: balas e-mail pengantar, atau tulis di https://github.com/juw12/lelet/issues (terbuka untuk umum).
 
 ## Lima pertanyaan
 
@@ -51,6 +51,8 @@ Saya menandainya di sini supaya Anda tidak perlu mencarinya sendiri.
 
 Disalin kata demi kata dari naskah undang-undang ini, dibaca 14 dan 16 November 2026: https://jdih.kemenkeu.go.id/api/download/FullText/1999/8TAHUN~1999UU.htm
 
+Tautan itu menuju berkas naskah di JDIH Kementerian Keuangan (jdih.kemenkeu.go.id). Halaman keterangan undang-undang yang sama di basis data peraturan BPK: https://peraturan.bpk.go.id/Details/45288/uu-no-8-tahun-1999
+
 | Dikutip surat | Bunyi dalam UU No. 8 Tahun 1999 |
 |---|---|
 | Pasal 4 huruf c | "hak atas informasi yang benar, jelas, dan jujur mengenai kondisi dan jaminan barang dan/atau jasa" |
@@ -86,7 +88,7 @@ Surat tidak mengutip peraturan di bawah ini karena isinya belum saya baca. Judul
 - Surat menyebut hasilnya "bukti awal" dan meminta penyedia membandingkannya dengan data mereka sendiri.
 - Angka rupiah adalah perkiraan dengan rumus buatan saya, bukan dari peraturan: harga paket x (1 - median unduh / kecepatan paket). Untuk contoh di bawah: Rp 350.000 x (1 - 20,35 / 50) = Rp 207.550 per bulan.
 - Di layar surat, aplikasi menampilkan kalimat ini: "Lelet bukan nasihat hukum dan bukan alat ukur resmi. Angka di sini adalah pengukuran Anda sendiri sebagai bukti awal."
-- Tanpa akun. Hasil tes, data paket, dan isi surat tetap di perangkat pelanggan. Halaman hanya mencatat tiga hitungan anonim, tanpa identitas, untuk mengetahui apakah alat ini dipakai.
+- Tanpa akun. Hasil tes, data paket, dan isi surat tetap di perangkat pelanggan. Halaman hanya mencatat tiga hitungan anonim, tanpa identitas, untuk mengetahui apakah alat ini dipakai. Seperti saat membuka situs lain, Cloudflare (tes kecepatan) dan GitHub (halaman dan hitungan) melihat alamat IP pengunjung; alamat itu tidak sampai kepada saya dan tidak saya simpan.
 
 ## Surat 1: keluhan kepada penyedia layanan
 
