@@ -1,6 +1,6 @@
 # Permohonan tinjauan: surat keluhan yang disusun Lelet
 
-**Cara cepat menjawab, sekitar 15 menit:** [Ringkasan](#ringkasan), lalu [Lima pertanyaan](#lima-pertanyaan), lalu tabel [Yang sudah diperiksa dan yang belum](#yang-sudah-diperiksa-dan-yang-belum). Tiga surat di bagian bawah adalah salinan lengkap dari aplikasi; untuk menjawab kelima pertanyaan, surat-surat itu boleh dilewati. Bagian itu, sebelum ketiga surat, 2.492 kata — kira-kira 12 menit membaca biasa, sekitar 15 menit bila tabel dan tautan di dalamnya ikut diperiksa. Bila pasal-pasalnya ikut dinilai satu per satu, waktunya lebih lama; angka ini hanya perkiraan membaca.
+**Cara cepat menjawab, sekitar 15 menit:** [Ringkasan](#ringkasan), lalu [Lima pertanyaan](#lima-pertanyaan), lalu tabel [Yang sudah diperiksa dan yang belum](#yang-sudah-diperiksa-dan-yang-belum). Tiga surat di bagian bawah adalah salinan lengkap dari aplikasi; untuk menjawab kelima pertanyaan, surat-surat itu boleh dilewati. Bagian itu, sebelum ketiga surat, 2.504 kata — kira-kira 13 menit membaca biasa, sekitar 15 menit bila tabel dan tautan di dalamnya ikut diperiksa. Bila pasal-pasalnya ikut dinilai satu per satu, waktunya lebih lama; angka ini hanya perkiraan membaca.
 
 Saya memohon masukan atas lima pertanyaan di halaman ini tentang tiga surat keluhan yang disusun Lelet (https://juw12.github.io/lelet/), alat gratis untuk pelanggan internet rumah.
 
@@ -14,7 +14,7 @@ Lelet (https://juw12.github.io/lelet/) adalah alat gratis untuk pelanggan intern
 
 Saya bukan pengacara. Belum ada orang yang berwenang memberi nasihat hukum yang membaca surat-surat ini. Yang sudah dilakukan hanya pemeriksaan bacaan: setiap pasal yang dikutip dibandingkan dengan naskah undang-undang, dengan bantuan asisten AI. Karena itu masukan Anda atas kelima pertanyaan itu sangat berarti bagi saya.
 
-Anda tidak berkewajiban menjawab. Bila permohonan ini bukan untuk Anda, silakan abaikan, teruskan kepada rekan, atau tunjukkan lembaga yang lebih tepat. Setiap pertanyaan dapat dijawab dengan satu huruf, misalnya "1a, 2b, 3b, 5a-b, 5b-c" — pertanyaan 5 punya dua bagian yang dijawab sendiri-sendiri. Jawaban atas satu pertanyaan saja sudah membantu. Bila ada waktu, satu kalimat alasan di samping huruf pilihan sangat membantu saya memperbaiki surat. Cara menjawab: balas e-mail pengantar, atau tulis di https://github.com/juw12/lelet/issues (terbuka untuk umum).
+Anda tidak berkewajiban menjawab. Bila permohonan ini bukan untuk Anda, silakan abaikan, teruskan kepada rekan, atau tunjukkan lembaga yang lebih tepat. Setiap pertanyaan dapat dijawab dengan satu huruf, misalnya "1a, 2b, 3b, 4a, 5a-b, 5b-c" - pertanyaan 5 punya dua bagian yang dijawab sendiri-sendiri, dan pada 5b pilihan (c) jawabannya memang berupa kalimat, bukan huruf. Jawaban atas satu pertanyaan saja sudah membantu. Bila ada waktu, satu kalimat alasan di samping huruf pilihan sangat membantu saya memperbaiki surat. Cara menjawab: balas e-mail pengantar, atau tulis di https://github.com/juw12/lelet/issues (terbuka untuk umum).
 
 ## Lima pertanyaan
 
