@@ -1,6 +1,6 @@
 # Permohonan tinjauan: surat keluhan yang disusun Lelet
 
-**Cara cepat menjawab, sekitar 15 menit:** [Ringkasan](#ringkasan), lalu [Lima pertanyaan](#lima-pertanyaan), lalu tabel [Yang sudah diperiksa dan yang belum](#yang-sudah-diperiksa-dan-yang-belum). Tiga surat di bagian bawah adalah salinan lengkap dari aplikasi; untuk menjawab kelima pertanyaan, surat-surat itu boleh dilewati. Bagian itu, sebelum ketiga surat, 2.320 kata — kira-kira 12 menit membaca biasa, sekitar 15 menit bila tabel dan tautan di dalamnya ikut diperiksa.
+**Cara cepat menjawab:** [Ringkasan](#ringkasan), lalu [Lima pertanyaan](#lima-pertanyaan), lalu tabel [Yang sudah diperiksa dan yang belum](#yang-sudah-diperiksa-dan-yang-belum). Tiga surat di bagian bawah adalah salinan lengkap dari aplikasi; untuk menjawab kelima pertanyaan, surat-surat itu boleh dilewati. Bagian itu, sebelum ketiga surat, 2.480 kata — kira-kira 12 menit membaca biasa, sekitar 21 menit bila tabel, tautan, dan pasal di dalamnya ikut diperiksa. Pemeriksaan hukum yang sungguh-sungguh tentu lebih lama; ini hanya perkiraan membaca.
 
 Saya memohon masukan atas lima pertanyaan di halaman ini tentang tiga surat keluhan yang disusun Lelet (https://juw12.github.io/lelet/), alat gratis untuk pelanggan internet rumah.
 
@@ -14,7 +14,7 @@ Lelet (https://juw12.github.io/lelet/) adalah alat gratis untuk pelanggan intern
 
 Saya bukan pengacara. Belum ada orang yang berwenang memberi nasihat hukum yang membaca surat-surat ini. Yang sudah dilakukan hanya pemeriksaan bacaan: setiap pasal yang dikutip dibandingkan dengan naskah undang-undang, dengan bantuan asisten AI. Karena itu masukan Anda atas kelima pertanyaan itu sangat berarti bagi saya.
 
-Anda tidak berkewajiban menjawab. Bila permohonan ini bukan untuk Anda, silakan abaikan, teruskan kepada rekan, atau tunjukkan lembaga yang lebih tepat. Setiap pertanyaan dapat dijawab dengan satu huruf, misalnya "1a, 2b, 3b". Jawaban atas satu pertanyaan saja sudah membantu. Cara menjawab: balas e-mail pengantar, atau tulis di https://github.com/juw12/lelet/issues (terbuka untuk umum).
+Anda tidak berkewajiban menjawab. Bila permohonan ini bukan untuk Anda, silakan abaikan, teruskan kepada rekan, atau tunjukkan lembaga yang lebih tepat. Setiap pertanyaan dapat dijawab dengan satu huruf, misalnya "1a, 2b, 3b, 5a-b, 5b-c" — pertanyaan 5 punya dua bagian yang dijawab sendiri-sendiri. Jawaban atas satu pertanyaan saja sudah membantu. Bila ada waktu, satu kalimat alasan di samping huruf pilihan sangat membantu saya memperbaiki surat. Cara menjawab: balas e-mail pengantar, atau tulis di https://github.com/juw12/lelet/issues (terbuka untuk umum).
 
 ## Lima pertanyaan
 
@@ -49,6 +49,8 @@ Saya menandainya di sini supaya Anda tidak perlu mencarinya sendiri.
 - "7 hari kerja" dapat terbaca sebagai tenggat Pasal 19 ayat (3), padahal bukan. (Pertanyaan 4) Risikonya: kalimat itu dapat terbaca sebagai ancaman atau sebagai tenggat yang tidak punya dasar hukum.
 - Angka rupiah dihitung dengan rumus buatan saya. Saya tidak menemukan dasar hukum untuk rumus itu. (Pertanyaan 5b) Risikonya: angka tanpa dasar hukum dapat dianggap tuntutan yang mengada-ada dan melemahkan bagian surat yang lain.
 - Surat versi singkat hanya menulis "Pasal 4 dan 19", tanpa huruf dan ayat, sehingga lebih longgar daripada surat lengkap. (Pertanyaan 1) Risikonya: rujukan yang lebih longgar lebih mudah dibantah.
+- Surat 2 memohon Komdigi "bantuan penyelesaian, termasuk kompensasi atau penyesuaian tagihan bila layanan terbukti tidak sesuai paket". Yang berwenang memutus ganti rugi adalah BPSK atau pengadilan, sedangkan Komdigi mengawasi penyelenggaraan. (Pertanyaan 4) Risikonya: permintaan itu dapat dibaca sebagai permintaan di luar kewenangan yang dituju, sehingga bagian surat yang lain ikut dilemahkan; kata "bantuan" dan syarat "bila terbukti" sedikit meringankannya.
+- Surat mengutip Pasal 4 huruf c (hak atas informasi yang benar) bersama huruf d dan h. Untuk keluhan kecepatan, huruf c paling longgar kaitannya, karena surat tidak menuduh penyedia memberi informasi yang salah. (Pertanyaan 1) Risikonya: rujukan yang tidak tepat sasaran mudah dibantah, dan bantahan itu dapat dipakai untuk seluruh surat.
 - Surat menyebut YLKI dan BPSK sebagai tujuan lanjutan. Saya belum meminta persetujuan YLKI untuk disebut. Bila YLKI berkeberatan, nama itu saya hapus dari surat. (Pertanyaan 4) Risikonya: menyebut lembaga tanpa izin dapat terbaca sebagai mengatasnamakan mereka.
 
 ## Pasal yang dikutip surat
@@ -109,7 +111,7 @@ Untuk pertanyaan 5a, yang bisa saya simpulkan dari membaca kedua peraturan ini: 
 - Surat menyebut hasilnya "bukti awal" dan meminta penyedia membandingkannya dengan data mereka sendiri.
 - Angka rupiah adalah perkiraan dengan rumus buatan saya, bukan dari peraturan: harga paket x (1 - median unduh / kecepatan paket). Untuk contoh di bawah: Rp 350.000 x (1 - 20,35 / 50) = Rp 207.550 per bulan.
 - Di layar surat, aplikasi menampilkan kalimat ini: "Lelet bukan nasihat hukum dan bukan alat ukur resmi. Angka di sini adalah pengukuran Anda sendiri sebagai bukti awal."
-- Tanpa akun. Hasil tes, data paket, dan isi surat tetap di perangkat pelanggan. Halaman hanya mencatat tiga hitungan anonim, tanpa identitas, untuk mengetahui apakah alat ini dipakai. Seperti saat membuka situs lain, Cloudflare (tes kecepatan, https://www.cloudflare.com/) dan GitHub (halaman dan hitungan, https://docs.github.com/en/site-policy) melihat alamat IP pengunjung; alamat itu tidak sampai kepada saya dan tidak saya simpan.
+- Tanpa akun. Hasil tes, data paket, dan isi surat tetap di perangkat pelanggan. Halaman hanya mencatat tiga hitungan anonim, tanpa identitas, untuk mengetahui apakah alat ini dipakai: angkanya adalah jumlah unduhan tiga berkas kosong (first-test, ten-tests, letter-sent) yang disimpan di GitHub, dan tidak ada isi tes, paket, atau surat yang ikut terkirim. Seperti saat membuka situs lain, Cloudflare (tes kecepatan, https://www.cloudflare.com/) dan GitHub (halaman dan hitungan, https://docs.github.com/en/site-policy) melihat alamat IP pengunjung; alamat itu tidak sampai kepada saya dan tidak saya simpan.
 
 ## Surat 1: keluhan kepada penyedia layanan
 
