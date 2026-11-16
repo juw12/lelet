@@ -1,0 +1,96 @@
+14 November 2026
+
+Kepada Yth.
+Layanan Pelanggan Contoh Net
+
+Perihal: Keluhan kecepatan internet tidak sesuai paket
+
+Dengan hormat,
+
+Saya, [nama Anda], pelanggan Contoh Net dengan paket "Rumah 50" yang dijual dengan kecepatan 50 Mbps seharga Rp 350.000 per bulan.
+
+Saya mengukur koneksi saya 12 kali pada 3 hari berbeda (11 November 2026 - 13 November 2026) dengan Lelet, tes lewat peramban ke server Cloudflare. Hasilnya:
+- Median unduh: 20,4 Mbps = 41% dari kecepatan paket (50 Mbps)
+- Median unggah: 10,5 Mbps; median latensi: 23 ms
+- 6 dari 12 tes berada di bawah 50% kecepatan paket; 12 dari 12 di bawah 80%
+- Waktu terburuk: malam (18.00-23.00), median 12,8 Mbps
+- 4 dari 12 tes dilakukan lewat kabel LAN, sisanya lewat Wi-Fi
+
+Berdasarkan Undang-Undang Nomor 8 Tahun 1999 tentang Perlindungan Konsumen (Pasal 4 huruf c, d, dan h, Pasal 7 huruf g, serta Pasal 19 ayat (1)), saya meminta:
+1. Penjelasan tertulis dan pemeriksaan teknis jaringan di alamat saya.
+2. Perbaikan sehingga kecepatan sesuai dengan paket.
+3. Jika tidak dapat diperbaiki, kompensasi atau penyesuaian tagihan untuk masa layanan yang tidak sesuai paket (perkiraan saya sendiri: sekitar Rp 207.550 per bulan).
+
+Saya menunggu tanggapan dalam 7 hari kerja. Jika tidak ada penyelesaian, saya akan meneruskan keluhan ini ke Kementerian Komunikasi dan Digital (Komdigi), YLKI, atau Badan Penyelesaian Sengketa Konsumen (BPSK).
+
+Catatan: ini hasil pengukuran saya sendiri sebagai bukti awal. Mohon dibandingkan dengan pembacaan dari perangkat Anda.
+
+Hormat saya,
+[nama Anda]
+
+Lampiran - semua tes:
+01.  2026-11-11 08:07  unduh 31,2 Mbps  unggah 9,0 Mbps  18 ms  kabel
+02.  2026-11-11 13:08  unduh 27,5 Mbps  unggah 10,0 Mbps  21 ms  Wi-Fi
+03.  2026-11-11 19:09  unduh 14,8 Mbps  unggah 11,0 Mbps  24 ms  Wi-Fi
+04.  2026-11-11 21:10  unduh 11,9 Mbps  unggah 12,0 Mbps  27 ms  kabel
+05.  2026-11-12 08:11  unduh 33,0 Mbps  unggah 9,0 Mbps  30 ms  Wi-Fi
+06.  2026-11-12 13:12  unduh 25,1 Mbps  unggah 10,0 Mbps  18 ms  Wi-Fi
+07.  2026-11-12 19:13  unduh 13,2 Mbps  unggah 11,0 Mbps  21 ms  kabel
+08.  2026-11-12 21:14  unduh 12,4 Mbps  unggah 12,0 Mbps  24 ms  Wi-Fi
+09.  2026-11-13 08:15  unduh 29,7 Mbps  unggah 9,0 Mbps  27 ms  Wi-Fi
+10.  2026-11-13 13:16  unduh 26,3 Mbps  unggah 10,0 Mbps  30 ms  kabel
+11.  2026-11-13 19:17  unduh 15,6 Mbps  unggah 11,0 Mbps  18 ms  Wi-Fi
+12.  2026-11-13 21:18  unduh 10,8 Mbps  unggah 12,0 Mbps  21 ms  Wi-Fi
+
+Halo Contoh Net, saya pelanggan Anda.
+Paket saya 50 Mbps (Rp 350.000/bulan), tetapi dari 12 tes pada 3 hari (11 November 2026 - 13 November 2026) median unduh saya hanya 20,4 Mbps, 41% dari paket.
+Mohon dicek dan diperbaiki, atau tagihan saya disesuaikan (UU 8/1999 Perlindungan Konsumen, Pasal 4 dan 19). Rincian semua tes bisa saya kirim.
+Terima kasih. [nama Anda]
+
+26 November 2026
+
+Kepada Yth.
+Layanan Pengaduan Kementerian Komunikasi dan Digital (Komdigi)
+Tembusan: Layanan Pelanggan Contoh Net
+
+Perihal: Pengaduan lanjutan - kecepatan internet Contoh Net tidak sesuai paket, keluhan pertama belum diselesaikan
+
+Dengan hormat,
+
+Saya, [nama Anda], pelanggan Contoh Net dengan paket "Rumah 50", yang dijual dengan kecepatan 50 Mbps seharga Rp 350.000 per bulan.
+
+Pada 14 November 2026 saya mengirim keluhan tertulis ke layanan pelanggan Contoh Net dan meminta tanggapan dalam 7 hari kerja. Batas waktu itu berakhir pada 24 November 2026. Sampai surat ini dibuat, saya belum menerima penyelesaian yang memadai.
+
+Hasil pengukuran saya (12 tes pada 3 hari, 11 November 2026 - 13 November 2026, dengan Lelet, tes lewat peramban ke server Cloudflare):
+- Median unduh: 20,4 Mbps = 41% dari kecepatan paket (50 Mbps)
+- Median unggah: 10,5 Mbps; median latensi: 23 ms
+- 6 dari 12 tes berada di bawah 50% kecepatan paket; 12 dari 12 di bawah 80%
+- Waktu terburuk: malam (18.00-23.00), median 12,8 Mbps
+- 4 dari 12 tes dilakukan lewat kabel LAN, sisanya lewat Wi-Fi
+
+Berdasarkan Undang-Undang Nomor 8 Tahun 1999 tentang Perlindungan Konsumen (Pasal 4 huruf c, d, dan h, Pasal 7 huruf g, serta Pasal 19 ayat (1)), saya memohon:
+1. Pengaduan ini dicatat dan diteruskan kepada Contoh Net untuk dijawab secara tertulis.
+2. Pemeriksaan apakah layanan di alamat saya sesuai dengan kecepatan yang dijual.
+3. Bantuan penyelesaian, termasuk kompensasi atau penyesuaian tagihan bila layanan terbukti tidak sesuai paket (perkiraan saya sendiri: sekitar Rp 207.550 per bulan).
+
+Salinan keluhan pertama saya lampirkan terpisah. Daftar semua tes ada di bawah.
+
+Catatan: ini hasil pengukuran saya sendiri sebagai bukti awal, bukan pengukuran resmi. Mohon dibandingkan dengan data penyelenggara.
+
+Hormat saya,
+[nama Anda]
+Kontak: [nomor telepon atau email Anda]
+
+Lampiran - semua tes:
+01.  2026-11-11 08:07  unduh 31,2 Mbps  unggah 9,0 Mbps  18 ms  kabel
+02.  2026-11-11 13:08  unduh 27,5 Mbps  unggah 10,0 Mbps  21 ms  Wi-Fi
+03.  2026-11-11 19:09  unduh 14,8 Mbps  unggah 11,0 Mbps  24 ms  Wi-Fi
+04.  2026-11-11 21:10  unduh 11,9 Mbps  unggah 12,0 Mbps  27 ms  kabel
+05.  2026-11-12 08:11  unduh 33,0 Mbps  unggah 9,0 Mbps  30 ms  Wi-Fi
+06.  2026-11-12 13:12  unduh 25,1 Mbps  unggah 10,0 Mbps  18 ms  Wi-Fi
+07.  2026-11-12 19:13  unduh 13,2 Mbps  unggah 11,0 Mbps  21 ms  kabel
+08.  2026-11-12 21:14  unduh 12,4 Mbps  unggah 12,0 Mbps  24 ms  Wi-Fi
+09.  2026-11-13 08:15  unduh 29,7 Mbps  unggah 9,0 Mbps  27 ms  Wi-Fi
+10.  2026-11-13 13:16  unduh 26,3 Mbps  unggah 10,0 Mbps  30 ms  kabel
+11.  2026-11-13 19:17  unduh 15,6 Mbps  unggah 11,0 Mbps  18 ms  Wi-Fi
+12.  2026-11-13 21:18  unduh 10,8 Mbps  unggah 12,0 Mbps  21 ms  Wi-Fi

@@ -3,12 +3,42 @@
 //   node scripts/review-pack.mjs           write the page
 //   node scripts/review-pack.mjs --check   exit 1 when the page on disk is out of date
 import { readFile, writeFile } from 'node:fs/promises';
+import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import * as core from '../core.js';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 export const PACK_PATH = path.join(HERE, '..', 'docs', 'permohonan-tinjauan.md');
+
+// The three letters as they were sent for review on 14 Nov 2026 (Lelet-permohonan-tinjauan.pdf),
+// in the order the page prints them. The page may gain explanations; the letters may not drift from
+// this copy without a new review. `node scripts/review-pack.mjs --check` fails when they do.
+export const LETTERS_SENT_2026_11_14 = path.join(HERE, '..', 'tests', 'fixtures', 'letters-sent-2026-11-14.txt');
+
+/** The three letters the app writes today, one after the other. */
+export function lettersAsSent(sample = sampleCase()) {
+  return [sample.first, sample.short, sample.second].join('\n\n');
+}
+
+/** '' when the letters still match the 14 Nov 2026 copy, otherwise the first line that differs. */
+export function lettersDrift(sample = sampleCase(), frozenPath = LETTERS_SENT_2026_11_14) {
+  let frozen;
+  try {
+    frozen = readFileSync(frozenPath, 'utf8');
+  } catch {
+    return 'the copy of the 14 Nov 2026 letters is missing: tests/fixtures/letters-sent-2026-11-14.txt';
+  }
+  const today = lettersAsSent(sample);
+  if (today === frozen) return '';
+  const was = frozen.split('\n');
+  const now = today.split('\n');
+  const first = was.findIndex((line, index) => line !== (now[index] ?? ''));
+  const at = first < 0 ? Math.min(was.length, now.length) : first;
+  const short = (line) => (line ?? '(nothing)').slice(0, 90);
+  return `the three letters changed since 14 Nov 2026, first at line ${at + 1}: `
+    + `sent "${short(was[at])}", now "${short(now[at])}"`;
+}
 
 // One fixed, made-up case so the page is the same on every run.
 // The first letter is written on Saturday 14 Nov 2026 from tests on 11-13 Nov; the second letter is
@@ -216,6 +246,13 @@ export function buildReviewPack() {
 }
 
 async function main() {
+  const drift = lettersDrift();
+  if (drift) {
+    console.error(`${drift}.`);
+    console.error('The three letters are frozen for the review. If the change is intended, replace '
+      + 'tests/fixtures/letters-sent-2026-11-14.txt in the same commit, deliberately.');
+    process.exit(1);
+  }
   const pack = buildReviewPack();
   if (process.argv.includes('--check')) {
     const onDisk = await readFile(PACK_PATH, 'utf8').catch(() => '');

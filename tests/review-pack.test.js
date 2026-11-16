@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 
 import * as core from '../core.js';
-import { buildReviewPack, CITED_ARTICLES, LAW_SOURCES, NOTED_ARTICLES, PACK_PATH, sampleCase } from '../scripts/review-pack.mjs';
+import { buildReviewPack, CITED_ARTICLES, LAW_SOURCES, lettersDrift, NOTED_ARTICLES, PACK_PATH, sampleCase } from '../scripts/review-pack.mjs';
 
 test('the review page on disk is exactly what the app builds today', async () => {
   const onDisk = await readFile(PACK_PATH, 'utf8');
@@ -18,6 +18,17 @@ test('the review page carries all three letters, whole', () => {
     assert.ok(pack.includes(letter));
     assert.doesNotMatch(letter, /undefined|NaN|null/);
   }
+});
+
+test('the three letters are still the ones sent for review on 14 Nov 2026', () => {
+  assert.equal(lettersDrift(), '');
+});
+
+test('a letter that drifts from the 14 Nov 2026 version is caught, and the report says where', () => {
+  const sample = sampleCase();
+  const drift = lettersDrift({ ...sample, short: `${sample.short}\nMohon dibalas.` });
+  assert.match(drift, /changed since 14 Nov 2026/);
+  assert.match(drift, /Mohon dibalas\./);
 });
 
 test('every article the formal letter cites is quoted on the review page', () => {
