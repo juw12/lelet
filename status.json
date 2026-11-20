@@ -79,6 +79,14 @@
         "regulars": 0,
         "letters": 0
       }
+    },
+    {
+      "at": "2026-11-20T23:16:31.166Z",
+      "counts": {
+        "testers": 6,
+        "regulars": 1,
+        "letters": 1
+      }
     }
   ],
   "final": null,
