@@ -95,6 +95,14 @@
         "regulars": 1,
         "letters": 1
       }
+    },
+    {
+      "at": "2026-11-22T22:41:56.294Z",
+      "counts": {
+        "testers": 6,
+        "regulars": 1,
+        "letters": 1
+      }
     }
   ],
   "final": null,
