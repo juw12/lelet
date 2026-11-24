@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "name": "Lelet",
-  "updated": "2026-11-22T22:41:56.294Z",
-  "updatedText": "Mon 23 Nov 2026, 05:41 WIB",
+  "updated": "2026-11-24T03:26:15.632Z",
+  "updatedText": "Tue 24 Nov 2026, 10:26 WIB",
   "phase": "before",
   "outcome": "waiting",
   "headline": "The launch test has not started yet.",
@@ -37,18 +37,18 @@
     "regulars": 3,
     "atText": "Sat 5 Dec 2026, 23:59 WIB"
   },
-  "daysToStart": 5,
-  "daysLeft": 20,
+  "daysToStart": 4,
+  "daysLeft": 19,
   "lateBaseline": false,
   "raw": {
     "baseline": {
-      "at": "2026-11-22T22:41:56.294Z",
+      "at": "2026-11-24T03:26:15.632Z",
       "testers": 6,
       "regulars": 1,
       "letters": 1
     },
     "latest": {
-      "at": "2026-11-22T22:41:56.294Z",
+      "at": "2026-11-24T03:26:15.632Z",
       "testers": 6,
       "regulars": 1,
       "letters": 1
