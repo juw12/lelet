@@ -1,55 +1,56 @@
-/* Lelet: warm paper, ink, one red accent. Green is used only for "matches plan" data. System fonts only. */
+/* Lelet: slips of white paper on a grey counter, black ink, and red kept for the verdict (the stamp,
+   "below plan"). Green is used only for "matches plan" data. System fonts only. */
 
 :root {
-  --paper: #f4efe6;
-  --surface: #fbf8f2;
-  --ink: #1b1a17;
-  --ink-2: #5a554c;
-  --rule: #d8cfbf;
-  --accent: #d9381e;
-  --accent-ink: #b32a12;
+  --paper: #e3e6e2;
+  --surface: #f6f7f4;
+  --ink: #111312;
+  --ink-2: #4a4f4b;
+  --rule: #b9bfb9;
+  --accent: #c9151e;
+  --accent-ink: #a30d15;
   --on-accent: #ffffff;
-  --ok: #1f7a3d;
-  --warn-bg: #f6e3c8;
-  --receipt: #fffdf8;
-  --shadow: 0 1px 0 rgba(27, 26, 23, 0.06), 0 10px 30px -18px rgba(27, 26, 23, 0.45);
-  --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+  --ok: #17663a;
+  --warn-bg: #f4e99a;
+  --receipt: #ffffff;
+  --shadow: 0 1px 0 rgba(17, 19, 18, 0.08), 0 12px 28px -18px rgba(17, 19, 18, 0.55);
+  --display: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --mono: ui-monospace, 'Cascadia Mono', 'SF Mono', Consolas, Menlo, 'Liberation Mono', monospace;
-  --radius: 10px;
+  --radius: 2px;
   color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --paper: #161513;
-    --surface: #211f1c;
-    --ink: #efe9dd;
-    --ink-2: #aaa294;
-    --rule: #3a362f;
-    --accent: #e8492c;
-    --accent-ink: #ff8a70;
+    --paper: #101211;
+    --surface: #1a1d1b;
+    --ink: #eef1ee;
+    --ink-2: #a4aaa5;
+    --rule: #3b403c;
+    --accent: #f0463c;
+    --accent-ink: #ff8d85;
     --on-accent: #ffffff;
     --ok: #6cc98a;
-    --warn-bg: #3b2d18;
-    --receipt: #262420;
+    --warn-bg: #3a3712;
+    --receipt: #232725;
     --shadow: 0 1px 0 rgba(0, 0, 0, 0.3), 0 10px 30px -18px rgba(0, 0, 0, 0.9);
     color-scheme: dark;
   }
 }
 
 :root[data-theme='dark'] {
-  --paper: #161513;
-  --surface: #211f1c;
-  --ink: #efe9dd;
-  --ink-2: #aaa294;
-  --rule: #3a362f;
-  --accent: #e8492c;
-  --accent-ink: #ff8a70;
+  --paper: #101211;
+  --surface: #1a1d1b;
+  --ink: #eef1ee;
+  --ink-2: #a4aaa5;
+  --rule: #3b403c;
+  --accent: #f0463c;
+  --accent-ink: #ff8d85;
   --on-accent: #ffffff;
   --ok: #6cc98a;
-  --warn-bg: #3b2d18;
-  --receipt: #262420;
+  --warn-bg: #3a3712;
+  --receipt: #232725;
   --shadow: 0 1px 0 rgba(0, 0, 0, 0.3), 0 10px 30px -18px rgba(0, 0, 0, 0.9);
   color-scheme: dark;
 }
@@ -75,19 +76,24 @@ body {
 h1,
 h2,
 h3 {
-  font-family: var(--serif);
-  font-weight: 700;
-  line-height: 1.15;
+  font-family: var(--display);
+  font-weight: 800;
+  line-height: 1.1;
   margin: 0;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.03em;
 }
 
 h1 {
   font-size: clamp(2rem, 8vw, 3.1rem);
 }
 
+/* A section heading is printed like the heading of a form: small, spaced capitals. */
 h2 {
-  font-size: 1.25rem;
+  font-family: var(--mono);
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 p {
@@ -162,10 +168,10 @@ select {
 }
 
 .brand-name {
-  font-family: var(--serif);
-  font-weight: 700;
-  font-size: 1.35rem;
-  letter-spacing: -0.02em;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 1.3rem;
+  letter-spacing: -0.03em;
 }
 
 .brand-tag {
@@ -187,7 +193,7 @@ select {
   height: 44px;
   padding: 0 12px;
   border: 1px solid var(--rule);
-  border-radius: 999px;
+  border-radius: var(--radius);
   background: transparent;
   font-family: var(--mono);
   font-size: 0.8rem;
@@ -247,7 +253,7 @@ select {
 
 .tabs a[aria-current='page'] {
   color: var(--ink);
-  border-top-color: var(--accent);
+  border-top-color: var(--ink);
 }
 
 @media (min-width: 720px) {
@@ -275,7 +281,7 @@ select {
   }
 
   .tabs a[aria-current='page'] {
-    border-bottom-color: var(--accent);
+    border-bottom-color: var(--ink);
   }
 }
 
@@ -299,11 +305,15 @@ main {
   margin-top: 10px;
 }
 
+/* A slip of paper with a ruled top edge, not a rounded box. */
 .card {
   background: var(--surface);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-  padding: 18px;
+  border-top: 2px solid var(--ink);
+  padding: 16px 18px 18px;
+}
+
+.card > h2 {
+  margin-bottom: 10px;
 }
 
 .small {
@@ -340,18 +350,19 @@ main {
 }
 
 .btn.primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--on-accent);
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
   font-size: 1.08rem;
+  font-weight: 700;
   min-height: 56px;
   width: 100%;
 }
 
 .btn.primary:hover {
-  background: var(--accent-ink);
-  border-color: var(--accent-ink);
-  color: var(--on-accent);
+  background: var(--ink-2);
+  border-color: var(--ink-2);
+  color: var(--paper);
 }
 
 :root[data-theme='dark'] .btn.primary:hover {
@@ -532,7 +543,6 @@ main {
 .verdict {
   border-left: 5px solid var(--accent);
   background: var(--surface);
-  border-radius: 0 var(--radius) var(--radius) 0;
   padding: 14px 16px;
 }
 
@@ -541,6 +551,10 @@ main {
 }
 
 .verdict h2 {
+  font-family: var(--display);
+  font-size: 1.45rem;
+  letter-spacing: -0.03em;
+  text-transform: none;
   color: var(--accent-ink);
 }
 
@@ -595,7 +609,7 @@ textarea {
   padding: 10px 12px;
   background: var(--receipt);
   border: 1px solid var(--rule);
-  border-radius: 8px;
+  border-radius: var(--radius);
 }
 
 input:focus,
@@ -630,7 +644,7 @@ legend {
 .seg {
   display: flex;
   border: 1px solid var(--rule);
-  border-radius: 8px;
+  border-radius: var(--radius);
   overflow: hidden;
   background: var(--receipt);
 }
@@ -697,7 +711,6 @@ legend {
 
 .notice {
   background: var(--warn-bg);
-  border-radius: 8px;
   padding: 12px 14px;
   font-size: 0.94rem;
 }
@@ -728,7 +741,7 @@ legend {
   font-size: 0.9rem;
   padding: 2px 8px;
   border: 2px solid currentColor;
-  border-radius: 4px;
+  border-radius: var(--radius);
   color: var(--accent-ink);
 }
 
@@ -1099,7 +1112,7 @@ details li + li {
   background: var(--ink);
   color: var(--paper);
   padding: 10px 16px;
-  border-radius: 999px;
+  border-radius: var(--radius);
   font-size: 0.9rem;
   opacity: 0;
   pointer-events: none;
