@@ -262,7 +262,7 @@ function renderChrome() {
   langButton.setAttribute('aria-label', t('head.lang'));
   $('#theme-btn').setAttribute('aria-label', t('head.theme'));
   const themeColor = $('meta[name="theme-color"]');
-  if (themeColor) themeColor.setAttribute('content', effectiveTheme() === 'dark' ? '#161513' : '#F4EFE6');
+  if (themeColor) themeColor.setAttribute('content', effectiveTheme() === 'dark' ? '#101211' : '#E3E6E2');
 
   const current = route();
   const tabs = $('#tabs');
