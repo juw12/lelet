@@ -135,9 +135,17 @@
         "regulars": 1,
         "letters": 1
       }
+    },
+    {
+      "at": "2026-11-28T00:38:57.328Z",
+      "counts": {
+        "testers": 6,
+        "regulars": 1,
+        "letters": 1
+      }
     }
   ],
   "final": null,
   "issue": null,
-  "launchIssue": null
+  "launchIssue": 6
 }

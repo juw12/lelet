@@ -1,11 +1,11 @@
 {
   "schema": 1,
   "name": "Lelet",
-  "updated": "2026-11-27T01:18:01.829Z",
-  "updatedText": "Fri 27 Nov 2026, 08:18 WIB",
-  "phase": "before",
-  "outcome": "waiting",
-  "headline": "The launch test has not started yet.",
+  "updated": "2026-11-28T00:39:00.307Z",
+  "updatedText": "Sat 28 Nov 2026, 07:39 WIB",
+  "phase": "running",
+  "outcome": "stop",
+  "headline": "The launch test is running. Still below the stop line.",
   "nextStep": null,
   "totals": {
     "testers": 0,
@@ -37,18 +37,18 @@
     "regulars": 3,
     "atText": "Sat 5 Dec 2026, 23:59 WIB"
   },
-  "daysToStart": 1,
-  "daysLeft": 16,
+  "daysToStart": 0,
+  "daysLeft": 15,
   "lateBaseline": false,
   "raw": {
     "baseline": {
-      "at": "2026-11-27T01:18:01.829Z",
+      "at": "2026-11-28T00:38:57.328Z",
       "testers": 6,
       "regulars": 1,
       "letters": 1
     },
     "latest": {
-      "at": "2026-11-27T01:18:01.829Z",
+      "at": "2026-11-28T00:38:57.328Z",
       "testers": 6,
       "regulars": 1,
       "letters": 1
@@ -58,7 +58,7 @@
     "app": "https://juw12.github.io/lelet/",
     "repo": "https://github.com/juw12/lelet",
     "status": "https://github.com/juw12/lelet/blob/launch-status/STATUS.md",
-    "launchIssue": null,
+    "launchIssue": "https://github.com/juw12/lelet/issues/6",
     "verdictIssue": null
   },
   "needsMe": [
